@@ -1,0 +1,55 @@
+{
+	"tableName":"abouts",
+	"translatableTableName": "about_translations",
+	"translatableKey" : "about_id",
+	"editable":true,
+	"setActive":true,
+	"multiLang":true,
+	"validation": {
+		"post" : {
+			"date" : "required|date",
+			"icon" : "image|mimes:jpeg,png,bmp,gif,svg",
+			"image" : "image|mimes:jpeg,png,bmp,gif,svg",
+			"images" : "array",
+			"images.*" : "image|mimes:jpeg,png,bmp,gif,svg",
+			"gallery" : "array",
+			"gallery.*" : "image|mimes:jpeg,png,bmp,gif,svg",
+			"url" : "required|url",
+			"title_01" : "required|array",
+			"title_01.*" : "required|string",
+			"title_02" : "required|array",
+			"title_02.*" : "required|string"
+		},
+		"update": {
+			
+		}
+	},
+	"child_plugin":{
+		"name":"fieldsetform",
+		"mode":"add,edit,remove",
+		"component_width" : "col-lg-12 col-xl-6 ",
+		"title":"Add",
+		"general_data":[
+			{
+				"name":"files/singleImageComponent",
+				"label":"image",
+				"columnName":"image",
+				"type" : "file"
+			}
+		],
+		"translatable_data" : [
+			{
+				"name":"textFieldComponent",
+				"label":"title",
+				"columnName":"title"
+			},
+			{
+				"name":"textareaComponent",
+				"label":"text",
+				"columnName":"text"
+			}
+		]
+	}
+}
+
+

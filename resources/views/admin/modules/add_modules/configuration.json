@@ -1,0 +1,36 @@
+{
+	"tableName":"",
+	"translatableTableName": "",
+	"translatableKey" : "",
+	"editable":true,
+	"setActive":true,
+	"multiLang":false,
+	"child_plugin":{
+		"name":"fieldsetform",
+		"mode":"add,edit,remove",
+		"title":"Add",
+		"general_data":[
+			{
+				"name":"form_fields/textfield",
+				"mode":"add,edit",
+				"label":"name",
+				"columnName":"name",
+				"escape":["html"],
+				"required":true
+			}
+		],
+		"translatable_data" : []
+	},
+	"parent_plugin":{
+			"dataLoaderMethod" : "",
+			"name":"tables/buttonTable",
+			"texts":{
+				"title":"",
+				"msg":""
+			},
+			"imageFolder":"",
+			"cols":[]
+    }
+}
+
+

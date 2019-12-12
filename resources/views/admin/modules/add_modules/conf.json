@@ -1,0 +1,92 @@
+{
+	"tableName":"add_modules",
+	"editable":true,
+	"setActive":true,
+	"multiLang":true,
+	"validation": {
+		"post" : {
+			"name" : "required|unique:modules|string",
+			"namespace" : "required|unique:modules|string",
+			"icon" : "nullable",
+			"parent" : "nullable"
+		},
+		"update": {
+			"name" : "required|unique:modules|string",
+			"namespace" : "required|unique:modules|string",
+			"icon" : "nullable",
+			"parent" : "nullable"
+		}
+	},
+	"child_plugin":{
+		"name":"fieldsetform",
+		"mode":"add,edit,remove",
+		"component_width" : "col-md-12 col-lg-6",
+		"title":"Add",
+		"general_data":[
+			{
+				"name":"form_fields/textfield",
+				"mode":"add,edit",
+				"label":"name",
+				"columnName":"name",
+				"escape":["html"],
+				"helpText": "Name and Surname.",
+				"icon": "fal fa-cog",
+				"validation" : "required|min:3|max:255",
+				"required":true
+			},
+			{
+				"name":"form_fields/textfield",
+				"mode":"add,edit",
+				"label":"namespace",
+				"columnName":"namespace",
+				"escape":["html"],
+				"helpText": "Define namespace..",
+				"icon": "fal fa-cog",
+				"validation" : "required|min:3|max:255",
+				"required":true
+			},
+			{
+				"name":"form_fields/textfield",
+				"mode":"add,edit",
+				"label":"icon",
+				"columnName":"icon",
+				"escape":["html"],
+				"helpText": "write icon class name without tags",
+				"icon": "fal fa-cog"
+			},
+			{
+				"name":"form_fields/checkbox",
+				"mode":"add,edit",
+				"label":"active",
+				"icon": "fal fa-envelope",
+				"columnName":"active",
+				"required":true
+			},
+			{
+				"name":"form_fields/selectbox",
+				"mode":"add,edit",
+				"label":"parent",
+				"dataLoaderMethod": "getModules",
+				"tableName" : "modules",
+				"columnName":"parent",
+				"option_name": "name",
+				"option_value": "id"
+			}
+		]
+	},
+	"parent_plugin":{
+			"name":"tables/buttonTable",
+			"texts":{
+				"title":"",
+				"msg":""
+			},
+			"imageFolder":"",
+			"cols":[
+				{ "name" : "name", "value" : "name"},
+	            { "name" : "actions", "value" : "actions", "renderer": "actionBtns" }
+	        ]
+    }
+}
+
+
+				
