@@ -1,5 +1,5 @@
 <?php
-
+// use Auth;
 /*
 |--------------------------------------------------------------------------
 | CMS Routes
@@ -11,12 +11,11 @@
 |
 */
 
+
 Auth::routes();
 Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function(){
-
 	Route::resource('/', 'DashboardController');
 	Route::resource('about', 'AboutController');
+	Route::resource('contact', 'ContactController');
+	Route::resource('events', 'EventController');
 });
-
-
-

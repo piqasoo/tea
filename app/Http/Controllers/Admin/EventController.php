@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\AdminController;
+use App\Events;
+use DB;
 use Auth;
 
-
-class DashboardController extends AdminController
+class EventController extends AdminController
 {
     static $parent;
     static $module;
@@ -15,12 +16,11 @@ class DashboardController extends AdminController
 
     public function __construct(){
         self::$parent = new AdminController();
-        self::$module = self::$parent->getModule('about');
-        if(!empty(self::$module) && self::$module->data->namespace){
+        self::$module = self::$parent->getModule('events');
+        if(!empty(self::$module) && (self::$module->statusCode == 1) && self::$module->data->namespace){
             self::$data = self::$parent->initModule(self::$module->data->namespace);
-        }
-        
-        // dd(self::$data);
+            self::$data->model = self::$module->data;
+        }     
     }
     /**
      * Display a listing of the resource.
@@ -30,7 +30,19 @@ class DashboardController extends AdminController
     public function index()
     {
         $data = self::$data;
-        return view('admin.index', compact('data'));
+        if(Auth::User() && !empty($data->model)){
+            $data->route = 'admin.'.$data->model->namespace.'.create';
+            $data->data = Events::where('active', true)->with('event_translations')->paginate(15);
+            $data->action = [$data->route];
+            $data->method = 'POST';
+            $data->editRoute = 'admin.'.$data->model->namespace.'.edit';
+            $data->deleteRoute = 'Admin\EventController@destroy';
+            // ['Admin\PressController@destroy', $row['id']]
+            return view('admin.index', compact('data'));
+        }
+        else {
+            return redirect('/');
+        }
     }
 
     /**

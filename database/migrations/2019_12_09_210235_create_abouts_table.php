@@ -25,6 +25,8 @@ class CreateAboutsTable extends Migration
             $table->integer('about_id')->unsigned();
             $table->string('title');
             $table->text('text');
+            $table->string('description', 160)->nullable();
+            $table->text('keywords')->nullable();
             $table->string('locale')->index();
             $table->unique(['about_id', 'locale']);
             $table->foreign('about_id')->references('id')->on('abouts')->onDelete('cascade');

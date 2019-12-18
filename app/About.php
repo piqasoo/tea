@@ -15,6 +15,10 @@ class About extends Eloquent implements TranslatableContract
      *
      * @var array
      */
-    public $translatedAttributes = ['title', 'text'];
+    public $translatedAttributes = ['title', 'text', 'description', 'keywords'];
     protected $fillable = ['image'];
+
+    public function about_translations(){
+    	return $this->hasMany(AboutTranslation::class);
+    }
 }

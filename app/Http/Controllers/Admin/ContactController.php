@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\AdminController;
-use App\About;
+use App\Contact;
 use DB;
 use Auth;
 
-class AboutController extends AdminController
+class ContactController extends AdminController
 {
     static $parent;
     static $module;
@@ -16,11 +16,11 @@ class AboutController extends AdminController
 
     public function __construct(){
         self::$parent = new AdminController();
-        self::$module = self::$parent->getModule('about');
-        if(!empty(self::$module) && self::$module->data->namespace){
+        self::$module = self::$parent->getModule('contact');
+        if(!empty(self::$module) && (self::$module->statusCode == 1) && self::$module->data->namespace){
             self::$data = self::$parent->initModule(self::$module->data->namespace);
             self::$data->model = self::$module->data;
-        }        
+        }     
     }
     /**
      * Display a listing of the resource.
@@ -75,9 +75,10 @@ class AboutController extends AdminController
         $data = self::$data;
         if(Auth::User() && !empty($data->model)){
             $data->route = 'admin.'.$data->model->namespace.'.update';
-            $data->data = About::where('id', $id)->with('about_translations')->first();
+            $data->data = Contact::where('id', $id)->with('contact_translations')->first();
             $data->action = [$data->route, $data->data->id];
             $data->method = 'PUT';
+            
             return view('admin.index', compact('data'));
         }
         else {
@@ -94,25 +95,27 @@ class AboutController extends AdminController
      */
     public function update(Request $request, $id)
     {
-        $data = About::find($id);
+        $data = Contact::find($id);
         if(Auth::User() && $data){
             $request->validate([
-                'title' => 'required|max:255',
-                'text' => 'nullable',
+                'mail_01'   => 'nullable|email',
+                'mail_02'   => 'nullable|email',
+                'facebook'  => 'nullable|url',
+                'instagram' => 'nullable|url',
+                'twitter'   => 'nullable|url',
+                'youtube'   => 'nullable|url',
             ]);
 
+            $data->mail_01  = $request['mail_01'];
+            $data->mail_02  = $request['mail_02'];
+            $data->facebook = $request['facebook'];
+            $data->instagram = $request['instagram'];
+            $data->twitter  = $request['twitter'];
+            $data->youtube  = $request['youtube'];
+
             foreach (\Config::get('app.locales') as $key => $locale) {
-                if(isset($request['title'])){
-                    $data->translateOrNew($locale)->title = $request['title'][$locale];
-                }
-                if(isset($request['text'])){
-                    $data->translateOrNew($locale)->text = $request['text'][$locale];
-                }
-                if(isset($request['description'])){
-                    $data->translateOrNew($locale)->description = $request['description'][$locale];
-                }
-                if(isset($request['keywords'])){
-                    $data->translateOrNew($locale)->keywords = $request['keywords'][$locale];
+                if(isset($request['manager'])){
+                    $data->translateOrNew($locale)->manager = $request['manager'][$locale];
                 }
             }
             $data->save();

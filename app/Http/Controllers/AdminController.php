@@ -22,6 +22,7 @@ class AdminController extends BaseController
       $gnComponents = array();
       $trComponents = array();
       $seoComponents = array();
+      $parentComponent = array();
       $multiLang = false;
 
         $configFile = public_path('../'). 'resources/views/admin/modules/' . $module . '/' . 'conf.json';
@@ -30,6 +31,9 @@ class AdminController extends BaseController
         	$conf = file_get_contents($configFile);
             $conf_data = json_decode($conf,true);
        	}
+        if(isset($conf_data['parent_plugin'])){
+          $parentComponent = $conf_data['parent_plugin'];
+        }
         if(isset($conf_data['child_plugin'])){
           if(isset($conf_data['child_plugin']['general_data'])){
             $gnComponents = $conf_data['child_plugin']['general_data'];
@@ -59,6 +63,7 @@ class AdminController extends BaseController
 
        	$data = array(
        		'template'      => $template,
+          'parentComponent' => $parentComponent,
           'gnComponents'  => (object) $gnComponents,
           'trComponents'  => (object) $trComponents,
           'seoComponents' => (object) $seoComponents,
@@ -69,19 +74,17 @@ class AdminController extends BaseController
 
     public static function getModule($module){
     	$response = array();
-
     	foreach (\Config::get('adminMenu') as $key => $value):
     		if($key === $module):
     			$response['statusCode'] = 1;
     			$response['data'] = (object) $value;
-    			return (object) $response;
+          break;
     		else:
     			$response['statusCode'] = 0;
     			$response['data'] = [];
     			$response['message'] = 'Module is not configurable!';
-    			return (object) $response;
     		endif;
     	endforeach;
-    	
+    	return (object) $response;
     }
 }

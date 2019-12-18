@@ -12,5 +12,7 @@ class AboutTranslation extends Model
         'locale',
         'title',
         'text',
+        'description', 
+        'keywords',
     ];
 }

@@ -1,0 +1,74 @@
+{
+	"tableName":"contacts",
+	"translatableTableName": "contact_translations",
+	"translatableKey" : "contact_id",
+	"editable":true,
+	"setActive":true,
+	"multiLang":true,
+	"child_plugin":{
+		"mode":"add,edit,remove",
+		"component_width" : "col-lg-12 col-xl-6 ",
+		"title":"Add",
+		"general_data":[
+			{
+				"name":"textFieldComponent",
+				"label":"Email",
+				"placeholder" : "personal@example.com",
+				"columnName":"mail_01"
+			},
+			{
+				"name":"textFieldComponent",
+				"label":"Manager Email",
+				"placeholder" : "manager@example.com",
+				"columnName":"mail_01"
+			},
+			{
+				"name":"textFieldComponent",
+				"label":"Facebook",
+				"placeholder" : "https://www.facebook.com/",
+				"columnName":"facebook"
+			},
+			{
+				"name":"textFieldComponent",
+				"label":"Instagram",
+				"placeholder" : "https://www.instagram.com/",
+				"columnName":"instagram"
+			},
+			{
+				"name":"textFieldComponent",
+				"label":"Twitter",
+				"placeholder" : "https://twitter.com/",
+				"columnName":"twitter"
+			},
+			{
+				"name":"textFieldComponent",
+				"label":"Youtube",
+				"placeholder" : "https://www.youtube.com/",
+				"columnName":"youtube"
+			}
+		],
+		"translatable_data" : [
+			{
+				"name":"textFieldComponent",
+				"label":"Manager",
+				"placeholder" : "Name / Lastname",
+				"columnName":"manager"
+			}
+		],
+		"seo_data": [
+			{
+				"name":"textareaComponent",
+				"label":"Description",
+				"placeholder" : "seo description is for the page in serach engine",
+				"columnName":"description"
+			},
+			{
+				"name":"textareaComponent",
+				"label":"Keywords",
+				"columnName":"keywords"
+			}
+		]
+	}
+}
+
+

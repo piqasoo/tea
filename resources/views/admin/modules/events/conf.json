@@ -41,7 +41,23 @@
 				"columnName":"keywords"
 			}
 		]
-	}
+	},
+	"parent_plugin":{
+			"dataLoaderMethod" : "",
+			"name":"tables/buttonTable",
+			"texts":{
+				"title":"",
+				"msg":""
+			},
+			"imageFolder":"",
+			"cols":[
+				{"name" : "event", "value" : "name"},
+				{"name" : "place", "value" : "place"},
+				{"name" : "date", "value" : "date"},
+				{"name" : "action", "value" : "actionBtns", "component" : "layouts/actionBtns"}
+			]
+    }
+
 }
 
 
