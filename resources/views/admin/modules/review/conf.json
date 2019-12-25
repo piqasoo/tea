@@ -1,0 +1,56 @@
+{
+	"tableName":"reviews",
+	"translatableTableName": "reviews_translations",
+	"translatableKey" : "about_id",
+	"editable":true,
+	"setActive":true,
+	"multiLang":true,
+	"child_plugin":{
+		"mode":"add,edit,remove",
+		"component_width" : "col-lg-12 col-xl-6 ",
+		"title":"Add",
+		"description" : "Required fileds must be filed in all language!",
+		"translatable_data" : [
+			{
+				"name":"textFieldComponent",
+				"label":"title",
+				"placeholder" : "",
+				"columnName":"title_01",
+				"required": true
+			},
+			{
+				"name":"textFieldComponent",
+				"label":"sub title",
+				"placeholder" : "",
+				"helpText" : "",
+				"columnName":"title_02",
+				"required": true
+			},
+			{
+				"name":"editorTextareaComponent",
+				"label":"Text",
+				"helpText" : "Put extra information about the event in the text field..",
+				"placeholder" : "",
+				"columnName":"text"
+			}
+		]
+	},
+	"parent_plugin":{
+			"dataLoaderMethod" : "",
+			"name":"tables/buttonTable",
+			"texts":{
+				"title":"",
+				"msg":""
+			},
+			"imageFolder":"",
+			"cols":[
+				{"name" : "title", "value" : "title_01"},
+				{"name" : "date", "value" : "date"},
+				{"name" : "active", "value" : "active", "component" : "layouts/activeComponent"},
+				{"name" : "action", "value" : "actionBtns", "component" : "layouts/actionBtnsComponent"}
+			]
+    }
+
+}
+
+

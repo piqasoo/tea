@@ -10,7 +10,10 @@
 <div class="content-header">
     <div class="header-section">
       <h1>
-        <i class="gi gi-leaf"></i>{{ ucfirst($data->model->title) }}<br><small>Create new record!</small>
+        <i class="gi gi-leaf"></i>{{ ucfirst($data->model->title) }}<br>
+        @if($data->formDescription)
+        <small>{{ $data->formDescription }}</small>
+        @endif
       </h1>
     </div>
   </div>
@@ -26,9 +29,11 @@
           <h2><strong> General</strong> data fields</h2>
       </div>
           <!-- Inculde general components -->
-            @foreach($data->gnComponents as $gnComponent)
-                @include('admin.components.'.$gnComponent['name'], ['data' => $data->data, 'component' => $gnComponent])
-            @endforeach
+      <div class="form-horizontal form-bordered">
+      @foreach($data->gnComponents as $gnComponent)
+        @include('admin.components.'.$gnComponent['name'], ['data' => $data->data, 'component' => $gnComponent])
+      @endforeach
+      </div>
     </div>
   </div>
 </div>

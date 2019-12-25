@@ -1,7 +1,7 @@
 {
-	"tableName":"events",
-	"translatableTableName": "events_translations",
-	"translatableKey" : "events_id",
+	"tableName":"news",
+	"translatableTableName": "news_translations",
+	"translatableKey" : "news_id",
 	"editable":true,
 	"setActive":true,
 	"multiLang":true,
@@ -17,42 +17,33 @@
 				"columnName":"date"
 			},
 			{
-				"name":"textFieldComponent",
-				"label":"Address Link",
-				"placeholder" : "Example: https://www.google.com/maps/place/Italy/@41.9004783,12.4760543,14z/data=!4m5!3m4!1s0x12d4fe82448dd203:0xe22cf55c24635e6f!8m2!3d41.87194!4d12.56738",
-				"helpText":"Google map link of the place where event will be held..",
-				"columnName":"address_link"
+				"name":"files/singleImageComponent",
+				"label":"image",
+				"columnName":"image",
+				"type" : "file"
 			},
 			{
-				"name":"textFieldComponent",
-				"label": "Ticket Link",
-				"placeholder" : "",
-				"helpText":"Link, where people can buy the event`s ticket..",
-				"columnName":"ticket"
+				"name":"files/multiImageComponent",
+				"label":"images",
+				"columnName":"images",
+				"type" : "file"
 			}
 		],
 		"translatable_data" : [
 			{
 				"name":"textFieldComponent",
-				"label":"Event Name",
+				"label":"title",
 				"placeholder" : "",
-				"columnName":"name",
+				"columnName":"title_01",
 				"required": true
 			},
 			{
 				"name":"textFieldComponent",
-				"label":"Event Place",
+				"label":"sub title",
 				"placeholder" : "",
-				"helpText" : "Address name of the place where the event will be held..",
-				"columnName":"place",
+				"helpText" : "",
+				"columnName":"title_02",
 				"required": true
-			},
-			{
-				"name":"textFieldComponent",
-				"label":"Role",
-				"placeholder" : "",
-				"helpText" : "What is your role in this event..",
-				"columnName":"role"
 			},
 			{
 				"name":"editorTextareaComponent",
@@ -72,9 +63,9 @@
 			},
 			"imageFolder":"",
 			"cols":[
-				{"name" : "event", "value" : "name"},
-				{"name" : "place", "value" : "place"},
+				{"name" : "title", "value" : "title_01"},
 				{"name" : "date", "value" : "date"},
+				{"name" : "active", "value" : "active", "component" : "layouts/activeComponent"},
 				{"name" : "action", "value" : "actionBtns", "component" : "layouts/actionBtnsComponent"}
 			]
     }

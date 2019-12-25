@@ -18,4 +18,5 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function(){
 	Route::resource('about', 'AboutController');
 	Route::resource('contact', 'ContactController');
 	Route::resource('events', 'EventController');
+	Route::resource('news', 'NewsController');
 });

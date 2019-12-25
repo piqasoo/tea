@@ -5,7 +5,15 @@
             'link' => 'about/1/edit', 
             'class' => 'fa fa-university sidebar-nav-icon', 
             'namespace' => 'about', 
-            'icon'  => '',
+            'icon'  => 'fa fa-user sidebar-nav-icon',
+            'roles' => ['admin']
+        ],
+        'slider' => [
+            'title' => 'Slider', 
+            'link' => 'slides', 
+            'class' => 'fa fa-university sidebar-nav-icon', 
+            'namespace' => 'slides', 
+            'icon'  => 'fa fa-chevron-circle-right sidebar-nav-icon',
             'roles' => ['admin']
         ],
         'events' => [
@@ -13,7 +21,39 @@
             'link' => 'events', 
             'class' => 'fa fa-university sidebar-nav-icon', 
             'namespace' => 'events', 
-            'icon'  => '',
+            'icon'  => 'fa fa-calendar-check-o sidebar-nav-icon',
+            'roles' => ['admin']
+        ],
+        'news' => [
+            'title' => 'News', 
+            'link' => 'news', 
+            'class' => 'fa fa-university sidebar-nav-icon', 
+            'namespace' => 'news', 
+            'icon'  => 'fa fa-calendar sidebar-nav-icon',
+            'roles' => ['admin']
+        ],
+        'gallery' => [
+            'title' => 'Gallery', 
+            'link' => 'gallery', 
+            'class' => 'fa fa-university sidebar-nav-icon', 
+            'namespace' => 'gallery', 
+            'icon'  => 'fa fa-folder-open sidebar-nav-icon',
+            'roles' => ['admin']
+        ],
+        'review' => [
+            'title' => 'Reviews', 
+            'link' => 'review', 
+            'class' => 'fa fa-university sidebar-nav-icon', 
+            'namespace' => 'review', 
+            'icon'  => 'fa fa-star-o sidebar-nav-icon',
+            'roles' => ['admin']
+        ],
+        'banners' => [
+            'title' => 'Banners', 
+            'link' => 'banners', 
+            'class' => 'fa fa-university sidebar-nav-icon', 
+            'namespace' => 'banners', 
+            'icon'  => 'fa fa-file-image-o sidebar-nav-icon',
             'roles' => ['admin']
         ],
         'contact' => [
@@ -21,7 +61,15 @@
             'link' => 'contact/1/edit', 
             'class' => 'fa fa-university sidebar-nav-icon', 
             'namespace' => 'contact', 
-            'icon'  => '',
+            'icon'  => 'fa fa-map-signs sidebar-nav-icon',
             'roles' => ['admin']
-        ]
+        ],
+        'texts' => [
+            'title' => 'texts', 
+            'link' => 'texts', 
+            'class' => 'fa fa-university sidebar-nav-icon', 
+            'namespace' => 'texts', 
+            'icon'  => 'fa fa-align-center sidebar-nav-icon',
+            'roles' => ['admin']
+        ],
   ];

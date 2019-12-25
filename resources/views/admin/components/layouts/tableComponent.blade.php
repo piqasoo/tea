@@ -23,7 +23,7 @@
 @endif
 <!-- END Datatables Header -->
 <div class="block full">
-  <div class="right clearfix"><a href="" class="btn btn-primary"> Add {{ $modelName }}</a></div>
+  <div class="right clearfix"><a href="{{ route($data->route) }}" class="btn btn-primary"> Add {{ $modelName }}</a></div>
 
 <div id="ecom-orders_wrapper" class="dataTables_wrapper form-inline no-footer">
   <div class="row">
@@ -58,15 +58,17 @@
     <tbody>
     @if(isset($data->data) && !empty($data->data))
       @foreach($data->data as $row)
-        @foreach($cols as $col)
-        @if(!isset($col['component']))
-        <td>{{ $row[$col['value']] }}</td>
-        @else
-        <td class="text-center">
-        @include('admin.components.'.$col['component'], ['data' => $data, 'id' => $row->id])
-        </td>
-        @endif
-        @endforeach
+        <tr>
+          @foreach($cols as $col)
+          @if(!isset($col['component']))
+          <td>{{ $row[$col['value']] }}</td>
+          @else
+          <td class="text-center">
+          @include('admin.components.'.$col['component'], ['parent' => $data, 'data' => $row, 'id' => $row->id, 'col' => $col ])
+          </td>
+          @endif
+          @endforeach
+        </tr>
       @endforeach
     @endif
     </tbody>

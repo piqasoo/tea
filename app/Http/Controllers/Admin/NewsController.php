@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\AdminController;
-use App\Events;
+use App\News;
 use DB;
 use Auth;
 
-class EventController extends AdminController
+
+class NewsController extends AdminController
 {
     static $parent;
     static $module;
@@ -16,7 +17,7 @@ class EventController extends AdminController
 
     public function __construct(){
         self::$parent = new AdminController();
-        self::$module = self::$parent->getModule('events');
+        self::$module = self::$parent->getModule('news');
         if(!empty(self::$module) && (self::$module->statusCode == 1) && self::$module->data->namespace){
             self::$data = self::$parent->initModule(self::$module->data->namespace);
             self::$data->model = self::$module->data;
@@ -32,11 +33,11 @@ class EventController extends AdminController
         $data = self::$data;
         if(Auth::User() && !empty($data->model)){
             $data->route = 'admin.'.$data->model->namespace.'.create';
-            $data->data = Events::with('event_translations')->paginate(15);
+            $data->data = News::with('news_translations')->paginate(15);
             $data->action = $data->route;
             $data->method = 'POST';
             $data->editRoute = 'admin.'.$data->model->namespace.'.edit';
-            $data->deleteRoute = 'Admin\EventController@destroy';
+            $data->deleteRoute = 'Admin\NewsController@destroy';
             // ['Admin\PressController@destroy', $row['id']]
             return view('admin.index', compact('data'));
         }
@@ -55,7 +56,7 @@ class EventController extends AdminController
         $data = self::$data;
         if(Auth::User() && !empty($data->model)){
             $data->route = 'admin.'.$data->model->namespace.'.create';
-            $data->data = new Events;
+            $data->data = new News;
             $data->action = ['admin.'.$data->model->namespace.'.store'];
             $data->method = 'POST';
             return view('admin.index', compact('data'));
@@ -74,24 +75,19 @@ class EventController extends AdminController
     public function store(Request $request)
     {
         $model = self::$data;
-        $data = new Events;
+        $data = new News;
         if(Auth::User()){
             $request->validate([
-                'name' => 'required|array',
-                'name.*' => 'required|max:255',
+                'title_01' => 'required|array',
+                'title_01.*' => 'required|max:255',
                 'text' => 'nullable',
-                'place' => 'required|array',
-                'place.*' => 'required|max:255',
             ]);
             foreach (\Config::get('app.locales') as $key => $locale) {
-                if(isset($request['name'])){
-                    $data->translateOrNew($locale)->name = $request['name'][$locale];
+                if(isset($request['title_01'])){
+                    $data->translateOrNew($locale)->title_01 = $request['title_01'][$locale];
                 }
-                if(isset($request['place'])){
-                    $data->translateOrNew($locale)->place = $request['place'][$locale];
-                }
-                if(isset($request['role'])){
-                    $data->translateOrNew($locale)->role = $request['role'][$locale];
+                if(isset($request['title_02'])){
+                    $data->translateOrNew($locale)->title_02 = $request['title_02'][$locale];
                 }
                 if(isset($request['text'])){
                     $data->translateOrNew($locale)->text = $request['text'][$locale];
@@ -101,11 +97,8 @@ class EventController extends AdminController
             if(isset($request['date'])){
                 $data->date = $request['date'];
             }
-            if(isset($request['address_link'])){
-                $data->address_link = $request['address_link'];
-            }
-            if(isset($request['ticket'])){
-                $data->ticket = $request['ticket'];
+            if(isset($request['active'])){
+                $data->active = $request['active'];
             }
 
             $data->save();
@@ -139,7 +132,7 @@ class EventController extends AdminController
         $data = self::$data;
         if(Auth::User() && !empty($data->model)){
             $data->route = 'admin.'.$data->model->namespace.'.create';
-            $data->data = Events::find($id);
+            $data->data = News::find($id);
             $data->action = ['admin.'.$data->model->namespace.'.update', 'event' => $id];
             $data->method = 'PUT';
             if(isset($data->data)){
@@ -164,24 +157,19 @@ class EventController extends AdminController
     public function update(Request $request, $id)
     {
         $model = self::$data;
-        $data = Events::find($id);
+        $data = News::find($id);
         if(Auth::User()){
             $request->validate([
-                'name' => 'required|array',
-                'name.*' => 'required|max:255',
+                'title_01' => 'required|array',
+                'title_01.*' => 'required|max:255',
                 'text' => 'nullable',
-                'place' => 'required|array',
-                'place.*' => 'required|max:255',
             ]);
             foreach (\Config::get('app.locales') as $key => $locale) {
-                if(isset($request['name'])){
-                    $data->translateOrNew($locale)->name = $request['name'][$locale];
+                if(isset($request['title_01'])){
+                    $data->translateOrNew($locale)->title_01 = $request['title_01'][$locale];
                 }
-                if(isset($request['place'])){
-                    $data->translateOrNew($locale)->place = $request['place'][$locale];
-                }
-                if(isset($request['role'])){
-                    $data->translateOrNew($locale)->role = $request['role'][$locale];
+                if(isset($request['title_02'])){
+                    $data->translateOrNew($locale)->title_02 = $request['title_02'][$locale];
                 }
                 if(isset($request['text'])){
                     $data->translateOrNew($locale)->text = $request['text'][$locale];
@@ -191,11 +179,8 @@ class EventController extends AdminController
             if(isset($request['date'])){
                 $data->date = $request['date'];
             }
-            if(isset($request['address_link'])){
-                $data->address_link = $request['address_link'];
-            }
-            if(isset($request['ticket'])){
-                $data->ticket = $request['ticket'];
+            if(isset($request['active'])){
+                $data->active = $request['active'];
             }
 
             $data->save();
@@ -204,7 +189,7 @@ class EventController extends AdminController
         }
         else {
             return redirect('/');
-        }  
+        }
     }
 
     /**
@@ -215,7 +200,7 @@ class EventController extends AdminController
      */
     public function destroy($id)
     {
-        $data = Events::find($id);
+        $data = News::find($id);
         if(Auth::User() && $data){
             $data->delete();
             return back();

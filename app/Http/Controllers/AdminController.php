@@ -24,6 +24,8 @@ class AdminController extends BaseController
       $seoComponents = array();
       $parentComponent = array();
       $multiLang = false;
+      $routeName = '';
+      $formDescription = '';
 
         $configFile = public_path('../'). 'resources/views/admin/modules/' . $module . '/' . 'conf.json';
 
@@ -37,12 +39,18 @@ class AdminController extends BaseController
         if(isset($conf_data['child_plugin'])){
           if(isset($conf_data['child_plugin']['general_data'])){
             $gnComponents = $conf_data['child_plugin']['general_data'];
+            $gnComponents = (object) $gnComponents;
           }
           if(isset($conf_data['child_plugin']['translatable_data'])){
             $trComponents = $conf_data['child_plugin']['translatable_data'];
+            $trComponents = (object) $trComponents;
           }
           if(isset($conf_data['child_plugin']['seo_data'])){
             $seoComponents = $conf_data['child_plugin']['seo_data'];
+            $seoComponents = (object) $seoComponents;
+          }
+          if(isset($conf_data['child_plugin']['description'])){
+            $formDescription = $conf_data['child_plugin']['description'];
           }
         }
         if(isset($conf_data['multiLang'])){
@@ -64,10 +72,12 @@ class AdminController extends BaseController
        	$data = array(
        		'template'      => $template,
           'parentComponent' => $parentComponent,
-          'gnComponents'  => (object) $gnComponents,
-          'trComponents'  => (object) $trComponents,
-          'seoComponents' => (object) $seoComponents,
+          'gnComponents'  => $gnComponents,
+          'trComponents'  => $trComponents,
+          'seoComponents' => $seoComponents,
           'multiLang'     => $multiLang,
+          'route'         => $routeName,
+          'formDescription' => $formDescription,
        	);
        	return (object) $data;
     }

@@ -43,7 +43,7 @@
                                 <?php // if (in_array(Auth::user()->role, $value['roles'])): ?>
                                 <li <?= Request::segment(2) == $value['namespace'] ? 'class="active"' : ''; ?>>
                                     <a href="/admin/<?=$value['link']?>">
-                                        <i class="<?=$value['class']?>"></i>
+                                        <i class="<?= $value['icon'] ? $value['icon'] : $value['class']?>"></i>
                                         <span class="sidebar-nav-mini-hide"><?=$value['title']?></span>
                                     </a>
                                 </li>
