@@ -6,7 +6,7 @@
 	$placeholder = isset($component->placeholder) ? $component->placeholder : 'fill text..';
 	$helpText	= isset($component->helpText) ?	$component->helpText : '';
 	$required 	= isset($component->required) ? true : false;
-	$value 		= isset($data->$columnName) ? $data->$columnName : null;
+	$value 		= isset($data->{$columnName}) ? $data->{$columnName} : null;
 
 	if((isset($lang) && $lang)){
 		$value = (isset($data->$columnName) && $data->translate($lang) && isset($data->translate($lang)->$columnName)) ? $data->translate($lang)->$columnName : null;

@@ -9,10 +9,10 @@
             'roles' => ['admin']
         ],
         'slider' => [
-            'title' => 'Slider', 
-            'link' => 'slides', 
+            'title' => 'Slides', 
+            'link' => 'slider', 
             'class' => 'fa fa-university sidebar-nav-icon', 
-            'namespace' => 'slides', 
+            'namespace' => 'slider', 
             'icon'  => 'fa fa-chevron-circle-right sidebar-nav-icon',
             'roles' => ['admin']
         ],

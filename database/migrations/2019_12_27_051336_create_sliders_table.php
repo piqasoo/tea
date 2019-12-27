@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReviewsTable extends Migration
+class CreateSlidersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,22 @@ class CreateReviewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('reviews', function (Blueprint $table) {
+        Schema::create('sliders', function (Blueprint $table) {
             $table->increments('id');
+            $table->text('image');
+            $table->text('link')->nullable();
             $table->boolean('active')->default(1);
             $table->timestamps();
             $table->softDeletes(); 
         });
-        Schema::create('review_translations', function (Blueprint $table) {
+        Schema::create('slider_translations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('review_id')->unsigned();
-            $table->string('name');
-            $table->string('title');
-            $table->text('text')->nullable();
+            $table->integer('slider_id')->unsigned();
+            $table->string('title_01')->nullable();
+            $table->string('title_02')->nullable();
             $table->string('locale')->index();
-            $table->unique(['review_id', 'locale']);
-            $table->foreign('review_id')->references('id')->on('reviews')->onDelete('cascade');
+            $table->unique(['slider_id', 'locale']);
+            $table->foreign('slider_id')->references('id')->on('sliders')->onDelete('cascade');
         });
     }
 
@@ -38,7 +39,6 @@ class CreateReviewsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reviews');
-        Schema::dropIfExists('review_translations');
+        Schema::dropIfExists('sliders');
     }
 }

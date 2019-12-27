@@ -1,7 +1,7 @@
 {
-	"tableName":"reviews",
-	"translatableTableName": "reviews_translations",
-	"translatableKey" : "about_id",
+	"tableName":"sliders",
+	"translatableTableName": "news_translations",
+	"translatableKey" : "news_id",
 	"editable":true,
 	"setActive":true,
 	"multiLang":true,
@@ -10,28 +10,34 @@
 		"component_width" : "col-lg-12 col-xl-6 ",
 		"title":"Add",
 		"description" : "Required fileds must be filed in all language!",
+		"general_data":[
+			{
+				"name":"textFieldComponent",
+				"label":"Link",
+				"placeholder" : "",
+				"columnName":"link"
+			},
+			{
+				"name":"files/singleImageComponent",
+				"label":"image",
+				"columnName":"image",
+				"type" : "file",
+				"required": true
+			}
+		],
 		"translatable_data" : [
 			{
 				"name":"textFieldComponent",
-				"label":"Reviewer",
+				"label":"title",
 				"placeholder" : "",
-				"columnName":"name",
-				"required": true
+				"columnName":"title_01"
 			},
 			{
 				"name":"textFieldComponent",
-				"label":"Opera Name",
+				"label":"sub title",
 				"placeholder" : "",
 				"helpText" : "",
-				"columnName":"title",
-				"required": true
-			},
-			{
-				"name":"editorTextareaComponent",
-				"label":"Comment",
-				"helpText" : "",
-				"placeholder" : "",
-				"columnName":"text"
+				"columnName":"title_02"
 			}
 		]
 	},
@@ -44,8 +50,8 @@
 			},
 			"imageFolder":"",
 			"cols":[
-				{"name" : "name", "value" : "name"},
-				{"name" : "title", "value" : "title"},
+				{"name" : "title", "value" : "title_01"},
+				{"name" : "date", "value" : "date"},
 				{"name" : "active", "value" : "active", "component" : "layouts/activeComponent"},
 				{"name" : "action", "value" : "actionBtns", "component" : "layouts/actionBtnsComponent"}
 			]

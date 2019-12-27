@@ -20,6 +20,15 @@
 <ul class="breadcrumb breadcrumb-top">
   <li>{{ $data->model->title }}</li>
 </ul>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 {!! Form::open(['method' => $data->method, 'route' => $data->action ]) !!}
 @if(!empty($data->gnComponents))
 <div class="row">
