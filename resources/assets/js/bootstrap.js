@@ -12,6 +12,8 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
+    require('@fancyapps/fancybox')($);
+
 } catch (e) {}
 
 /**
@@ -37,6 +39,10 @@ if (token) {
 } else {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
+import 'slick-carousel'
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
+// import "@fancyapps/fancybox"
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

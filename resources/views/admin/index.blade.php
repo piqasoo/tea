@@ -40,6 +40,12 @@
                                     <span class="sidebar-header-title">MENU</span>
                                 </li>
                                 <?php foreach (Config::get('adminMenu') as $key => $value): ?>
+                                <?php if($value['class'] == 'sidebar-header'): ?>
+                                    <li class="sidebar-header">
+                                        <span class="sidebar-header-options clearfix"><a href="javascript:void(0)" data-toggle="tooltip"><i class="<?= $value['icon'] ? $value['icon'] : 'fa fa-folder-open' ?>"></i></a></span>
+                                        <span class="sidebar-header-title"><?=$value['title']?></span>
+                                    </li>
+                                <?php else: ?>
                                 <?php // if (in_array(Auth::user()->role, $value['roles'])): ?>
                                 <li <?= Request::segment(2) == $value['namespace'] ? 'class="active"' : ''; ?>>
                                     <a href="/admin/<?=$value['link']?>">
@@ -48,6 +54,7 @@
                                     </a>
                                 </li>
                                 <?php // endif ?>
+                                <?php endif ?>
                                 <?php endforeach ?>
                             </ul>
                         </div>

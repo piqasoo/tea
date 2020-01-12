@@ -29,7 +29,7 @@
         </ul>
     </div>
 @endif
-{!! Form::open(['method' => $data->method, 'route' => $data->action ]) !!}
+{!! Form::open(['method' => $data->method, 'route' => $data->action, 'enctype'=>"multipart/form-data" ]) !!}
 @if(!empty($data->gnComponents))
 <div class="row">
   <div class="col-md-12">

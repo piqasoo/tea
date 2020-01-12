@@ -21,4 +21,8 @@ class About extends Eloquent implements TranslatableContract
     public function about_translations(){
     	return $this->hasMany(AboutTranslation::class);
     }
+    public function media()
+    {
+        return $this->morphMany(Media::class, 'mediable');
+    }
 }

@@ -17,4 +17,10 @@ Route::get('/', function () {
 });
 
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'PagesController@homePage')->name('home');
+Route::get('/biography', 'PagesController@biographyPage')->name('biography');
+Route::get('/events', 'PagesController@eventsPage')->name('events');
+
+
+
+

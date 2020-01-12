@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\AdminController;
+use App\Providers\MediaProvider as MediaLibrary;
 use App\About;
 use DB;
 use Auth;
@@ -97,8 +98,11 @@ class AboutController extends AdminController
         $data = About::find($id);
         if(Auth::User() && $data){
             $request->validate([
-                'title' => 'required|max:255',
-                'text' => 'nullable',
+                'title' => 'required|array',
+                'title.*' => 'required|string|max:255',
+                'text' => 'nullable|array',
+                'text.*' => 'nullable|string',
+                'image' => 'nullable|image|dimensions:max_width=1200|mimes:jpeg,bmp,png'
             ]);
 
             foreach (\Config::get('app.locales') as $key => $locale) {
@@ -116,6 +120,13 @@ class AboutController extends AdminController
                 }
             }
             $data->save();
+
+            if(isset($request['image'])){
+
+                MediaLibrary::putImage($data, $request['image'],  'about', 'image');
+            }
+            // MediaLibrary
+            
         }
         return back();
     }

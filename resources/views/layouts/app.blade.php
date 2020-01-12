@@ -16,64 +16,111 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:800,800i&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:300,400&display=swap" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+        <header>
+            <div class="logo">
+                <a href="">TEA PURTSELADZE</a>
+                <span>Soprano</span>
+            </div>
+            <nav class="">
+                <ul>
+                    <li><a href="">{{ trans('texts.home') }}</a></li>
+                    <li><a href="">{{ trans('texts.biography') }}</a></li>
+                    <li><a href="">{{ trans('texts.portfolio') }}</a></li>
+                    <li><a href="">{{ trans('texts.review') }}</a></li>
+                    <li><a href="">{{ trans('texts.events') }}</a></li>
+                    <li><a href="">{{ trans('texts.multimedia') }}</a></li>
+                    <li><a href="">{{ trans('texts.contact') }}</a></li>
+                </ul>
+            </nav>
+            <div class="social-container">
+                <div>
+                    <a href="" class="social"><i class="fa fa-facebook"></i></a>
+                </div>
+                <div>
+                    <a href="" class="social"><i class="fa fa-twitter"></i></a>
+                </div>
+                <div>
+                    <a href="" class="social"><i class="fa fa-youtube"></i></a>
+                </div>
+                <div class="lang">
+                    <a href="">ge</a>
+                    <a href="">en</a>
+                    <a href="">itl</a>
+                </div>
+            </div>
+            
+        </header>
+        
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
+        <main>
+            @yield('content')
+        </main>
+        <footer class="footer">
+            <div class="center-container">   
+                <div>
+                    <h3>Contact information</h3>
+                    <ul>
+                        <li>Via S. Giorgio, 4 - 40121 Bologna BO - Italy</li>
+                        <li>Phone: +39 (051) 262126</li>
+                        <li>Email: info@stagedoor.it</li>
+                        <li class="social">
+                            <a href="" class="social"><i class="fa fa-facebook"></i></a>
+                            <a href="" class="social"><i class="fa fa-twitter"></i></a>
+                            <a href="" class="social"><i class="fa fa-youtube"></i></a>
+                        </li>
                     </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
+                </div>
+                <div>
+                    <h3>Future events</h3>
+                    <ul>
+                        <li>
+                            <span class="event-day">12</span> <span class="event-month">february</span>
+                            <h5>event name</h5>
+                        </li>
+                        <li>
+                            <span class="event-day">12</span> <span class="event-month">february</span>
+                            <h5>event name</h5>
+                        </li>
+                        <li>
+                            <span class="event-day">12</span> <span class="event-month">february</span>
+                            <h5>event name</h5>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>latest news</h3>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <h5>Nabucco alle Terme di Caracalla, 25 Luglio 2017 ore 21:00</h5>
+                                <span>27 december 2020</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <h5>Nabucco alle Terme di Caracalla, 25 Luglio 2017 ore 21:00</h5>
+                                <span>27 december 2020</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <h5>Nabucco alle Terme di Caracalla, 25 Luglio 2017 ore 21:00</h5>
+                                <span>27 december 2020</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
-        </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
+        </footer>
     </div>
 </body>
 </html>

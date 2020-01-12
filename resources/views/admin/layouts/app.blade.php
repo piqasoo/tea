@@ -2,6 +2,7 @@
 <html class="no-js" lang="en">
 <head>
 	<meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 	<title>dashboard</title>
 
 	<meta name="description" content="ProUI is a Responsive Bootstrap Admin Template created by pixelcave and published on Themeforest.">
@@ -18,6 +19,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('admin_resources/css/themes.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('admin_resources/css/main.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('admin_resources/css/plugins.css') }}">
+
 	@yield('css')
 	@yield('floara-styles')
     

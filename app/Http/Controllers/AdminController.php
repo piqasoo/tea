@@ -19,6 +19,9 @@ class AdminController extends BaseController
         * @return file
         */
     	$template = 'admin/components/layouts/tableComponent';
+      $tableName = '';
+      $translatableTableName = '';
+      $translatableKey = '';
       $gnComponents = array();
       $trComponents = array();
       $seoComponents = array();
@@ -26,6 +29,7 @@ class AdminController extends BaseController
       $multiLang = false;
       $routeName = '';
       $formDescription = '';
+      $visibilityRoute = '/admin/'. $module . '/set/visibility';
 
         $configFile = public_path('../'). 'resources/views/admin/modules/' . $module . '/' . 'conf.json';
 
@@ -35,6 +39,15 @@ class AdminController extends BaseController
        	}
         if(isset($conf_data['parent_plugin'])){
           $parentComponent = $conf_data['parent_plugin'];
+          if(isset($conf_data['tableName'])){
+              $tableName = $conf_data['tableName'];
+          }
+          if(isset($conf_data['translatableTableName'])){
+            $translatableTableName = $conf_data['translatableTableName'];
+          }
+          if(isset($conf_data['translatableKey'])){
+            $translatableKey = $conf_data['translatableKey'];
+          }
         }
         if(isset($conf_data['child_plugin'])){
           if(isset($conf_data['child_plugin']['general_data'])){
@@ -70,14 +83,18 @@ class AdminController extends BaseController
        	}
 
        	$data = array(
-       		'template'      => $template,
-          'parentComponent' => $parentComponent,
+       		'template'         => $template,
+          'parentComponent'  => $parentComponent,
           'gnComponents'  => $gnComponents,
           'trComponents'  => $trComponents,
           'seoComponents' => $seoComponents,
           'multiLang'     => $multiLang,
           'route'         => $routeName,
           'formDescription' => $formDescription,
+          'visibilityRoute' => $visibilityRoute,
+          'tableName'       => $tableName,
+          'translatableTableName' => $translatableTableName,
+          'translatableKey'       => $translatableKey,
        	);
        	return (object) $data;
     }
