@@ -90,7 +90,7 @@ class MediaProvider extends ServiceProvider
         
     }
 
-    public static function putImage($model, $image, $path, $type)
+    public static function putLibraryImage($model, $image, $path, $type)
     {
         $img = Image::make($image->getRealPath());
 
@@ -123,6 +123,45 @@ class MediaProvider extends ServiceProvider
         ]);
 
     }
+    public static function putImage($model, $column, $image, $path)
+    {
+        $img = Image::make($image->getRealPath());
+
+        // $img->resize(800, null, function ($constraint) {
+        //             $constraint->aspectRatio();
+        //         });
+        $image_name = time().'.'.$image->getClientOriginalExtension();
+
+        /*
+        ** check if directory exists
+        ** if not, create it
+        */
+        $directory = public_path('/uploads/'. $path);
+        if (!file_exists($directory)) 
+        {
+            File::makeDirectory($directory, $mode = 0777, true, true);            
+        }
+        if($directory)
+        {
+            /*
+            ** Save image
+            */
+            $img->save(public_path('/uploads/'. $path . '/' .$image_name));
+        }
+        if($model->$column != null){
+            $existedImg = public_path('/uploads/'. $path . '/' .$model->$column);
+            File::delete($existedImg);
+        }
+        $model->$column = $image_name;
+        $model->save();
+
+        // $model->media()->create([
+        //     'id'            => (string) Uuid::generate(4),
+        //     'media_key'     => '',
+        //     'media_value'   => $image_name,
+        // ]);
+
+    }
 
     public static function deleteImages($model, $path){
 
@@ -139,7 +178,18 @@ class MediaProvider extends ServiceProvider
         }
 
     }
-    public static function deleteImage($id, $path){
+    public static function deleteImage($model, $column, $path){
+        $image = null;
+        if($model->{$column}){
+            $image = '/uploads/' . $path . '/'. $model->{$column};
+        }
+        if($image)
+        {
+            File::delete(public_path($image));
+        }
+
+    }
+    public static function deleteLibraryImage($id, $path){
 
         $image = Images::find($id);
 

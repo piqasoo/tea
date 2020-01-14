@@ -16,4 +16,8 @@ class Events extends Eloquent implements TranslatableContract
     public function event_translations(){
     	return $this->hasMany(EventsTranslation::class);
     }
+    public function media()
+    {
+        return $this->morphMany(Media::class, 'mediable');
+    }
 }

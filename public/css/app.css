@@ -16449,11 +16449,15 @@ main {
 .slider h2 {
   color: #fff;
   padding-top: 30vh;
-  font-size: 3rem;
+  /*font-size: 3rem;*/
+  font-size: 5rem;
+  font-weight: 900;
+  opacity: 0.8;
 }
 
 .slider h3 {
   color: #E82E57;
+  font-family: "Oswald", sans-serif;
 }
 
 .slider h2,

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\AdminController;
+use App\Providers\MediaProvider as MediaLibrary;
 use App\Slider;
 use DB;
 use Auth;
@@ -36,7 +37,7 @@ class SliderController extends AdminController
             $data->action = $data->route;
             $data->method = 'POST';
             $data->editRoute = 'admin.'.$data->model->namespace.'.edit';
-            $data->deleteRoute = 'Admin\ReviewController@destroy';
+            $data->deleteRoute = 'Admin\SliderController@destroy';
             // ['Admin\PressController@destroy', $row['id']]
             return view('admin.index', compact('data'));
         }
@@ -73,6 +74,7 @@ class SliderController extends AdminController
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $model = self::$data;
         $data = new Slider;
         if(Auth::User()){
@@ -92,15 +94,17 @@ class SliderController extends AdminController
                     $data->translateOrNew($locale)->title_02 = $request['title_02'][$locale];
                 }
             }
-
             if(isset($request['link'])){
                 $data->link = $request['link'];
             }
             if(isset($request['active'])){
                 $data->active = $request['active'];
             }
-
             $data->save();
+
+            if(isset($request['image'])){
+                MediaLibrary::putImage($data, 'image', $request['image'],  'slider');
+            }
 
             return redirect('admin/'.$model->model->namespace);
         }
@@ -128,7 +132,17 @@ class SliderController extends AdminController
      */
     public function edit($id)
     {
-        //
+        $data = self::$data;
+        if(Auth::User() && !empty($data->model)){
+            $data->route = 'admin.'.$data->model->namespace.'.create';
+            $data->data = Slider::find($id) ;
+            $data->action = ['admin.'.$data->model->namespace.'.update', 'slider' => $id];
+            $data->method = 'PUT';
+            return view('admin.index', compact('data'));
+        }
+        else {
+            return redirect('/');
+        }
     }
 
     /**
@@ -140,7 +154,42 @@ class SliderController extends AdminController
      */
     public function update(Request $request, $id)
     {
-        //
+        $model = self::$data;
+        $data = Slider::find($id);
+        if(Auth::User()){
+            $request->validate([
+                'image' => 'required|image',
+                'link'  => 'nullable|string',
+                'title_01' => 'nullable|array',
+                'title_01.*' => 'nullable|max:255',
+                'title_02' => 'nullable|array',
+                'title_02.*' => 'nullable|max:255',
+            ]);
+            foreach (\Config::get('app.locales') as $key => $locale) {
+                if(isset($request['title_01'])){
+                    $data->translateOrNew($locale)->title_01 = $request['title_01'][$locale];
+                }
+                if(isset($request['title_02'])){
+                    $data->translateOrNew($locale)->title_02 = $request['title_02'][$locale];
+                }
+            }
+            if(isset($request['link'])){
+                $data->link = $request['link'];
+            }
+            if(isset($request['active'])){
+                $data->active = $request['active'];
+            }
+            $data->save();
+
+            if(isset($request['image'])){
+                MediaLibrary::putImage($data, 'image', $request['image'],  'slider');
+            }
+
+            return redirect('admin/'.$model->model->namespace);
+        }
+        else {
+            return redirect('/');
+        } 
     }
 
     /**
@@ -151,6 +200,14 @@ class SliderController extends AdminController
      */
     public function destroy($id)
     {
-        //
+        $data = Slider::find($id);
+        if(Auth::User() && $data){
+            MediaLibrary::deleteImage($data, 'image',  'slider');
+            $data->delete();
+            return back();
+        }
+        else {
+            return redirect('/');
+        }
     }
 }

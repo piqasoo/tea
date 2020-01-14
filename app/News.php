@@ -16,4 +16,8 @@ class News extends Eloquent implements TranslatableContract
     public function news_translations(){
     	return $this->hasMany(NewsTranslation::class);
     }
+    public function media()
+    {
+        return $this->morphMany(Media::class, 'mediable');
+    }
 }

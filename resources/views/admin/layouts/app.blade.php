@@ -33,6 +33,7 @@
     <script src="{{ asset('admin_resources/js/vendor/bootstrap.min.js') }}"></script>
     <script src="{{ asset('admin_resources/js/plugins.js') }}"></script>
     <script src="{{ asset('admin_resources/js/app.js') }}"></script>
+    <script src="{{ asset('admin_resources/js/media.js') }}"></script>
     <script type="text/javascript">
     	$.ajaxSetup({
            headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }

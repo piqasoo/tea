@@ -12,16 +12,11 @@
 		"description" : "Required fileds must be filed in all language!",
 		"general_data":[
 			{
-				"name":"textFieldComponent",
-				"label":"Link",
-				"placeholder" : "",
-				"columnName":"link"
-			},
-			{
 				"name":"files/singleImageComponent",
 				"label":"image",
 				"columnName":"image",
 				"type" : "file",
+				"folder" : "slider",
 				"required": true
 			}
 		],
@@ -51,7 +46,7 @@
 			"imageFolder":"",
 			"cols":[
 				{"name" : "title", "value" : "title_01"},
-				{"name" : "date", "value" : "date"},
+				{"name" : "date", "value" : "created_at"},
 				{"name" : "active", "value" : "active", "component" : "layouts/activeComponent"},
 				{"name" : "action", "value" : "actionBtns", "component" : "layouts/actionBtnsComponent"}
 			]

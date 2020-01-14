@@ -16,4 +16,8 @@ class Slider extends Eloquent implements TranslatableContract
     public function slider_translations(){
     	return $this->hasMany(SliderTranslation::class);
     }
+    public function media()
+    {
+        return $this->morphMany(Media::class, 'mediable');
+    }
 }
