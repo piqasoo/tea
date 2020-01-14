@@ -53,9 +53,19 @@ class PagesController extends Controller
     }
 
     public function biographyPage(){
-    	return view('biography');
+        $data = [];
+        $general = self::$generalData;
+        $data['general'] = $general;
+
+        $data = (object) $data;
+    	return view('biography', compact('data'));
     }
     public function eventsPage(){
-    	return view('events');
+        $data = [];
+        $general = self::$generalData;
+        $data['general'] = $general;
+
+        $data = (object) $data;
+    	return view('events', compact('data'));
     }
 }
