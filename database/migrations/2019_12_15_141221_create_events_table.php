@@ -28,6 +28,7 @@ class CreateEventsTable extends Migration
             $table->integer('events_id')->unsigned();
             $table->string('place');
             $table->string('name');
+            $table->string('slug');
             $table->string('role')->nullable();
             $table->text('text')->nullable();
             $table->string('locale')->index();

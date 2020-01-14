@@ -8,5 +8,5 @@ class ReviewTranslation extends Model
 {
     public $timestamps = false;
 
-    protected $fillable = ['name','title', 'text']; 
+    protected $fillable = ['name','title', 'text', 'ord', 'slug']; 
 }

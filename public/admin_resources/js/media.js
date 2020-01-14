@@ -45,3 +45,35 @@ class handleSingleImg {
 		}
 	}
 }
+
+class validateYouTubeUrl {
+	constructor(column, value) {
+		this.column = column;
+		this.value = value;
+	}
+
+	change(value) {
+		var url = "https://www.youtube.com/watch?v="+this.value+"";
+		if(value != ''){
+			url = "https://www.youtube.com/watch?v="+value+"";
+		}
+        if (url != undefined || url != '') {        
+            var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
+            var match = url.match(regExp);
+            if (match && match[2].length == 11) {
+                // Do anything for being valid
+                // if need to change the url to embed url then use below line
+                // console.log(url);  
+                // console.log($('#'+this.column+'-videoObject'));  
+                $('#'+this.column+'-youtube').css("display", "table");
+                var src = 'https://www.youtube.com/embed/' + match[2] + '?autoplay=1&enablejsapi=1';
+                // console.log(src);
+                $('#'+this.column+'-videoObject').attr('src', src);
+            } else {
+            	// console.log('not valid');  
+                $('#'+this.column+'-youtube').css("display", "none");
+                $('#'+this.column+'-youtube-parent-container').append('<span class="help-block">Not valid video code!</span>'); 
+            }
+        }
+	}
+}

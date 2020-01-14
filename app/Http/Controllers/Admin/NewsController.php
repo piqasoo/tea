@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\AdminController;
+use App\Providers\MediaProvider as MediaLibrary;
 use App\News;
 use DB;
 use Auth;
@@ -78,6 +79,7 @@ class NewsController extends AdminController
         $data = new News;
         if(Auth::User()){
             $request->validate([
+                'image' => 'required|image',
                 'title_01' => 'required|array',
                 'title_01.*' => 'required|max:255',
                 'text' => 'nullable',
@@ -85,6 +87,7 @@ class NewsController extends AdminController
             foreach (\Config::get('app.locales') as $key => $locale) {
                 if(isset($request['title_01'])){
                     $data->translateOrNew($locale)->title_01 = $request['title_01'][$locale];
+                    $data->translateOrNew($locale)->slug = str_slug($request['title_01'][$locale]);
                 }
                 if(isset($request['title_02'])){
                     $data->translateOrNew($locale)->title_02 = $request['title_02'][$locale];
@@ -102,6 +105,10 @@ class NewsController extends AdminController
             }
 
             $data->save();
+
+            if(isset($request['image'])){
+                MediaLibrary::putImage($data, 'image', $request['image'],  'news');
+            }
 
             return redirect('admin/'.$model->model->namespace);
         }
@@ -167,6 +174,7 @@ class NewsController extends AdminController
             foreach (\Config::get('app.locales') as $key => $locale) {
                 if(isset($request['title_01'])){
                     $data->translateOrNew($locale)->title_01 = $request['title_01'][$locale];
+                    $data->translateOrNew($locale)->slug = str_slug($request['title_01'][$locale]);
                 }
                 if(isset($request['title_02'])){
                     $data->translateOrNew($locale)->title_02 = $request['title_02'][$locale];
@@ -185,6 +193,10 @@ class NewsController extends AdminController
 
             $data->save();
 
+            if(isset($request['image'])){
+                MediaLibrary::putImage($data, 'image', $request['image'],  'news');
+            }
+
             return redirect('admin/'.$model->model->namespace);
         }
         else {
@@ -202,6 +214,7 @@ class NewsController extends AdminController
     {
         $data = News::find($id);
         if(Auth::User() && $data){
+            MediaLibrary::deleteImage($data, 'image',  'news');
             $data->delete();
             return back();
         }

@@ -12,8 +12,9 @@
 		"general_data":[
 			{
 				"name":"files/singleImageComponent",
-				"label":"image",
+				"label":"Banner",
 				"columnName":"image",
+				"folder": "about",
 				"type" : "file"
 			}
 		],

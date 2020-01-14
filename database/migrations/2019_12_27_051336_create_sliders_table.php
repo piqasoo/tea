@@ -15,8 +15,9 @@ class CreateSlidersTable extends Migration
     {
         Schema::create('sliders', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('image');
+            $table->text('image')->nullable();
             $table->text('link')->nullable();
+            $table->integer('ord')->default(0);
             $table->boolean('active')->default(1);
             $table->timestamps();
             $table->softDeletes(); 
@@ -40,5 +41,6 @@ class CreateSlidersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('sliders');
+        Schema::dropIfExists('slider_translations');
     }
 }

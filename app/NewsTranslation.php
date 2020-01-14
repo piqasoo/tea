@@ -8,5 +8,5 @@ class NewsTranslation extends Model
 {
     public $timestamps = false;
 
-    protected $fillable = ['title_01','title_02', 'text', 'date', 'image', 'images']; 
+    protected $fillable = ['title_01','title_02', 'text', 'date', 'image', 'images', 'slug']; 
 }

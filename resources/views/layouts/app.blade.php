@@ -67,58 +67,69 @@
         <footer class="footer">
             <div class="center-container">   
                 <div>
-                    <h3>Contact information</h3>
+                    <h3>{{ trans('texts.contact_information') }}</h3>
                     <ul>
-                        <li>Via S. Giorgio, 4 - 40121 Bologna BO - Italy</li>
-                        <li>Phone: +39 (051) 262126</li>
-                        <li>Email: info@stagedoor.it</li>
+                        @if($data->general->contact->mail_01)
+                        <li>{{ trans('texts.email') }}: {{ $data->general->contact->mail_01 }}</li>
+                        @endif
+                        @if($data->general->contact->manager)
+                        <li>{{ trans('texts.manager') }}: {{ $data->general->contact->manager }}</li>
+                        @endif
+                        @if($data->general->contact->manager && $data->general->contact->mail_02)
+                        <li>{{ trans('texts.manager_email') }}: {{ $data->general->contact->mail_02 }}</li>
+                        @endif
                         <li class="social">
-                            <a href="" class="social"><i class="fa fa-facebook"></i></a>
-                            <a href="" class="social"><i class="fa fa-twitter"></i></a>
-                            <a href="" class="social"><i class="fa fa-youtube"></i></a>
+                            @if($data->general->contact->facebook)
+                            <a href="{{$data->general->contact->facebook}}" class="social"><i class="fa fa-facebook"></i></a>
+                            @endif
+                            @if($data->general->contact->twitter)
+                            <a href="{{$data->general->contact->twitter}}" class="social"><i class="fa fa-twitter"></i></a>
+                            @endif
+                            @if($data->general->contact->youtube)
+                            <a href="{{$data->general->contact->youtube}}" class="social"><i class="fa fa-youtube"></i></a>
+                            @endif
                         </li>
                     </ul>
                 </div>
+                @if(isset($data->general) && isset($data->general->events) && !empty($data->general->events))
                 <div>
-                    <h3>Future events</h3>
+                    <h3>{{ trans('texts.future_events') }}</h3>
                     <ul>
+                        @foreach($data->general->events as $footEvent)
+                        <?php 
+                            $day = \Carbon\carbon::parse($footEvent->date)->format('d');
+                            $month = \Carbon\carbon::parse($footEvent->date)->format('F');
+                        ?>
                         <li>
-                            <span class="event-day">12</span> <span class="event-month">february</span>
-                            <h5>event name</h5>
+                            <a href="{{ url('events/'.$footEvent->slug.'/'.$footEvent->id) }}">
+                                <span class="event-day">{{ $day }}</span> <span class="event-month">{{ trans('texts.'.$month) }}</span>
+                                <h5>{{ $footEvent->name }}</h5>
+                            </a>
                         </li>
-                        <li>
-                            <span class="event-day">12</span> <span class="event-month">february</span>
-                            <h5>event name</h5>
-                        </li>
-                        <li>
-                            <span class="event-day">12</span> <span class="event-month">february</span>
-                            <h5>event name</h5>
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
+                @endif
+                @if(isset($data->general) && isset($data->general->news) && !empty($data->general->news))
                 <div>
-                    <h3>latest news</h3>
+                    <h3>{{ trans('texts.latest_news') }}</h3>
                     <ul>
+                        @foreach($data->general->news as $footNews)
+                        <?php 
+                            $day = \Carbon\carbon::parse($footNews->date)->format('d');
+                            $month = \Carbon\carbon::parse($footNews->date)->format('F');
+                            $year = \Carbon\carbon::parse($footNews->date)->format('Y');
+                        ?>
                         <li>
-                            <a href="">
-                                <h5>Nabucco alle Terme di Caracalla, 25 Luglio 2017 ore 21:00</h5>
-                                <span>27 december 2020</span>
+                            <a href="{{ url('news/'.$footNews->slug.'/'.$footNews->id) }}">
+                                <h5>{{ $footNews->title_01 }}</h5>
+                                <span>{{$day}} {{ trans('texts.'.$month) }} {{$year}}</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="">
-                                <h5>Nabucco alle Terme di Caracalla, 25 Luglio 2017 ore 21:00</h5>
-                                <span>27 december 2020</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <h5>Nabucco alle Terme di Caracalla, 25 Luglio 2017 ore 21:00</h5>
-                                <span>27 december 2020</span>
-                            </a>
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
+                @endif
             </div>
         </footer>
     </div>

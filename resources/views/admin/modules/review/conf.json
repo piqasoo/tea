@@ -10,6 +10,15 @@
 		"component_width" : "col-lg-12 col-xl-6 ",
 		"title":"Add",
 		"description" : "Required fileds must be filed in all language!",
+		"general_data":[
+			{
+				"name":"textFieldComponent",
+				"label":"Order",
+				"placeholder" : "",
+				"helpText" : "Write only numbers, 0 means first slide, 1 - second, 2 - third and so..",
+				"columnName":"ord"
+			}
+		],
 		"translatable_data" : [
 			{
 				"name":"textFieldComponent",

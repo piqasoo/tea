@@ -32,7 +32,7 @@
         </div>
         @endif
 </div>
-@section('scripts')
+@push('scripts')
 <script>
     let {!! $columnName !!}singleImg = new handleSingleImg('{!! $columnName !!}',{!! $columnName !!});
   $('{!! "#".$columnName !!}').change(function() 
@@ -40,4 +40,4 @@
     {{ $columnName }}singleImg.change();
   });
 </script>
-@endsection
+@endpush

@@ -20,6 +20,7 @@
 				"name":"files/singleImageComponent",
 				"label":"image",
 				"columnName":"image",
+				"folder": "news",
 				"type" : "file"
 			},
 			{
@@ -35,14 +36,6 @@
 				"label":"title",
 				"placeholder" : "",
 				"columnName":"title_01",
-				"required": true
-			},
-			{
-				"name":"textFieldComponent",
-				"label":"sub title",
-				"placeholder" : "",
-				"helpText" : "",
-				"columnName":"title_02",
 				"required": true
 			},
 			{

@@ -20,7 +20,7 @@
 <ul class="breadcrumb breadcrumb-top">
   <li>{{ $data->model->title }}</li>
 </ul>
-@if ($errors->any())
+<!-- @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
             @foreach ($errors->all() as $error)
@@ -28,7 +28,7 @@
             @endforeach
         </ul>
     </div>
-@endif
+@endif -->
 {!! Form::open(['method' => $data->method, 'route' => $data->action, 'enctype'=>"multipart/form-data" ]) !!}
 @if(!empty($data->gnComponents))
 <div class="row">
@@ -117,7 +117,7 @@
 {!! Form::close() !!}
 
 
-@section('scripts')
+@section('floara_scripts')
 <script src="/admin_resources/froala/js/froala_editor.min.js"></script>
 <script src="/admin_resources/froala/js/plugins/media_manager.min.js"></script>
 <script src="/admin_resources/froala/froala.init.js"></script>

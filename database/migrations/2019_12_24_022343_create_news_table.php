@@ -27,6 +27,7 @@ class CreateNewsTable extends Migration
             $table->string('title_01');
             $table->string('title_02')->nullable();
             $table->text('text')->nullable();
+            $table->string('slug');
             $table->string('locale')->index();
             $table->unique(['news_id', 'locale']);
             $table->foreign('news_id')->references('id')->on('news')->onDelete('cascade');

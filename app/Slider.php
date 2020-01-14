@@ -11,7 +11,7 @@ class Slider extends Eloquent implements TranslatableContract
     use Translatable;
 
     public $translatedAttributes = ['title_01', 'title_02'];
-    protected $fillable = ['image', 'link'];
+    protected $fillable = ['image', 'link', 'ord'];
 
     public function slider_translations(){
     	return $this->hasMany(SliderTranslation::class);

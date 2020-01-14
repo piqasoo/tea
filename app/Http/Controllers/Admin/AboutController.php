@@ -123,7 +123,7 @@ class AboutController extends AdminController
 
             if(isset($request['image'])){
 
-                MediaLibrary::putImage($data, $request['image'],  'about', 'image');
+                MediaLibrary::putImage($data, 'image', $request['image'],  'about');
             }
             // MediaLibrary
             

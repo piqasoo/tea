@@ -86,6 +86,7 @@ class EventController extends AdminController
             foreach (\Config::get('app.locales') as $key => $locale) {
                 if(isset($request['name'])){
                     $data->translateOrNew($locale)->name = $request['name'][$locale];
+                    $data->translateOrNew($locale)->slug = str_slug($request['name'][$locale]);
                 }
                 if(isset($request['place'])){
                     $data->translateOrNew($locale)->place = $request['place'][$locale];
@@ -176,6 +177,7 @@ class EventController extends AdminController
             foreach (\Config::get('app.locales') as $key => $locale) {
                 if(isset($request['name'])){
                     $data->translateOrNew($locale)->name = $request['name'][$locale];
+                    $data->translateOrNew($locale)->slug = str_slug($request['name'][$locale]);
                 }
                 if(isset($request['place'])){
                     $data->translateOrNew($locale)->place = $request['place'][$locale];

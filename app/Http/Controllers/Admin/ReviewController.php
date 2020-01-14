@@ -90,6 +90,7 @@ class ReviewController extends AdminController
                 }
                 if(isset($request['name'])){
                     $data->translateOrNew($locale)->name = $request['name'][$locale];
+                    $data->translateOrNew($locale)->slug = str_slug($request['name'][$locale]);
                 }
                 if(isset($request['text'])){
                     $data->translateOrNew($locale)->text = $request['text'][$locale];
@@ -97,6 +98,9 @@ class ReviewController extends AdminController
             }
             if(isset($request['active'])){
                 $data->active = $request['active'];
+            }
+            if(isset($request['ord'])){
+                $data->ord = $request['ord'];
             }
 
             $data->save();
@@ -171,6 +175,7 @@ class ReviewController extends AdminController
                 }
                 if(isset($request['name'])){
                     $data->translateOrNew($locale)->name = $request['name'][$locale];
+                    $data->translateOrNew($locale)->slug = str_slug($request['name'][$locale]);
                 }
                 if(isset($request['text'])){
                     $data->translateOrNew($locale)->text = $request['text'][$locale];
@@ -178,6 +183,9 @@ class ReviewController extends AdminController
             }
             if(isset($request['active'])){
                 $data->active = $request['active'];
+            }
+            if(isset($request['ord'])){
+                $data->ord = $request['ord'];
             }
 
             $data->save();

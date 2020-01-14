@@ -1,23 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+@if($data->data->slides && !empty($data->data->slides))
 <section class="slider">
-    <div style="background-image: url('images/tea.jpg')">
-    	<h2>tea purtceladze</h2>
-    	<h3>soprano</h3>
-    	<!-- <img style="visibility: hidden;" src="images/tea.jpg">	 -->
+	@foreach($data->data->slides as $slide)
+    <div style="background-image: url('/uploads/slider/{{ $slide->image }}')">
+    	<h2>{{ $slide->title_01 }}</h2>
+    	<h3>{{ $slide->title_02 }}</h3>
+    	<img style="visibility: hidden;" src="/uploads/slider/{{ $slide->image }}">	
     </div>
-    <div style="background-image: url('https://medicitv-b.imgix.net/movie/swan-lake-rudolf-nureyev-jose-martinez-agnes-letestu-opera-national-de-paris_d.jpg?auto=format&h=450&q=85&w=800')">
-    	<h2>tea purtceladze</h2>
-    	<h3>basso</h3>
-    	<!-- <img style="visibility: hidden;" src="https://medicitv-b.imgix.net/movie/swan-lake-rudolf-nureyev-jose-martinez-agnes-letestu-opera-national-de-paris_d.jpg?auto=format&h=450&q=85&w=800"> -->
-    </div>
-    <div style="background-image: url('https://dancemagazine.com.au/wp-content/uploads/2016/12/Paris-Opera-Ballet-presents-Nureyevs-Swan-Lake.-Photo-by-Lac-Loboff.jpg')">
-    	<h2>tea purtceladze</h2>
-    	<h3>soprano</h3>
-    	<!-- <img style="visibility: hidden;" src="https://dancemagazine.com.au/wp-content/uploads/2016/12/Paris-Opera-Ballet-presents-Nureyevs-Swan-Lake.-Photo-by-Lac-Loboff.jpg"> -->
-    </div>
+    @endforeach
 </section>
+@endif
 <section class="events block">
 	<h2>Future <span>events</span></h2>
 	<h4>events</h4>

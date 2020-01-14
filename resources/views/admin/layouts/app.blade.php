@@ -40,7 +40,7 @@
         });
     </script>
 
-    @yield('scripts')
+    @stack('scripts')
     @yield('floara_scripts')
 
 </body>

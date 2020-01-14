@@ -1,5 +1,5 @@
 {
-	"tableName":"sliders",
+	"tableName":"video",
 	"translatableTableName": "news_translations",
 	"translatableKey" : "news_id",
 	"editable":true,
@@ -12,19 +12,23 @@
 		"description" : "Required fileds must be filed in all language!",
 		"general_data":[
 			{
+				"name":"dateComponent",
+				"label":"date",
+				"columnName":"date"
+			},
+			{
 				"name":"files/singleImageComponent",
 				"label":"image",
 				"columnName":"image",
+				"folder": "video",
 				"type" : "file",
-				"folder" : "slider",
 				"required": true
 			},
 			{
-				"name":"textFieldComponent",
-				"label":"Order",
-				"placeholder" : "",
-				"helpText" : "Write only numbers, 0 means first slide, 1 - second, 2 - third and so..",
-				"columnName":"ord"
+				"name":"youtubeComponent",
+				"label":"youtube video",
+				"columnName":"video",
+				"required": true
 			}
 		],
 		"translatable_data" : [
@@ -32,14 +36,14 @@
 				"name":"textFieldComponent",
 				"label":"title",
 				"placeholder" : "",
-				"columnName":"title_01"
+				"columnName":"title"
 			},
 			{
-				"name":"textFieldComponent",
-				"label":"sub title",
+				"name":"editorTextareaComponent",
+				"label":"Description",
 				"placeholder" : "",
 				"helpText" : "",
-				"columnName":"title_02"
+				"columnName":"text"
 			}
 		]
 	},
@@ -52,8 +56,8 @@
 			},
 			"imageFolder":"",
 			"cols":[
-				{"name" : "title", "value" : "title_01"},
-				{"name" : "date", "value" : "created_at"},
+				{"name" : "title", "value" : "title"},
+				{"name" : "date", "value" : "date"},
 				{"name" : "active", "value" : "active", "component" : "layouts/activeComponent"},
 				{"name" : "action", "value" : "actionBtns", "component" : "layouts/actionBtnsComponent"}
 			]

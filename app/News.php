@@ -10,7 +10,7 @@ class News extends Eloquent implements TranslatableContract
 {
     use Translatable;
 
-    public $translatedAttributes = ['title_01','title_02', 'text'];
+    public $translatedAttributes = ['title_01','title_02', 'text', 'slug'];
     protected $fillable = ['date', 'image', 'images'];
 
     public function news_translations(){

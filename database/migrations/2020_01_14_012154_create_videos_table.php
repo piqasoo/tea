@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReviewsTable extends Migration
+class CreateVideosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,24 @@ class CreateReviewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('reviews', function (Blueprint $table) {
+        Schema::create('videos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('ord')->default(0);
+            $table->text('image')->nullable();
+            $table->text('video');
+            $table->date('date')->nullable();
             $table->boolean('active')->default(1);
             $table->timestamps();
             $table->softDeletes(); 
         });
-        Schema::create('review_translations', function (Blueprint $table) {
+        Schema::create('video_translations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('review_id')->unsigned();
-            $table->string('name');
+            $table->integer('video_id')->unsigned();
+            $table->string('title')->nullable();
             $table->string('slug');
-            $table->string('title');
             $table->text('text')->nullable();
             $table->string('locale')->index();
-            $table->unique(['review_id', 'locale']);
-            $table->foreign('review_id')->references('id')->on('reviews')->onDelete('cascade');
+            $table->unique(['video_id', 'locale']);
+            $table->foreign('video_id')->references('id')->on('videos')->onDelete('cascade');
         });
     }
 
@@ -40,7 +41,7 @@ class CreateReviewsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reviews');
-        Schema::dropIfExists('review_translations');
+        Schema::dropIfExists('videos');
+        Schema::dropIfExists('video_translations');
     }
 }

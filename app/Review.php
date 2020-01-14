@@ -10,7 +10,7 @@ class Review extends Eloquent implements TranslatableContract
 {
     use Translatable;
 
-    public $translatedAttributes = ['name','title', 'text'];
+    public $translatedAttributes = ['name','title', 'text', 'slug'];
 
     public function review_translations(){
     	return $this->hasMany(ReviewTranslation::class);

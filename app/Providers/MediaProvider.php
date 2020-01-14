@@ -154,13 +154,6 @@ class MediaProvider extends ServiceProvider
         }
         $model->$column = $image_name;
         $model->save();
-
-        // $model->media()->create([
-        //     'id'            => (string) Uuid::generate(4),
-        //     'media_key'     => '',
-        //     'media_value'   => $image_name,
-        // ]);
-
     }
 
     public static function deleteImages($model, $path){

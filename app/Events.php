@@ -10,7 +10,7 @@ class Events extends Eloquent implements TranslatableContract
 {
     use Translatable;
 
-    public $translatedAttributes = ['place','name', 'role', 'text'];
+    public $translatedAttributes = ['place','name', 'role', 'text', 'slug'];
     protected $fillable = ['date', 'time', 'address_link', 'ticket'];
 
     public function event_translations(){

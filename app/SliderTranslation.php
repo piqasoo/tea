@@ -8,5 +8,5 @@ class SliderTranslation extends Model
 {
     public $timestamps = false;
 
-    protected $fillable = ['image', 'link','title_01', 'title_02'];
+    protected $fillable = ['image', 'link', 'ord', 'title_01', 'title_02'];
 }
