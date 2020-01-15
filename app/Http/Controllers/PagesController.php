@@ -60,12 +60,37 @@ class PagesController extends Controller
         $data = (object) $data;
     	return view('biography', compact('data'));
     }
-    public function eventsPage(){
+    public function eventsPage($filter){
         $data = [];
+        $events = [];
+        $banner = null;
+        $topEvent = null;
         $general = self::$generalData;
         $data['general'] = $general;
+        $filters = ['future', 'passed'];
+        $currentDate = Carbon::now()->format('Y-m-d');
 
-        $data = (object) $data;
-    	return view('events', compact('data'));
+        if(in_array($filter, $filters)){
+            if($filter && $filter == 'future'){
+                $topEvent = Events::whereDate('date', '>=', $currentDate)->orderBy('date', 'asc')->first();
+                $events = Events::whereDate('date', '>=', $currentDate)->where('id', '!=', $topEvent->id)->orderBy('date', 'asc')->get();
+            }
+            elseif($filter == 'passed'){
+                $events = Events::whereDate('date', '<=', $currentDate)->orderBy('date', 'asc')->get();
+            }
+            $pageData = array(
+                'banner' => $banner,
+                'topEvent' => $topEvent,
+                'events' => $events,
+                'filter' => $filter,
+            );
+            $data['data'] = (object) $pageData;
+            $data = (object) $data;
+            return view('events', compact('data'));
+        }
+        else {
+            return redirect('/');
+        }
+        
     }
 }

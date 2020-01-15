@@ -34,9 +34,9 @@
                 <ul>
                     <li><a href="{{ route('home') }}">{{ trans('texts.home') }}</a></li>
                     <li><a href="{{ route('biography') }}">{{ trans('texts.biography') }}</a></li>
-                    <li><a href="">{{ trans('texts.portfolio') }}</a></li>
+                    <li><a href="">{{ trans('texts.press') }}</a></li>
                     <li><a href="">{{ trans('texts.review') }}</a></li>
-                    <li><a href="{{ route('events') }}">{{ trans('texts.events') }}</a></li>
+                    <li><a href="{{ route('events', ['filter' => 'future']) }}">{{ trans('texts.events') }}</a></li>
                     <li><a href="">{{ trans('texts.multimedia') }}</a></li>
                     <li><a href="">{{ trans('texts.contact') }}</a></li>
                 </ul>

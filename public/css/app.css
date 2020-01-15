@@ -16601,6 +16601,10 @@ main {
   background-color: transparent;
 }
 
+.events .btn-label {
+  margin-left: -4px;
+}
+
 .center-container {
   max-width: 1140px;
   margin: auto;
@@ -16924,5 +16928,30 @@ main {
 .share a {
   color: #929292;
   padding-right: 10px;
+}
+
+.btn-label {
+  padding: 5px 15px;
+  background: rgba(146, 146, 146, 0.211765);
+  font-family: "Oswald", sans-serif;
+  text-transform: capitalize;
+  letter-spacing: 3px;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.btn-label:hover {
+  background: #131313;
+  color: #fff;
+}
+
+.btn-label.active {
+  background: #E82E57;
+  color: #fff;
+}
+
+.btn-label.active:hover {
+  background: #131313;
+  color: #E82E57;
 }
 

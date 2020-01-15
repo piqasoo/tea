@@ -310,6 +310,9 @@ main {
 			}
 		}
 	}
+	.btn-label {
+		margin-left: -4px;
+	}
 }
 .center-container {
 	max-width: 1140px; 
@@ -581,4 +584,24 @@ main {
 		color: #929292;
 		padding-right: 10px;
 	}	
+}
+.btn-label {
+	padding: 5px 15px;
+    background: rgba(146, 146, 146, 0.21176470588235294);
+    font-family: "Oswald", sans-serif;
+    text-transform: capitalize;
+    letter-spacing: 3px;
+    transition: all 0.5s;
+    &:hover {
+    	background: #131313;
+    	color: $basicColor;
+    }
+    &.active {
+    	background: $primaryColor;
+    	color: $basicColor;
+    	&:hover {
+    		background: #131313;
+    		color: $primaryColor;
+    	}
+    }
 }
