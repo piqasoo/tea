@@ -115,4 +115,26 @@ class PagesController extends Controller
         $data = (object) $data;
         return view('press', compact('data'));
     }
+
+    public function articlePage($slug, $id){
+        $data = [];
+        $general = self::$generalData;
+        $data['general'] = $general;
+        $post = null;
+        $news = [];
+
+        if($slug && $id){
+            $post = News::where('active', true)->find($id);
+            if($post){
+                $news = News::where('active', true)->where('id', '!=', $post->id)->orderBy('date', 'desc')->skip(0)->take(3)->get();
+            }
+        }
+        $pageData = array(
+            'post' => $post,
+            'news' => $news,
+        );
+        $data['data'] = (object) $pageData;
+        $data = (object) $data;
+        return view('press-article', compact('data'));
+    }
 }

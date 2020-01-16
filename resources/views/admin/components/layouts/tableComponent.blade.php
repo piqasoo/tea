@@ -82,43 +82,10 @@
   </div>
 </div>
 
-@section('scripts')
+@push('scripts')
 
-<!-- <script type="text/javascript">
-
-  $("input[name='visibility']").change(function() {
-
-      var id = $(this).attr('data-id');
-      var value = $(this).is(":checked") ? 1 : 0;
-      var token = $('meta[name=csrf-token]').attr('content');
-
-      $.post({
-          url: "/admin/about/set/visibility",
-          cache: false,
-          dataType: 'json',
-          data: {
-            id: id,
-            value: value,
-            _token: token,
-          },
-            beforeSend: function (xhr) {
-                return xhr.setRequestHeader('X-CSRF-TOKEN', token);
-              }
-            })
-            .done(function (msg) {
-                console.log(msg);
-            })
-            .fail(function(xhr, status, error) {
-
-              var err = eval("(" + xhr.responseText + ")");
-              console.log(err.Message);
-
-            });
-  });
-</script> -->
 <script type="text/javascript">
   let activeInput = $("input[name='active']");
-
   if(activeInput.length > 0){
     activeInput.change(function(){
       var id = $(this).attr('data-id');
@@ -154,35 +121,6 @@
     });
       
   }
-  // $("input[name='visibility']").change(function() {
-
-  //     var id = $(this).attr('data-id');
-  //     var value = $(this).is(":checked") ? 1 : 0;
-  //     var token = $('meta[name=csrf-token]').attr('content');
-
-  //     $.post({
-  //         url: "/admin/press/set/visibility",
-  //         cache: false,
-  //         dataType: 'json',
-  //         data: {
-  //           id: id,
-  //           value: value,
-  //           _token: token,
-  //         },
-  //           beforeSend: function (xhr) {
-  //               return xhr.setRequestHeader('X-CSRF-TOKEN', token);
-  //             }
-  //           })
-  //           .done(function (msg) {
-  //               console.log(msg);
-  //           })
-  //           .fail(function(xhr, status, error) {
-
-  //             var err = eval("(" + xhr.responseText + ")");
-  //             console.log(err.Message);
-
-  //           });
-  // });
 </script>
 
-@stop
+@endpush

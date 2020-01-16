@@ -16995,3 +16995,16 @@ main {
   margin-bottom: 0;
 }
 
+.page-content .news-detailed {
+  width: 70%;
+}
+
+.page-content .news-detailed h1,
+.page-content .news-detailed p {
+  width: 100%;
+}
+
+.page-content .news-detailed img {
+  width: 100%;
+}
+

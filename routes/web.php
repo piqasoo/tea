@@ -21,6 +21,7 @@ Route::get('/', 'PagesController@homePage')->name('home');
 Route::get('/biography', 'PagesController@biographyPage')->name('biography');
 Route::get('/events/{filter}', 'PagesController@eventsPage')->name('events');
 Route::get('/press', 'PagesController@pressPage')->name('press');
+Route::get('/press/{title}/{id}', 'PagesController@articlePage')->name('article');
 
 
 

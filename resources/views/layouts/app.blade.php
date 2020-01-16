@@ -154,7 +154,7 @@
                             $year = \Carbon\carbon::parse($footNews->date)->format('Y');
                         ?>
                         <li>
-                            <a href="{{ url('news/'.$footNews->slug.'/'.$footNews->id) }}">
+                            <a href="{{ url('press/'.$footNews->slug.'/'.$footNews->id) }}">
                                 <h5>{{ $footNews->title_01 }}</h5>
                                 <span>{{$day}} {{ trans('texts.'.$month) }} {{$year}}</span>
                             </a>

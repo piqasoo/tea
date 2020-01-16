@@ -641,3 +641,15 @@ main {
 		margin-bottom: 0;
 	}
 }
+.page-content {
+	.news-detailed {
+		width: 70%;
+		h1, p {
+			width: 100%;
+		}
+		img {
+			width: 100%;
+		}
+	}
+}
+
