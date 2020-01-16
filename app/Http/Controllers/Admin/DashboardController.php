@@ -14,6 +14,7 @@ class DashboardController extends AdminController
     static $data;
 
     public function __construct(){
+        $this->middleware('auth');
         self::$parent = new AdminController();
         self::$module = self::$parent->getModule('about');
         if(!empty(self::$module) && self::$module->data->namespace){

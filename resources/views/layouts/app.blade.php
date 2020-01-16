@@ -32,13 +32,13 @@
             </div>
             <nav class="">
                 <ul>
-                    <li><a href="{{ route('home') }}">{{ trans('texts.home') }}</a></li>
-                    <li><a href="{{ route('biography') }}">{{ trans('texts.biography') }}</a></li>
-                    <li><a href="">{{ trans('texts.press') }}</a></li>
-                    <li><a href="">{{ trans('texts.review') }}</a></li>
-                    <li><a href="{{ route('events', ['filter' => 'future']) }}">{{ trans('texts.events') }}</a></li>
-                    <li><a href="">{{ trans('texts.multimedia') }}</a></li>
-                    <li><a href="">{{ trans('texts.contact') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['home']) ? 'active' : '' }}"><a href="{{ route('home') }}">{{ trans('texts.home') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['biography']) ? 'active' : '' }}"><a href="{{ route('biography') }}">{{ trans('texts.biography') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['press', 'article']) ? 'active' : '' }}"><a href="{{ route('press') }}">{{ trans('texts.press') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['review']) ? 'active' : '' }}"><a href="">{{ trans('texts.review') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['events', 'event']) ? 'active' : '' }}"><a href="{{ route('events', ['filter' => 'future']) }}">{{ trans('texts.events') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['multimedia']) ? 'active' : '' }}"><a href="">{{ trans('texts.multimedia') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['contact']) ? 'active' : '' }}"><a href="">{{ trans('texts.contact') }}</a></li>
                 </ul>
             </nav>
             <div class="social-container">
@@ -57,7 +57,40 @@
                     <a href="">itl</a>
                 </div>
             </div>
-            
+        </header>
+        <header class="header-fixed">
+            <div class="logo">
+                <a href="">TEA PURTSELADZE</a>
+                <span>Soprano</span>
+            </div>
+
+            <nav class="">
+                <ul>
+                    <li class="{{ in_array($data->general->activeRoute, ['home']) ? 'active' : '' }}"><a href="{{ route('home') }}">{{ trans('texts.home') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['biography']) ? 'active' : '' }}"><a href="{{ route('biography') }}">{{ trans('texts.biography') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['press', 'article']) ? 'active' : '' }}"><a href="{{ route('press') }}">{{ trans('texts.press') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['review']) ? 'active' : '' }}"><a href="">{{ trans('texts.review') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['events', 'event']) ? 'active' : '' }}"><a href="{{ route('events', ['filter' => 'future']) }}">{{ trans('texts.events') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['multimedia']) ? 'active' : '' }}"><a href="">{{ trans('texts.multimedia') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['contact']) ? 'active' : '' }}"><a href="">{{ trans('texts.contact') }}</a></li>
+                </ul>
+            </nav>
+            <div class="social-container">
+                <div>
+                    <a href="" class="social"><i class="fa fa-facebook"></i></a>
+                </div>
+                <div>
+                    <a href="" class="social"><i class="fa fa-twitter"></i></a>
+                </div>
+                <div>
+                    <a href="" class="social"><i class="fa fa-youtube"></i></a>
+                </div>
+                <div class="lang">
+                    <a href="">ge</a>
+                    <a href="">en</a>
+                    <a href="">itl</a>
+                </div>
+            </div>
         </header>
         
 

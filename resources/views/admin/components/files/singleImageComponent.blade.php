@@ -16,7 +16,7 @@
   }
 ?>
 <div class="form-group {!! $columnName !!}">
-        <label class="col-sm-2 control-label">{{ $label }} @if($required)<span style="color:red">*</span>@endif</label>
+        <label class="col-sm-2 control-label">{{ ucfirst($label) }} @if($required)<span style="color:red">*</span>@endif</label>
         <div class="col-sm-10">
           {!! Form::file($columnName, array('multiple'=>true, 'id'=> $columnName )) !!}
           @if($helpText)<span class="help-block">{{ $helpText }}</span>@endif

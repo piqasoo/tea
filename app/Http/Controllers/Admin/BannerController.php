@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AdminController;
 use App\Providers\MediaProvider as MediaLibrary;
-use App\Slider;
+use App\Banner;
 use DB;
 use Auth;
 
-class SliderController extends AdminController
+class BannerController extends AdminController
 {
     static $parent;
     static $module;
@@ -17,12 +17,13 @@ class SliderController extends AdminController
 
     public function __construct(){
         $this->middleware('auth');
+        $moduleName = 'banners'; //module name
         self::$parent = new AdminController();
-        self::$module = self::$parent->getModule('slider');
-        if(!empty(self::$module) && (self::$module->statusCode == 1) && self::$module->data->namespace){
+        self::$module = self::$parent->getModule($moduleName);
+        if(!empty(self::$module) && self::$module->data->namespace){
             self::$data = self::$parent->initModule(self::$module->data->namespace);
             self::$data->model = self::$module->data;
-        }     
+        }      
     }
     /**
      * Display a listing of the resource.
@@ -34,11 +35,11 @@ class SliderController extends AdminController
         $data = self::$data;
         if(Auth::User() && !empty($data->model)){
             $data->route = 'admin.'.$data->model->namespace.'.create';
-            $data->data = Slider::with('slider_translations')->paginate(15);
+            $data->data = Banner::with('banner_translations')->paginate(15);
             $data->action = $data->route;
             $data->method = 'POST';
             $data->editRoute = 'admin.'.$data->model->namespace.'.edit';
-            $data->deleteRoute = 'Admin\SliderController@destroy';
+            $data->deleteRoute = 'Admin\BannerController@destroy';
             // ['Admin\PressController@destroy', $row['id']]
             return view('admin.index', compact('data'));
         }
@@ -57,7 +58,7 @@ class SliderController extends AdminController
         $data = self::$data;
         if(Auth::User() && !empty($data->model)){
             $data->route = 'admin.'.$data->model->namespace.'.create';
-            $data->data = new Slider;
+            $data->data = new Banner;
             $data->action = ['admin.'.$data->model->namespace.'.store'];
             $data->method = 'POST';
             return view('admin.index', compact('data'));
@@ -75,17 +76,14 @@ class SliderController extends AdminController
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $model = self::$data;
-        $data = new Slider;
+        $data = new Banner;
         if(Auth::User()){
             $request->validate([
                 'image' => 'required|image',
-                'link'  => 'nullable|string',
-                'title_01' => 'nullable|array',
-                'title_01.*' => 'nullable|max:255',
-                'title_02' => 'nullable|array',
-                'title_02.*' => 'nullable|max:255',
+                'title_01' => 'required|array',
+                'title_01.*' => 'required|max:255',
+                'page' => 'required',
             ]);
             foreach (\Config::get('app.locales') as $key => $locale) {
                 if(isset($request['title_01'])){
@@ -95,19 +93,14 @@ class SliderController extends AdminController
                     $data->translateOrNew($locale)->title_02 = $request['title_02'][$locale];
                 }
             }
-            if(isset($request['link'])){
-                $data->link = $request['link'];
+            if(isset($request['page'])){
+                $data->page = $request['page'];
             }
-            if(isset($request['ord'])){
-                $data->ord = $request['ord'];
-            }
-            if(isset($request['active'])){
-                $data->active = $request['active'];
-            }
+            $data->image = '';
             $data->save();
 
             if(isset($request['image'])){
-                MediaLibrary::putImage($data, 'image', $request['image'],  'slider');
+                MediaLibrary::putImage($data, 'image', $request['image'],  'banners');
             }
 
             return redirect('admin/'.$model->model->namespace);
@@ -137,12 +130,18 @@ class SliderController extends AdminController
     public function edit($id)
     {
         $data = self::$data;
+        $param = 'banner';
         if(Auth::User() && !empty($data->model)){
             $data->route = 'admin.'.$data->model->namespace.'.create';
-            $data->data = Slider::find($id) ;
-            $data->action = ['admin.'.$data->model->namespace.'.update', 'slider' => $id];
+            $data->data = Banner::find($id);
+            $data->action = ['admin.'.$data->model->namespace.'.update', $param => $id];
             $data->method = 'PUT';
-            return view('admin.index', compact('data'));
+            if(isset($data->data)){
+                return view('admin.index', compact('data'));
+            }
+            else {
+                return redirect('/');
+            }
         }
         else {
             return redirect('/');
@@ -159,15 +158,13 @@ class SliderController extends AdminController
     public function update(Request $request, $id)
     {
         $model = self::$data;
-        $data = Slider::find($id);
+        $data = Banner::find($id);
         if(Auth::User()){
             $request->validate([
                 'image' => 'required|image',
-                'link'  => 'nullable|string',
-                'title_01' => 'nullable|array',
-                'title_01.*' => 'nullable|max:255',
-                'title_02' => 'nullable|array',
-                'title_02.*' => 'nullable|max:255',
+                'title_01' => 'required|array',
+                'title_01.*' => 'required|max:255',
+                'page' => 'required',
             ]);
             foreach (\Config::get('app.locales') as $key => $locale) {
                 if(isset($request['title_01'])){
@@ -177,26 +174,20 @@ class SliderController extends AdminController
                     $data->translateOrNew($locale)->title_02 = $request['title_02'][$locale];
                 }
             }
-            if(isset($request['ord'])){
-                $data->ord = $request['ord'];
-            }
-            if(isset($request['link'])){
-                $data->link = $request['link'];
-            }
-            if(isset($request['active'])){
-                $data->active = $request['active'];
+            if(isset($request['page'])){
+                $data->page = $request['page'];
             }
             $data->save();
 
             if(isset($request['image'])){
-                MediaLibrary::putImage($data, 'image', $request['image'],  'slider');
+                MediaLibrary::putImage($data, 'image', $request['image'],  'banners');
             }
 
             return redirect('admin/'.$model->model->namespace);
         }
         else {
             return redirect('/');
-        } 
+        }  
     }
 
     /**
@@ -207,9 +198,9 @@ class SliderController extends AdminController
      */
     public function destroy($id)
     {
-        $data = Slider::find($id);
+        // $data = Model::find($id);
         if(Auth::User() && $data){
-            MediaLibrary::deleteImage($data, 'image',  'slider');
+            // MediaLibrary::deleteImage($data, 'field',  'path');
             $data->delete();
             return back();
         }

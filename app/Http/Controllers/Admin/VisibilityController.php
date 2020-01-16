@@ -14,6 +14,7 @@ class VisibilityController extends AdminController
     static $data;
 
     public function __construct(){
+        $this->middleware('auth');
         self::$parent = new AdminController();
     }
 

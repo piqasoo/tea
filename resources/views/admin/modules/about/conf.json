@@ -9,15 +9,6 @@
 		"mode":"add,edit,remove",
 		"component_width" : "col-lg-12 col-xl-6 ",
 		"title":"Add",
-		"general_data":[
-			{
-				"name":"files/singleImageComponent",
-				"label":"Banner",
-				"columnName":"image",
-				"folder": "about",
-				"type" : "file"
-			}
-		],
 		"translatable_data" : [
 			{
 				"name":"textFieldComponent",

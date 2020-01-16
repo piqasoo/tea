@@ -16365,6 +16365,11 @@ h6 {
   font-size: 0.85rem;
 }
 
+#app header nav ul li.active {
+  color: #e82e579e;
+  font-weight: 700;
+}
+
 #app header .social-container a.social {
   width: 20px;
   margin: 0 10px;
@@ -16373,6 +16378,26 @@ h6 {
 
 #app header .lang a {
   padding: 0px 5px;
+}
+
+#app header.header-fixed {
+  position: fixed;
+  z-index: 9800;
+  -webkit-transform: translate(0, -100%);
+          transform: translate(0, -100%);
+  top: 0;
+  left: 0;
+  -webkit-transition: -webkit-transform 0.8s;
+  transition: -webkit-transform 0.8s;
+  transition: transform 0.8s;
+  transition: transform 0.8s, -webkit-transform 0.8s;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+#app header.header-fixed.active {
+  -webkit-transform: translate(0, 0);
+          transform: translate(0, 0);
 }
 
 footer.footer h3,
@@ -16404,6 +16429,7 @@ footer.footer ul li {
   list-style: none;
   color: #7b7b7b;
   line-height: 24px;
+  max-width: 300px;
 }
 
 footer.footer ul li.social {
@@ -16703,6 +16729,8 @@ main {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
 .news-container article {
@@ -16953,5 +16981,17 @@ main {
 .btn-label.active:hover {
   background: #131313;
   color: #E82E57;
+}
+
+.text p {
+  padding-bottom: 10px;
+}
+
+.page-title.block h2 {
+  padding-top: 0px;
+}
+
+.page-title.block h4 {
+  margin-bottom: 0;
 }
 

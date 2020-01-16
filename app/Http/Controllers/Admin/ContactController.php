@@ -15,6 +15,7 @@ class ContactController extends AdminController
     static $data;
 
     public function __construct(){
+        $this->middleware('auth');
         self::$parent = new AdminController();
         self::$module = self::$parent->getModule('contact');
         if(!empty(self::$module) && (self::$module->statusCode == 1) && self::$module->data->namespace){

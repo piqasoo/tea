@@ -1,0 +1,79 @@
+{
+	"tableName":"banners",
+	"translatableTableName": "banner_translations",
+	"translatableKey" : "banner_id",
+	"editable":true,
+	"setActive":true,
+	"multiLang":true,
+	"child_plugin":{
+		"mode":"add,edit,remove",
+		"component_width" : "col-lg-12 col-xl-6 ",
+		"title":"Add",
+		"description" : "Required fileds must be filed in all language!",
+		"general_data":[
+			{
+				"name":"selectboxComponent",
+				"label":"page",
+				"placeholder" : "",
+				"columnName":"page",
+				"optionName": "name",
+				"optionKey" : "value",
+				"colWidth" : "3",
+				"dataLoad" : [
+					{
+						"name" : "Biography",
+						"value" : "biography"
+					},
+					{
+						"name" : "Future Events",
+						"value" : "events-future"
+					},
+					{
+						"name" : "Passed Events",
+						"value" : "events-passed"
+					},
+					{
+						"name" : "Review",
+						"value" : "review"
+					}
+				],
+				"required": true
+			},
+			{
+				"name":"files/singleImageComponent",
+				"label":"image",
+				"columnName":"image",
+				"folder": "banners",
+				"type" : "file",
+				"required": true
+			}
+		],
+		"translatable_data" : [
+			{
+				"name":"textFieldComponent",
+				"label":"title",
+				"placeholder" : "",
+				"columnName":"title_01",
+				"required": true
+			}
+		]
+	},
+	"parent_plugin":{
+			"dataLoaderMethod" : "",
+			"name":"tables/buttonTable",
+			"texts":{
+				"title":"",
+				"msg":""
+			},
+			"imageFolder":"",
+			"cols":[
+				{"name" : "title", "value" : "title_01"},
+				{"name" : "page", "value" : "page"},
+				{"name" : "active", "value" : "active", "component" : "layouts/activeComponent"},
+				{"name" : "action", "value" : "actionBtns", "component" : "layouts/actionBtnsComponent"}
+			]
+    }
+
+}
+
+
