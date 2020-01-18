@@ -20,8 +20,14 @@ Route::get('/', function () {
 Route::get('/', 'PagesController@homePage')->name('home');
 Route::get('/biography', 'PagesController@biographyPage')->name('biography');
 Route::get('/events/{filter}', 'PagesController@eventsPage')->name('events');
+Route::get('/events/{slug}/{id}', 'PagesController@eventPage')->name('event');
 Route::get('/press', 'PagesController@pressPage')->name('press');
-Route::get('/press/{title}/{id}', 'PagesController@articlePage')->name('article');
+Route::get('/press/{slug}/{id}', 'PagesController@articlePage')->name('article');
+Route::get('/reviews', 'PagesController@reviewPage')->name('review');
+Route::get('/gallery-photo', 'PagesController@galleryPhotoPage')->name('galleryPhoto');
+Route::get('/gallery-photo/{slug}/{id}', 'PagesController@galleryDetaildPhotoPage')->name('galleryPhotoDetailed');
+Route::get('/contact', 'PagesController@contactPage')->name('contact');
+
 
 
 

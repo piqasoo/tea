@@ -10,9 +10,6 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
@@ -37,8 +34,8 @@
                     <li class="{{ in_array($data->general->activeRoute, ['press', 'article']) ? 'active' : '' }}"><a href="{{ route('press') }}">{{ trans('texts.press') }}</a></li>
                     <li class="{{ in_array($data->general->activeRoute, ['review']) ? 'active' : '' }}"><a href="">{{ trans('texts.review') }}</a></li>
                     <li class="{{ in_array($data->general->activeRoute, ['events', 'event']) ? 'active' : '' }}"><a href="{{ route('events', ['filter' => 'future']) }}">{{ trans('texts.events') }}</a></li>
-                    <li class="{{ in_array($data->general->activeRoute, ['multimedia']) ? 'active' : '' }}"><a href="">{{ trans('texts.multimedia') }}</a></li>
-                    <li class="{{ in_array($data->general->activeRoute, ['contact']) ? 'active' : '' }}"><a href="">{{ trans('texts.contact') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['galleryPhoto', 'galleryPhotoDetailed']) ? 'active' : '' }}"><a href="{{ route('galleryPhoto') }}">{{ trans('texts.multimedia') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['contact']) ? 'active' : '' }}"><a href="{{ route('contact') }}">{{ trans('texts.contact') }}</a></li>
                 </ul>
             </nav>
             <div class="social-container">
@@ -71,8 +68,8 @@
                     <li class="{{ in_array($data->general->activeRoute, ['press', 'article']) ? 'active' : '' }}"><a href="{{ route('press') }}">{{ trans('texts.press') }}</a></li>
                     <li class="{{ in_array($data->general->activeRoute, ['review']) ? 'active' : '' }}"><a href="">{{ trans('texts.review') }}</a></li>
                     <li class="{{ in_array($data->general->activeRoute, ['events', 'event']) ? 'active' : '' }}"><a href="{{ route('events', ['filter' => 'future']) }}">{{ trans('texts.events') }}</a></li>
-                    <li class="{{ in_array($data->general->activeRoute, ['multimedia']) ? 'active' : '' }}"><a href="">{{ trans('texts.multimedia') }}</a></li>
-                    <li class="{{ in_array($data->general->activeRoute, ['contact']) ? 'active' : '' }}"><a href="">{{ trans('texts.contact') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['galleryPhoto', 'galleryPhotoDetailed']) ? 'active' : '' }}"><a href="{{ route('galleryPhoto') }}">{{ trans('texts.multimedia') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['contact']) ? 'active' : '' }}"><a href="{{ route('contact') }}">{{ trans('texts.contact') }}</a></li>
                 </ul>
             </nav>
             <div class="social-container">
@@ -166,5 +163,7 @@
             </div>
         </footer>
     </div>
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

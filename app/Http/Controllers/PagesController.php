@@ -137,4 +137,90 @@ class PagesController extends Controller
         $data = (object) $data;
         return view('press-article', compact('data'));
     }
+
+    public function eventPage($slug, $id){
+        $data = [];
+        $general = self::$generalData;
+        $data['general'] = $general;
+        $post = null;
+        $events = [];
+
+        if($slug && $id){
+            $event = Events::where('active', true)->find($id);
+            if($event){
+                $events = Events::where('active', true)->where('id', '!=', $event->id)->orderBy('date', 'desc')->skip(0)->take(3)->get();
+            }
+        }
+        $banner = Banner::where('page', 'event')->where('active', true)->first(); 
+        $pageData = array(
+            'event' => $event,
+            'events' => $events,
+            'banner' => $banner,
+        );
+        $data['data'] = (object) $pageData;
+        $data = (object) $data;
+        return view('event', compact('data'));
+    }
+
+    public function reviewPage(){
+        $data = [];
+        $general = self::$generalData;
+        $data['general'] = $general;
+
+        $pageData = array(
+            // 'event' => $event,
+            // 'events' => $events,
+        );
+        $data['data'] = (object) $pageData;
+        $data = (object) $data;
+        return view('reviews', compact('data'));
+    }
+    public function galleryPhotoPage(){
+        $data = [];
+        $general = self::$generalData;
+        $data['general'] = $general;
+        $banner = Banner::where('page', 'multimedia')->where('active', true)->first(); 
+
+        $pageData = array(
+            'banner' => $banner,
+            // 'event' => $event,
+            // 'events' => $events,
+        );
+        $data['data'] = (object) $pageData;
+        $data = (object) $data;
+        return view('gallery-photo', compact('data'));
+    }
+
+    public function galleryDetaildPhotoPage($slug, $id){
+        $data = [];
+        $general = self::$generalData;
+        $data['general'] = $general;
+        $banner = Banner::where('page', 'multimedia')->where('active', true)->first(); 
+
+        $pageData = array(
+            'banner' => $banner,
+            // 'event' => $event,
+            // 'events' => $events,
+        );
+        $data['data'] = (object) $pageData;
+        $data = (object) $data;
+        return view('gallery-photo-detailed', compact('data'));
+    }
+
+    public function contactPage()
+    {
+        $data = [];
+        $general = self::$generalData;
+        $data['general'] = $general;
+        $banner = Banner::where('page', 'contact')->where('active', true)->first(); 
+
+        $pageData = array(
+            'banner' => $banner,
+            // 'event' => $event,
+            // 'events' => $events,
+        );
+        $data['data'] = (object) $pageData;
+        $data = (object) $data;
+        return view('contact', compact('data'));
+    }
 }

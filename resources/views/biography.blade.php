@@ -4,7 +4,7 @@
 
 @include('layouts.includes.pageBanner')
 
-<div class="center-container page-content text">
+<div class="biography center-container page-content text">
 	<h1>{{ $data->data->biography->title }}</h1>
 	<p>{!! $data->data->biography->text !!}</p>
 

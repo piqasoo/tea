@@ -35,6 +35,18 @@
 					{
 						"name" : "Review",
 						"value" : "review"
+					},
+					{
+						"name" : "Contact",
+						"value" : "contact"
+					},
+					{
+						"name" : "Event",
+						"value" : "event"
+					},
+					{
+						"name" : "Multimedia",
+						"value" : "multimedia"
 					}
 				],
 				"required": true
