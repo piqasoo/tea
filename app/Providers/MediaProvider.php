@@ -200,7 +200,6 @@ class MediaProvider extends ServiceProvider
             $media = Media::find($value->id);
             $media->sort = $value->order;
             $media->save();
-            // dd($media);
         }
     }
 

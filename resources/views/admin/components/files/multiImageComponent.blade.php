@@ -24,7 +24,10 @@
         <div class="input-group img-prev col-md-10 imgs-preview" id="{{ $columnName }}-prev" >
         	
         	@foreach($values as $key => $value)
-          	<img class="{{ $columnName.'-src' }} ui-sortable-handle" src="{{ isset($value) ? asset($path.$value->media_value).'?nocache='.rand(0, 10000)  : '' }}" id="{{$columnName}}-{{$key}}" alt="Uploaded Image Preview Holder" data-id="{{ $value->id }}"/>
+        	<div data-id="{{ $value->id }}" id="{{$columnName}}-{{$key}}">
+        		<a class="btn btn-primary" href=""><i class="fa fa-times"></i></a>
+          		<img class="{{ $columnName.'-src' }} ui-sortable-handle" src="{{ isset($value) ? asset($path.$value->media_value).'?nocache='.rand(0, 10000)  : '' }}"  alt="Uploaded Image Preview Holder" />
+        	</div>
           	@endforeach
         </div>
     @endif
@@ -43,12 +46,15 @@
 	  	var array = [];
 	  	var sortedIDs = $( this).sortable( "toArray", {"attribute": "data-id"} );
 	  	for (var i = 0; i < sortedIDs.length; i++) {
-	  		var obj = {
-	  			id : sortedIDs[i],
-	  			order: i,
+	  		if(sortedIDs[i]){
+	  			var obj = {
+		  			id : sortedIDs[i],
+		  			order: i,
+		  		}
+		  		array.push(obj);
 	  		}
-	  		array.push(obj);
 	  	}
+	  	console.log(array);
 	  	var sortedData = JSON.stringify(array);
 	  	$('input[name="sort-{!!$columnName!!}"]').val(sortedData);
 	  }
@@ -59,15 +65,12 @@
   </script>
 <script>
     let {!! $columnName !!}singleImg = new handleMultiImgs('{!! $columnName !!}',{!! $columnName !!}, {!! $maxNumber !!}, {!! $maxFileSize !!});
-  $('{!! "#".$columnName !!}').change(function() 
-  {
-    {{ $columnName }}singleImg.change();
-    $( function() {
-	    $( "#images-prev" ).sortable();
-	    $( "#images-prev" ).disableSelection();
-	  } );
-    // $(function(){ UiDraggable.init(); });
-  });
+  	$('{!! "#".$columnName !!}').change(function() 
+  	{
+    	{{ $columnName }}singleImg.change();
+    	$( function() {
+	    	$( "#{!! $columnName !!}-prev" ).sortable();
+		});
+  	});
 </script>
-<!-- <script>$(function(){ UiDraggable.init(); });</script> -->
 @endpush

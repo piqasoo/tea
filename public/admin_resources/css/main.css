@@ -4364,8 +4364,23 @@ body.AdminLogin input[type="submit"] {
     margin: 15px 0px;
 }
 .imgs-preview img{
-    height: 70px;
+    height: 90px;
     width: auto;
     margin-right: 8px;
-    margin-top: 8px;
+    
+}
+.ui-sortable div {
+    margin-top: 28px;
+    display: inline-block;
+    position: relative;
+}
+.ui-sortable div a {
+    position: absolute;
+    right: 8px;
+    top: -20px;
+    margin: 0;
+    padding: 0;
+    height: 20px;
+    width: 20px;
+    border-radius: 0;
 }
