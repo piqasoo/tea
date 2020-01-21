@@ -72,11 +72,11 @@
             'icon'  => 'fa fa-video-camera sidebar-nav-icon',
             'roles' => ['admin']
         ],
-        'image' => [
-            'title' => 'image', 
-            'link' => 'image', 
+        'photo_album' => [
+            'title' => 'Photo Albums', 
+            'link' => 'photo_album', 
             'class' => '', 
-            'namespace' => 'image', 
+            'namespace' => 'photo_album', 
             'icon'  => 'fa fa-camera sidebar-nav-icon',
             'roles' => ['admin']
         ],

@@ -32,14 +32,15 @@ class MediaProvider extends ServiceProvider
 
     public static function putImages($model, $images, $path, $type, $quantity)
     {
-        
-        $number = $model->images()->get()->count();
+        $images = (array) $images;
+        $number = $model->media()->get()->count();
         $difference = null;
         $limitedImgs = null;
 
         if($number < $quantity)
         {
             $difference = $quantity - $number;
+            // dd($images);
             $limitedImgs = array_slice($images,0,$difference);
 
             foreach ($limitedImgs as $key => $image) 
@@ -70,17 +71,17 @@ class MediaProvider extends ServiceProvider
 
                 $model->media()->create([
                     'id'            => (string) Uuid::generate(4),
-                    'image_key'     => $type,
-                    'image_value'   => $image_name,
+                    'media_key'     => $type,
+                    'media_value'   => $image_name,
                 ]);
             }
 
-            $cover = $model->media()->where('image_key', 'cover')->first();
+            // $cover = $model->media()->where('image_key', 'cover')->first();
 
-            if(!$cover)
-            {
-                $model->media()->first()->update(['image_key' => 'cover']);
-            }
+            // if(!$cover)
+            // {
+            //     $model->media()->first()->update(['image_key' => 'cover']);
+            // }
            
         }
         else{
@@ -156,29 +157,29 @@ class MediaProvider extends ServiceProvider
         $model->save();
     }
 
-    public static function deleteImages($model, $path){
+    public static function deletefiles($model, $path){
 
-        $images = $model->media()->get();
+        $files = $model->media()->get();
         
-        if(count($images))
+        if(count($files))
         {
-            foreach ($images as $key => $image) 
+            foreach ($files as $key => $file) 
             {
-                $fullPath = '/uploads/' . $path . '/'. $image->image_value;
+                $fullPath = '/uploads/' . $path . '/'. $file->media_value;
                 File::delete(public_path($fullPath));
-                $image->delete();
+                $file->delete();
             }
         }
 
     }
     public static function deleteImage($model, $column, $path){
-        $image = null;
+        $file = null;
         if($model->{$column}){
-            $image = '/uploads/' . $path . '/'. $model->{$column};
+            $file = '/uploads/' . $path . '/'. $model->{$column};
         }
-        if($image)
+        if($file)
         {
-            File::delete(public_path($image));
+            File::delete(public_path($file));
         }
 
     }
@@ -193,6 +194,14 @@ class MediaProvider extends ServiceProvider
             $image->delete();
         }
 
+    }
+    public static function sortImages($data){
+        foreach ($data as $key => $value) {
+            $media = Media::find($value->id);
+            $media->sort = $value->order;
+            $media->save();
+            // dd($media);
+        }
     }
 
 

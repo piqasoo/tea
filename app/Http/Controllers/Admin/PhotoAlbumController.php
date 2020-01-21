@@ -5,12 +5,11 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AdminController;
 use App\Providers\MediaProvider as MediaLibrary;
-use App\News;
+use App\PhotoAlbum;
 use DB;
 use Auth;
 
-
-class NewsController extends AdminController
+class PhotoAlbumController extends AdminController
 {
     static $parent;
     static $module;
@@ -18,12 +17,14 @@ class NewsController extends AdminController
 
     public function __construct(){
         $this->middleware('auth');
+        $moduleName = 'photo_album'; //module name
         self::$parent = new AdminController();
-        self::$module = self::$parent->getModule('news');
-        if(!empty(self::$module) && (self::$module->statusCode == 1) && self::$module->data->namespace){
+        self::$module = self::$parent->getModule($moduleName);
+        // dd(self::$module);
+        if(!empty(self::$module) && self::$module->data->namespace){
             self::$data = self::$parent->initModule(self::$module->data->namespace);
             self::$data->model = self::$module->data;
-        }     
+        }      
     }
     /**
      * Display a listing of the resource.
@@ -35,12 +36,12 @@ class NewsController extends AdminController
         $data = self::$data;
         if(Auth::User() && !empty($data->model)){
             $data->route = 'admin.'.$data->model->namespace.'.create';
-            $data->data = News::with('news_translations')->paginate(15);
+            $data->data = PhotoAlbum::with('photo_album_translations')->paginate(15);
             $data->action = $data->route;
             $data->method = 'POST';
             $data->editRoute = 'admin.'.$data->model->namespace.'.edit';
-            $data->deleteRoute = 'Admin\NewsController@destroy';
-            // ['Admin\PressController@destroy', $row['id']]
+            $data->deleteRoute = 'Admin\PhotoAlbumController@destroy';
+            //// ['Admin\PressController@destroy', $row['id']]
             return view('admin.index', compact('data'));
         }
         else {
@@ -58,7 +59,7 @@ class NewsController extends AdminController
         $data = self::$data;
         if(Auth::User() && !empty($data->model)){
             $data->route = 'admin.'.$data->model->namespace.'.create';
-            $data->data = new News;
+            $data->data = new PhotoAlbum;
             $data->action = ['admin.'.$data->model->namespace.'.store'];
             $data->method = 'POST';
             return view('admin.index', compact('data'));
@@ -77,38 +78,32 @@ class NewsController extends AdminController
     public function store(Request $request)
     {
         $model = self::$data;
-        $data = new News;
+        $data = new PhotoAlbum;
         if(Auth::User()){
             $request->validate([
                 'image' => 'required|image',
-                'title_01' => 'required|array',
-                'title_01.*' => 'required|max:255',
+                'title' => 'required|array',
+                'title.*' => 'required|max:255',
                 'text' => 'nullable',
+                'images' => 'required|array',
+                'images.*' => 'required|image',
             ]);
             foreach (\Config::get('app.locales') as $key => $locale) {
-                if(isset($request['title_01'])){
-                    $data->translateOrNew($locale)->title_01 = $request['title_01'][$locale];
-                    $data->translateOrNew($locale)->slug = str_slug($request['title_01'][$locale]);
-                }
-                if(isset($request['title_02'])){
-                    $data->translateOrNew($locale)->title_02 = $request['title_02'][$locale];
-                }
-                if(isset($request['text'])){
-                    $data->translateOrNew($locale)->text = $request['text'][$locale];
+                if(isset($request['title'])){
+                    $data->translateOrNew($locale)->title = $request['title'][$locale];
+                    $data->translateOrNew($locale)->slug = str_slug($request['title'][$locale]);
                 }
             }
-
             if(isset($request['date'])){
                 $data->date = $request['date'];
             }
-            // if(isset($request['active'])){
-            //     $data->active = $request['active'];
-            // }
-
             $data->save();
 
             if(isset($request['image'])){
-                MediaLibrary::putImage($data, 'image', $request['image'],  'news');
+                MediaLibrary::putImage($data, 'image', $request['image'],  'photo_album');
+            }
+            if(isset($request['images'])){
+                MediaLibrary::putImages($data,  $request['images'], 'photo_album', 'image',  50);
             }
 
             return redirect('admin/'.$model->model->namespace);
@@ -138,10 +133,11 @@ class NewsController extends AdminController
     public function edit($id)
     {
         $data = self::$data;
+        $param = 'param';
         if(Auth::User() && !empty($data->model)){
             $data->route = 'admin.'.$data->model->namespace.'.create';
-            $data->data = News::find($id);
-            $data->action = ['admin.'.$data->model->namespace.'.update', 'event' => $id];
+            $data->data = PhotoAlbum::with('media')->find($id);
+            $data->action = ['admin.'.$data->model->namespace.'.update', $param => $id];
             $data->method = 'PUT';
             if(isset($data->data)){
                 return view('admin.index', compact('data'));
@@ -165,37 +161,38 @@ class NewsController extends AdminController
     public function update(Request $request, $id)
     {
         $model = self::$data;
-        $data = News::find($id);
+        $data = PhotoAlbum::find($id);
         if(Auth::User()){
             $request->validate([
-                'title_01' => 'required|array',
-                'title_01.*' => 'required|max:255',
+                'image' => 'nullable|image',
+                'title' => 'required|array',
+                'title.*' => 'required|max:255',
                 'text' => 'nullable',
+                'images' => 'nullable|array',
+                'images.*' => 'nullable|image',
             ]);
             foreach (\Config::get('app.locales') as $key => $locale) {
-                if(isset($request['title_01'])){
-                    $data->translateOrNew($locale)->title_01 = $request['title_01'][$locale];
-                    $data->translateOrNew($locale)->slug = str_slug($request['title_01'][$locale]);
-                }
-                if(isset($request['title_02'])){
-                    $data->translateOrNew($locale)->title_02 = $request['title_02'][$locale];
-                }
-                if(isset($request['text'])){
-                    $data->translateOrNew($locale)->text = $request['text'][$locale];
+                if(isset($request['title'])){
+                    $data->translateOrNew($locale)->title = $request['title'][$locale];
+                    $data->translateOrNew($locale)->slug = str_slug($request['title'][$locale]);
                 }
             }
-
             if(isset($request['date'])){
                 $data->date = $request['date'];
             }
-            if(isset($request['active'])){
-                $data->active = $request['active'];
-            }
-
             $data->save();
 
             if(isset($request['image'])){
-                MediaLibrary::putImage($data, 'image', $request['image'],  'news');
+                MediaLibrary::putImage($data, 'image', $request['image'],  'photo_album');
+            }
+            if(isset($request['images'])){
+                MediaLibrary::putImages($data,  $request['images'], 'photo_album', 'image',  50);
+            }
+            if(isset($request['sort-images'])){
+            	$orderData = json_decode($request['sort-images']);
+            	if(!empty($orderData)){
+            		MediaLibrary::sortImages($orderData);
+            	}
             }
 
             return redirect('admin/'.$model->model->namespace);
@@ -213,9 +210,9 @@ class NewsController extends AdminController
      */
     public function destroy($id)
     {
-        $data = News::find($id);
+        $data = PhotoAlbum::find($id);
         if(Auth::User() && $data){
-            MediaLibrary::deleteImage($data, 'image',  'news');
+            MediaLibrary::deletefiles($data, 'photo_album');
             $data->delete();
             return back();
         }

@@ -2,11 +2,11 @@
 <?php
   $modelName = isset($data->model->title) ? $data->model->title : '';
 ?>
-@section('css')
+@push('css')
 <link href="/admin_resources/froala/css/froala_editor.min.css" rel="stylesheet" type="text/css" />
 <link href="/admin_resources/froala/css/froala_style.min.css" rel="stylesheet" type="text/css" />
 <link href="/admin_resources/froala/css/themes/custom-theme.css" rel="stylesheet" type="text/css" />
-@endsection
+@endpush
 <div class="content-header">
     <div class="header-section">
       <h1>
@@ -20,7 +20,7 @@
 <ul class="breadcrumb breadcrumb-top">
   <li>{{ $data->model->title }}</li>
 </ul>
-<!-- @if ($errors->any())
+@if ($errors->any())
     <div class="alert alert-danger">
         <ul>
             @foreach ($errors->all() as $error)
@@ -28,7 +28,7 @@
             @endforeach
         </ul>
     </div>
-@endif -->
+@endif
 {!! Form::open(['method' => $data->method, 'route' => $data->action, 'enctype'=>"multipart/form-data" ]) !!}
 @if(!empty($data->gnComponents))
 <div class="row">

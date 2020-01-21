@@ -1,0 +1,69 @@
+{
+	"tableName":"photo_albums",
+	"translatableTableName": "photo_album_translations",
+	"translatableKey" : "photo_album_id",
+	"editable":true,
+	"setActive":true,
+	"multiLang":true,
+	"child_plugin":{
+		"mode":"add,edit,remove",
+		"component_width" : "col-lg-12 col-xl-6 ",
+		"title":"Add",
+		"description" : "Required fileds must be filed in all language!",
+		"general_data":[
+			{
+				"name":"dateComponent",
+				"label":"date",
+				"columnName":"date"
+			},
+			{
+				"name":"files/singleImageComponent",
+				"label":"cover",
+				"columnName":"image",
+				"folder": "photo_album",
+				"type" : "file",
+				"required": true
+			},
+			{
+				"name":"files/multiImageComponent",
+				"label":"images",
+				"columnName":"images",
+				"folder": "photo_album",
+				"type" : "file"
+			}
+		],
+		"translatable_data" : [
+			{
+				"name":"textFieldComponent",
+				"label":"title",
+				"placeholder" : "",
+				"columnName":"title"
+			},
+			{
+				"name":"editorTextareaComponent",
+				"label":"Description",
+				"placeholder" : "",
+				"helpText" : "",
+				"columnName":"text"
+			}
+		]
+	},
+	"parent_plugin":{
+			"dataLoaderMethod" : "",
+			"name":"tables/buttonTable",
+			"texts":{
+				"title":"",
+				"msg":""
+			},
+			"imageFolder":"",
+			"cols":[
+				{"name" : "title", "value" : "title"},
+				{"name" : "date", "value" : "date"},
+				{"name" : "active", "value" : "active", "component" : "layouts/activeComponent"},
+				{"name" : "action", "value" : "actionBtns", "component" : "layouts/actionBtnsComponent"}
+			]
+    }
+
+}
+
+

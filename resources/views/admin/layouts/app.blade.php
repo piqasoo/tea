@@ -20,7 +20,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('admin_resources/css/main.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('admin_resources/css/plugins.css') }}">
 
-	@yield('css')
+	@stack('css')
 	@yield('floara-styles')
     
 	<script src="{{ asset('admin_resources/js/vendor/modernizr.min.js') }}"></script>

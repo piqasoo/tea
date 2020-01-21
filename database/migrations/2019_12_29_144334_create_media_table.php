@@ -22,6 +22,7 @@ class CreateMediaTable extends Migration
             $table->integer('mediable_id')->index();
             $table->string('mediable_type')->index();
             $table->string('extension')->nullable();
+            $table->integer('sort')->default(0);
             $table->timestamps();
         });
     }
