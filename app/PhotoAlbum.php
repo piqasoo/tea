@@ -11,13 +11,13 @@ class PhotoAlbum extends Eloquent implements TranslatableContract
     use Translatable;
 
     public $translatedAttributes = ['title', 'text', 'slug'];
-    protected $fillable = ['date', 'image', 'active'];
+    protected $fillable = ['date', 'image', 'active', 'top'];
 
     public function photo_album_translations(){
     	return $this->hasMany(PhotoAlbumTranslation::class);
     }
     public function media()
     {
-        return $this->morphMany(Media::class, 'mediable');
+        return $this->morphMany(Media::class, 'mediable')->orderBy('sort', 'asc');
     }
 }

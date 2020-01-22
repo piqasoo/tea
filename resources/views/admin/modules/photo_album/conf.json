@@ -17,6 +17,11 @@
 				"columnName":"date"
 			},
 			{
+				"name":"checkboxComponent",
+				"label":"Top Albumn",
+				"columnName":"top"
+			},
+			{
 				"name":"files/singleImageComponent",
 				"label":"cover",
 				"columnName":"image",
@@ -59,6 +64,7 @@
 			"cols":[
 				{"name" : "title", "value" : "title"},
 				{"name" : "date", "value" : "date"},
+				{"name" : "top album", "value" : "top"},
 				{"name" : "active", "value" : "active", "component" : "layouts/activeComponent"},
 				{"name" : "action", "value" : "actionBtns", "component" : "layouts/actionBtnsComponent"}
 			]

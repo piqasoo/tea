@@ -3,90 +3,29 @@
 @section('content')
 
 @include('layouts.includes.pageBannerSecondary')
+<?php $albums = $data->data->albums; ?>
 
 <section class="gallery-photo-container">
 	<section class="gallery-photo block center-container">
 		<h2>Gallery <span>photo</span></h2>
 		<h4>Albums</h4>
+		@if(count($albums) > 0)
 		<div class="gallery-photo-container">
+			@foreach($albums as $album)
 			<div class="albumn-container">
-				<a href="">
+				<a href="{{ route('galleryPhotoDetailed', ['slug' => $album->slug, 'id' => $album->id ]) }}">
 					<div class="albumn-img">
-						<div class="img" style="background-image: url('images/tea.jpg')"></div>
+						<div class="img" style="background-image: url({{ asset('/uploads/photo_album/'.$album->image)  }})"></div>
 		            </div>
 		            
 		            <div class="albumn-description">
-		            	<h3>Iavnana For Vato</h3> <!----> 
-		            	<small><i class="fa fa-search-plus"></i> images: 10</small></div>
+		            	<h3>{{ $album->title }}</h3> <!----> 
+		            	<small><i class="fa fa-search-plus"></i> {{ trans('texts.images') }}: {{ count($album->media) }}</small></div>
 				</a>
 	        </div>
-	        <div class="albumn-container">
-				<a href="">
-					<div class="albumn-img">
-						<div class="img" style="background-image: url('images/tea.jpg')"></div>
-		            </div>
-		            
-		            <div class="albumn-description">
-		            	<h3>Iavnana For Vato</h3> <!----> 
-		            	<small><i class="fa fa-search-plus"></i> images: 10</small></div>
-				</a>
-	        </div>
-	        <div class="albumn-container">
-				<a href="">
-					<div class="albumn-img">
-						<div class="img" style="background-image: url('images/tea.jpg')"></div>
-		            </div>
-		            
-		            <div class="albumn-description">
-		            	<h3>Iavnana For Vato</h3> <!----> 
-		            	<small><i class="fa fa-search-plus"></i> images: 10</small></div>
-				</a>
-	        </div>
-	        <div class="albumn-container">
-				<a href="">
-					<div class="albumn-img">
-						<div class="img" style="background-image: url('images/tea.jpg')"></div>
-		            </div>
-		            
-		            <div class="albumn-description">
-		            	<h3>Iavnana For Vato</h3> <!----> 
-		            	<small><i class="fa fa-search-plus"></i> images: 10</small></div>
-				</a>
-	        </div>
-	        <div class="albumn-container">
-				<a href="">
-					<div class="albumn-img">
-						<div class="img" style="background-image: url('images/tea.jpg')"></div>
-		            </div>
-		            
-		            <div class="albumn-description">
-		            	<h3>Iavnana For Vato</h3> <!----> 
-		            	<small><i class="fa fa-search-plus"></i> images: 10</small></div>
-				</a>
-	        </div>
-	        <div class="albumn-container">
-				<a href="">
-					<div class="albumn-img">
-						<div class="img" style="background-image: url('images/tea.jpg')"></div>
-		            </div>
-		            
-		            <div class="albumn-description">
-		            	<h3>Iavnana For Vato</h3> <!----> 
-		            	<small><i class="fa fa-search-plus"></i> images: 10</small></div>
-				</a>
-	        </div>
-	        <div class="albumn-container">
-				<a href="">
-					<div class="albumn-img">
-						<div class="img" style="background-image: url('images/tea.jpg')"></div>
-		            </div>
-		            
-		            <div class="albumn-description">
-		            	<h3>Iavnana For Vato</h3> <!----> 
-		            	<small><i class="fa fa-search-plus"></i> images: 10</small></div>
-				</a>
-	        </div>
+	        @endforeach
 		</div>
+		@endif
 		<!-- <div class="gallery-photo-container">
 			<figure class="albumn-container">
 	            <a class="" href="">

@@ -18,6 +18,7 @@ class CreatePhotoAlbumnsTable extends Migration
             $table->text('image')->nullable();
             $table->date('date')->nullable();
             $table->boolean('active')->default(1);
+            $table->boolean('top')->default(0);
             $table->timestamps();
             $table->softDeletes(); 
         });

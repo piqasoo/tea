@@ -5,6 +5,7 @@ use App\About;
 use App\Slider;
 use App\Events;
 use App\Video;
+use App\PhotoAlbum;
 use App\Review;
 use App\News;
 use App\Contact;
@@ -41,17 +42,20 @@ class PagesController extends Controller
 
     	$slider = Slider::where('active', true)->orderBy('ord', 'asc')->get();
     	$currentDate = \Carbon\Carbon::now()->format('Y-m-d');
-        $events = Events::whereDate('date', '>=', $currentDate)->orderBy('date', 'asc')->get();
+        $topEvent = Events::whereDate('date', '>=', $currentDate)->orderBy('date', 'asc')->first();
+        $events = Events::whereDate('date', '>=', $currentDate)->where('id', '!=', $topEvent->id)->orderBy('date', 'asc')->get();
     	$news = News::where('active', true)->orderBy('date', 'desc')->skip(0)->take(3)->get();
     	$reviews = Review::where('active', true)->orderBy('ord', 'asc')->get();
-    	$videos = Video::where('active', true)->orderBy('date', 'desc')->get();
-
+    	$videos = Video::where('active', true)->orderBy('date', 'desc')->skip(0)->take(2)->get();
+        $photoAlbum = PhotoAlbum::where(['active'=> 1, 'top' => 1])->with('media')->first();
     	$pageData = array(
     		'slides' => $slider,
+            'topEvent' => $topEvent,
     		'events' => $events,
     		'news' => $news,
     		'reviews'	=> $reviews,
     		'videos'	=> $videos,
+            'photoAlbum' => $photoAlbum,
     	);
     	$data['data'] = (object) $pageData;
     	$data = (object) $data;
@@ -111,7 +115,11 @@ class PagesController extends Controller
         $data = [];
         $general = self::$generalData;
         $data['general'] = $general;
-
+        $news = News::where('active', true)->orderBy('date', 'desc')->paginate(12);
+        $pageData = array(
+            'news' => $news,
+        );
+        $data['data'] = (object) $pageData;
         $data = (object) $data;
         return view('press', compact('data'));
     }
@@ -148,7 +156,7 @@ class PagesController extends Controller
         if($slug && $id){
             $event = Events::where('active', true)->find($id);
             if($event){
-                $events = Events::where('active', true)->where('id', '!=', $event->id)->orderBy('date', 'desc')->skip(0)->take(3)->get();
+                $events = Events::where('active', true)->where('id', '!=', $event->id)->orderBy('date', 'desc')->skip(0)->take(2)->get();
             }
         }
         $banner = Banner::where('page', 'event')->where('active', true)->first(); 
@@ -180,11 +188,10 @@ class PagesController extends Controller
         $general = self::$generalData;
         $data['general'] = $general;
         $banner = Banner::where('page', 'multimedia')->where('active', true)->first(); 
-
+        $albums = PhotoAlbum::where('active', 1)->with('media')->orderBy('date', 'desc')->get();
         $pageData = array(
             'banner' => $banner,
-            // 'event' => $event,
-            // 'events' => $events,
+            'albums' => $albums,
         );
         $data['data'] = (object) $pageData;
         $data = (object) $data;
@@ -196,10 +203,10 @@ class PagesController extends Controller
         $general = self::$generalData;
         $data['general'] = $general;
         $banner = Banner::where('page', 'multimedia')->where('active', true)->first(); 
-
+        $album = PhotoAlbum::where('active', 1)->where('id', $id)->with('media')->first();
         $pageData = array(
             'banner' => $banner,
-            // 'event' => $event,
+            'album' => $album,
             // 'events' => $events,
         );
         $data['data'] = (object) $pageData;
@@ -222,5 +229,20 @@ class PagesController extends Controller
         $data['data'] = (object) $pageData;
         $data = (object) $data;
         return view('contact', compact('data'));
+    }
+    public function galleryVideoPage(){
+        $data = [];
+        $general = self::$generalData;
+        $data['general'] = $general;
+        $banner = Banner::where('page', 'multimedia')->where('active', true)->first(); 
+
+        $pageData = array(
+            'banner' => $banner,
+            // 'event' => $event,
+            // 'events' => $events,
+        );
+        $data['data'] = (object) $pageData;
+        $data = (object) $data;
+        return view('gallery-video', compact('data'));
     }
 }

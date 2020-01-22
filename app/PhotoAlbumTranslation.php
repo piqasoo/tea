@@ -8,5 +8,5 @@ class PhotoAlbumTranslation extends Model
 {
     public $timestamps = false;
 
-    protected $fillable = ['title', 'text', 'date', 'image', 'active', 'slug']; 
+    protected $fillable = ['title', 'text', 'date', 'image', 'active', 'slug', 'top']; 
 }

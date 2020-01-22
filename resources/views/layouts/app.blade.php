@@ -19,12 +19,13 @@
     <link href="https://fonts.googleapis.com/css?family=Oswald:300,400&display=swap" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <!-- <script src="https://unpkg.com/vue@2.5.13/dist/vue.js"></script> -->
 </head>
 <body>
     <div id="app">
         <header>
             <div class="logo">
-                <a href="">TEA PURTSELADZE</a>
+                <a href="{{ route('home') }}">TEA PURTSELADZE</a>
                 <span>Soprano</span>
             </div>
             <nav class="">
@@ -39,25 +40,36 @@
                 </ul>
             </nav>
             <div class="social-container">
+                @if($data->general->contact->facebook)
                 <div>
-                    <a href="" class="social"><i class="fa fa-facebook"></i></a>
+                    <a href="{{$data->general->contact->facebook}}" class="social"><i class="fa fa-facebook"></i></a>
                 </div>
+                @endif
+                @if($data->general->contact->twitter)
                 <div>
-                    <a href="" class="social"><i class="fa fa-twitter"></i></a>
+                    <a href="{{$data->general->contact->twitter}}" class="social"><i class="fa fa-twitter"></i></a>
                 </div>
+                @endif
+                @if($data->general->contact->youtube)
                 <div>
-                    <a href="" class="social"><i class="fa fa-youtube"></i></a>
+                    <a href="{{$data->general->contact->youtube}}" class="social"><i class="fa fa-youtube"></i></a>
                 </div>
+                @endif
                 <div class="lang">
                     <a href="">ge</a>
                     <a href="">en</a>
                     <a href="">itl</a>
                 </div>
+                <div class="burger-menu">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
             </div>
         </header>
         <header class="header-fixed">
             <div class="logo">
-                <a href="">TEA PURTSELADZE</a>
+                <a href="{{ route('home') }}">TEA PURTSELADZE</a>
                 <span>Soprano</span>
             </div>
 
@@ -73,23 +85,51 @@
                 </ul>
             </nav>
             <div class="social-container">
+                @if($data->general->contact->facebook)
                 <div>
-                    <a href="" class="social"><i class="fa fa-facebook"></i></a>
+                    <a href="{{$data->general->contact->facebook}}" class="social"><i class="fa fa-facebook"></i></a>
                 </div>
+                @endif
+                @if($data->general->contact->twitter)
                 <div>
-                    <a href="" class="social"><i class="fa fa-twitter"></i></a>
+                    <a href="{{$data->general->contact->twitter}}" class="social"><i class="fa fa-twitter"></i></a>
                 </div>
+                @endif
+                @if($data->general->contact->youtube)
                 <div>
-                    <a href="" class="social"><i class="fa fa-youtube"></i></a>
+                    <a href="{{$data->general->contact->youtube}}" class="social"><i class="fa fa-youtube"></i></a>
                 </div>
+                @endif
                 <div class="lang">
                     <a href="">ge</a>
                     <a href="">en</a>
                     <a href="">itl</a>
                 </div>
+                <div class="burger-menu">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
             </div>
         </header>
-        
+        <header class="header-mobile">
+            <nav class="">
+                <ul>
+                    <li class="{{ in_array($data->general->activeRoute, ['home']) ? 'active' : '' }}"><a href="{{ route('home') }}">{{ trans('texts.home') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['biography']) ? 'active' : '' }}"><a href="{{ route('biography') }}">{{ trans('texts.biography') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['press', 'article']) ? 'active' : '' }}"><a href="{{ route('press') }}">{{ trans('texts.press') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['review']) ? 'active' : '' }}"><a href="">{{ trans('texts.review') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['events', 'event']) ? 'active' : '' }}"><a href="{{ route('events', ['filter' => 'future']) }}">{{ trans('texts.events') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['galleryPhoto', 'galleryPhotoDetailed']) ? 'active' : '' }}"><a href="{{ route('galleryPhoto') }}">{{ trans('texts.multimedia') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['contact']) ? 'active' : '' }}"><a href="{{ route('contact') }}">{{ trans('texts.contact') }}</a></li>
+                </ul>
+            </nav>
+            <div class="lang">
+                <a href="">ge</a>
+                <a href="">en</a>
+                <a href="">itl</a>
+            </div>
+        </header>
 
         <main>
             @yield('content')
@@ -164,6 +204,9 @@
         </footer>
     </div>
     <!-- Scripts -->
+    <!-- <script src="{{ asset('js/app.js') }}"></script> -->
+    <script src="{{ asset('js/manifest.js') }}"></script>
+    <script src="{{ asset('js/vendor.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

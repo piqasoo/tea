@@ -104,4 +104,12 @@
             'icon'  => 'fa fa-align-center sidebar-nav-icon',
             'roles' => ['admin']
         ],
+        // [
+        //     'title'         => 'Texts', 
+        //     'link'          => 'texts', 
+        //     'liClass'       => '', 
+        //     'class'         => 'sidebar-nav-icon', 
+        //     'namespace'     => 'texts', 
+        //     'roles'         => ['admin']
+        // ],
   ];

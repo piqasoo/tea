@@ -15,5 +15,14 @@ let mix = require('laravel-mix');
 mix.js([
     'resources/assets/js/app.js',
     'resources/assets/js/init.js'
-], 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+], 'public/js').extract([
+            'vue',
+            'jquery',
+            'lodash',
+        ])
+        .autoload({
+            jquery: ['$', 'window.jQuery', 'jQuery'],
+            lodash: ['_', 'window._', 'lodash'],
+            vue: ['Vue', 'window.Vue', 'vue']
+    });
+   mix.sass('resources/assets/sass/app.scss', 'public/css');

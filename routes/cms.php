@@ -24,6 +24,7 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function(){
 	Route::resource('video', 'VideoController');
 	Route::resource('photo_album', 'PhotoAlbumController');
 	Route::resource('banners', 'BannerController');
+	Route::resource('texts', 'TextController');
 	
 	Route::post('{model}/set/visibility', 'VisibilityController@setVisibility');
 	

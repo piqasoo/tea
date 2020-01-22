@@ -53,5 +53,21 @@ $(document).ready(function(){
     		console.log(src);
     	})
     }
+    if($('.burger-menu').length > 0){
+    	$('.burger-menu').click(function(){
+    		$('.header-mobile').toggleClass('active');
+    	});
+    }
+    var length = $('.tab-item').length;
+	// console.log(length);
+	if(length > 0){
+		$('.tab-item').click(function(){
+			for (var i = 0; i < length; i++) {
+				$('.tab-item').eq(i).removeClass('current');
+			}
+			$(this).addClass('current');
+			// console.log($(this));
+		});
+	}
 
 });

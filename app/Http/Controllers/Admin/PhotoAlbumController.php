@@ -97,6 +97,9 @@ class PhotoAlbumController extends AdminController
             if(isset($request['date'])){
                 $data->date = $request['date'];
             }
+            if(isset($request['top'])){
+                $data->top = $request['top'];
+            }
             $data->save();
 
             if(isset($request['image'])){
@@ -176,6 +179,9 @@ class PhotoAlbumController extends AdminController
                     $data->translateOrNew($locale)->title = $request['title'][$locale];
                     $data->translateOrNew($locale)->slug = str_slug($request['title'][$locale]);
                 }
+            }
+            if(isset($request['top'])){
+                $data->top = $request['top'];
             }
             if(isset($request['date'])){
                 $data->date = $request['date'];

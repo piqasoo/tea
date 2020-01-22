@@ -13,168 +13,149 @@
 </section>
 @endif
 <section class="events block">
-	<h2>Future <span>events</span></h2>
-	<h4>events</h4>
+	<h2>{{ trans('texts.future') }} <span>{{ trans('texts.events') }}</span></h2>
+	<h4>{{ trans('texts.events') }}</h4>
+	@if($data->data->events && !empty($data->data->events))
 	<ul class="center-container">
+		@if($data->data->topEvent)
+		<?php 
+			$topEvent =  $data->data->topEvent;
+            $topday = \Carbon\carbon::parse($topEvent->date)->format('d');
+            $topmonth = \Carbon\carbon::parse($topEvent->date)->format('F');
+        ?>
 		<li class="top-event">
-			<a href="">
-				<div class="highlight date"><span class="event-day">12</span> <span class="event-month">february</span></div>
-				<div>Torino</div>
-				<div>Nabucco</div>
-				<div class="highlight">see more</div>
+			<a href="{{ url('events/'.$topEvent->slug.'/'.$topEvent->id) }}">
+				<div class="highlight date"><span class="event-day">{{$topday}}</span> <span class="event-month">{{trans('texts.'.$topmonth)}}</span></div>
+				<div>{{ $topEvent->name }}</div>
+				<div>{{ $topEvent->place }}</div>
+				<div class="highlight">{{ trans('texts.see_more') }}</div>
 			</a>
 		</li>
+		@endif
+		@foreach($data->data->events as $event)
+		<?php 
+            $day = \Carbon\carbon::parse($event->date)->format('d');
+            $month = \Carbon\carbon::parse($event->date)->format('F');
+            $year = \Carbon\carbon::parse($event->date)->format('Y');
+        ?>
 		<li>
-			<a href="">
-				<div class="highlight date">12 December 2020</div>
-				<div>Konzerthalle, Bamberg</div>
-				<div>Nabucco</div>
-				<div class="highlight">see more</div>
+			<a href="{{ url('events/'.$event->slug.'/'.$event->id) }}">
+				<div class="highlight date">{{$day}} {{trans('texts.'.$month)}} {{$year}}</div>
+				<div>{{ $event->name }}</div>
+				<div>{{ $event->place }}</div>
+				<div class="highlight">{{ trans('texts.see_more') }}</div>
 			</a>
 		</li>
-		<li>
-			<a href="">
-				<div class="highlight date">12 November 2020</div>
-				<div>Torino</div>
-				<div>Nabucco</div>
-				<div class="highlight">see more</div>
-			</a>
-		</li>
-		<li>
-			<a href="">
-				<div class="highlight date">19 September</div>
-				<div>Torino</div>
-				<div>Nabucco</div>
-				<div class="highlight">see more</div>
-			</a>
-		</li>
-		<li>
-			<a href="">
-				<div class="highlight date">12 february</div>
-				<div>Torino</div>
-				<div>Nabucco</div>
-				<div class="highlight">see more</div>
-			</a>
-		</li>
+		@endforeach
+		<div class="see-more">
+	     	<a href="{{ route('events', ['filter' => 'future']) }}">{{ trans('texts.see_more') }}</a>
+	    </div>
 	</ul>
-</section>
-<section class="gallery-photo block block-dark">
-	<h2>Gallery <span>photo</span></h2>
-	<h4>photo</h4>
-	<div class="gallery-photo-container">
-		<figure>
-            <a class="" data-fancybox="images" href="images/tea.jpg" data-width="1536">
-                <div style="background-image: url('images/tea.jpg')"></div>
-                <img style="visibility: hidden;" class="img-fluid" src="images/tea.jpg">
-            </a>
-        </figure>
-        <figure>
-            <a class="" data-fancybox="images" href="https://scontent.fgbb2-1.fna.fbcdn.net/v/t1.0-9/12295483_1061763120521973_299453508711310279_n.jpg?_nc_cat=111&_nc_ohc=l90Z3T_83AoAX-Xyn8m&_nc_ht=scontent.fgbb2-1.fna&oh=9629bd7c023686e156893cdc8fb16970&oe=5E922490" data-width="1536">
-            	<div style="background-image: url('https://scontent.fgbb2-1.fna.fbcdn.net/v/t1.0-9/12295483_1061763120521973_299453508711310279_n.jpg?_nc_cat=111&_nc_ohc=l90Z3T_83AoAX-Xyn8m&_nc_ht=scontent.fgbb2-1.fna&oh=9629bd7c023686e156893cdc8fb16970&oe=5E922490')"></div>
-                <img style="visibility: hidden;" class="img-fluid" src="https://scontent.fgbb2-1.fna.fbcdn.net/v/t1.0-9/12295483_1061763120521973_299453508711310279_n.jpg?_nc_cat=111&_nc_ohc=l90Z3T_83AoAX-Xyn8m&_nc_ht=scontent.fgbb2-1.fna&oh=9629bd7c023686e156893cdc8fb16970&oe=5E922490">
-            </a>
-        </figure>
-        <figure>
-            <a class="" data-fancybox="images" href="https://scontent.fgbb2-2.fna.fbcdn.net/v/t1.0-9/67490540_2598905286807741_8950423154342232064_o.jpg?_nc_cat=105&_nc_ohc=zhJH5d-dghcAX_hQtrf&_nc_ht=scontent.fgbb2-2.fna&oh=b99c7f3919f269d61ad39e55ca8f701e&oe=5EA3CA61" data-width="1536">
-                <div style="background-image: url('https://scontent.fgbb2-2.fna.fbcdn.net/v/t1.0-9/67490540_2598905286807741_8950423154342232064_o.jpg?_nc_cat=105&_nc_ohc=zhJH5d-dghcAX_hQtrf&_nc_ht=scontent.fgbb2-2.fna&oh=b99c7f3919f269d61ad39e55ca8f701e&oe=5EA3CA61')"></div>
-                <img style="visibility: hidden;" class="img-fluid" src="https://scontent.fgbb2-2.fna.fbcdn.net/v/t1.0-9/67490540_2598905286807741_8950423154342232064_o.jpg?_nc_cat=105&_nc_ohc=zhJH5d-dghcAX_hQtrf&_nc_ht=scontent.fgbb2-2.fna&oh=b99c7f3919f269d61ad39e55ca8f701e&oe=5EA3CA61">
-            </a>
-        </figure>
-        <figure>
-            <a class="" data-fancybox="images" href="https://scontent.fgbb2-2.fna.fbcdn.net/v/t31.0-8/10479360_807525362612418_6644362887306934277_o.jpg?_nc_cat=100&_nc_ohc=adiul0pyDHoAX_HMxmV&_nc_ht=scontent.fgbb2-2.fna&oh=00644f8e4e10b305b0d6cd2a3a443f18&oe=5EA73C40" data-width="1536">
-                <div style="background-image: url('https://scontent.fgbb2-2.fna.fbcdn.net/v/t31.0-8/10479360_807525362612418_6644362887306934277_o.jpg?_nc_cat=100&_nc_ohc=adiul0pyDHoAX_HMxmV&_nc_ht=scontent.fgbb2-2.fna&oh=00644f8e4e10b305b0d6cd2a3a443f18&oe=5EA73C40')"></div>
-                <img style="visibility: hidden;" class="img-fluid" src="https://scontent.fgbb2-2.fna.fbcdn.net/v/t31.0-8/10479360_807525362612418_6644362887306934277_o.jpg?_nc_cat=100&_nc_ohc=adiul0pyDHoAX_HMxmV&_nc_ht=scontent.fgbb2-2.fna&oh=00644f8e4e10b305b0d6cd2a3a443f18&oe=5EA73C40">
-            </a>
-        </figure>
+	@endif
 
+</section>
+@if($data->data->photoAlbum)
+
+<section class="gallery-photo block block-dark">
+	<h2>{{ trans('texts.gallery') }} <span>{{ trans('texts.photo') }}</span></h2>
+	<h4>{{ $data->data->photoAlbum->title }}</h4>
+	<div class="gallery-photo-container">
+	@if(!empty($data->data->photoAlbum->media))
+		@foreach($data->data->photoAlbum->media as $album)
+		<figure>
+
+            <a class="" data-fancybox="images" href="{{ asset('uploads/photo_album/'.$album->media_value) }}">
+                <div style="background-image: url('{{ asset('uploads/photo_album/'.$album->media_value) }}')"></div>
+                <img style="visibility: hidden;" class="img-fluid" src="{{ asset('uploads/photo_album/'.$album->media_value) }}">
+            </a>
+        </figure>
+        @endforeach
+    @endif
 	</div>
 	<div class="see-more">
-     	<a href="">see more</a>
+     	<a href="{{ route('galleryPhoto') }}">{{ trans('texts.see_all') }}</a>
     </div>
 </section>
+@endif
+@if($data->data->videos)
 <section class="gallery-video block">
-	<h2>Gallery <span>video</span></h2>
-	<h4>video</h4>
+	<h2>{{ trans('texts.gallery') }} <span>{{ trans('texts.video') }}</span></h2>
+	<h4>{{ trans('texts.video') }}</h4>
 	<div class="gallery-video-container center-container">
+		@foreach($data->data->videos as $video)
 		<div>
-			<iframe width="560" height="315" src="https://www.youtube.com/embed/1qexU71YMCU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			<iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $video->video }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 		</div>
-		<div>
-			<iframe width="560" height="315" src="https://www.youtube.com/embed/_uKbAP6ehNo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-		</div>
+		@endforeach
 	</div>
 	<div class="see-more">
-     	<a href="">see more</a>
+     	<a href="{{ route('galleryVideo') }}">{{ trans('texts.see_more') }}</a>
     </div>
 </section>
+@endif
+@if($data->data->reviews)
 <section class="reviews block block-dark">
-	<h2>What do <span>thay say</span></h2>
-	<h4>REVIEWS</h4>
+	<h2>{{ trans('texts.what_do') }}<span> {{ trans('texts.they_say') }}</span></h2>
+	<h4>{{ trans('texts.reviews') }}</h4>
 	<div class="reviews-container center-container">
+		@foreach($data->data->reviews as $review)
 		<blockquote cite="">
-			<p>go through anything. You read and you’re pierced.</p>
-			<footer>—Aldous Huxley, <cite>Brave New World</cite></footer>
+			<p>{!! $review->text !!}</p>
+			<footer>—{{ $review->name }}, <cite>{{ $review->title }}</cite></footer>
 		</blockquote>
-		<blockquote cite="">
-			<p>Words can be like X-rays, if you use them properly—they’ll go through anything. You read and you’re pierced.</p>
-			<footer>—Aldous Huxley, <cite>Brave New World</cite></footer>
-		</blockquote>
-		<blockquote cite="">
-			<p>Words can be like X-rays, if you use them properly—they’ll.</p>
-			<footer>—Aldous Huxley, <cite>Brave New World</cite></footer>
-		</blockquote>
+		@endforeach
 	</div>
 	<div class="see-more">
-     	<a href="">see more</a>
+     	<a href="">{{ trans('texts.see_more') }}</a>
     </div>
 </section>
+@endif
+@if($data->data->news)
 <section class="news block ">
-	<h2>latest <span>articles</span></h2>
-	<h4>press</h4>
+	<h2>{{ trans('texts.latest') }} <span>{{ trans('texts.articles') }}</span></h2>
+	<h4>{{ trans('texts.press') }}</h4>
 	<div class="news-container center-container">
+		@foreach($data->data->news as $news)
 		<article>
-			<div><a href=""><img src="https://source.unsplash.com/IbLZjKcelpM/416x350"></a></div>
-			<h3><a href="">CONCERTO “LE VIE DELL’AMICIZIA”- VENERDÌ 21 LUGLIO, RAI1 ALLE 23H35</a></h3>
-			<h4>27 february 2020</h4>
+			<div class="albumn-img">
+				<a href="{{ route('article', ['slug' => $news->slug, 'id' => $news->id]) }}" class="img" style="background-image: url({{ asset('uploads/news/'.$news->image) }})"><img src="{{ asset('uploads/news/'.$news->image) }}" style="visibility: hidden;"></a>
+			</div>
+			<h3><a href="{{ route('article', ['slug' => $news->slug, 'id' => $news->id]) }}">{{ $news->title_01 }}</a></h3>
+			<h4>{{ \Carbon\carbon::parse($news->date)->format('d') }} {{ trans('texts.'.\Carbon\carbon::parse($news->date)->format('F')) }} {{ \Carbon\carbon::parse($news->date)->format('Y') }}</h4>
 			<div class="see-more">
-		     	<a href="">see more</a>
+		     	<a href="{{ route('article', ['slug' => $news->slug, 'id' => $news->id]) }}">{{ trans('texts.see_more') }}</a>
 		    </div>
 		</article>
-		<article>
-			<div><a href=""><img src="https://source.unsplash.com/IbLZjKcelpM/416x350"></a></div>
-			<h3><a href="">CONCERTO “LE VIE DELL’AMICIZIA”- VENERDÌ 21 LUGLIO, RAI1 ALLE 23H35</a></h3>
-			<h4>27 february 2020</h4>
-			<div class="see-more">
-		     	<a href="">see more</a>
-		    </div>
-		</article>
-		<article>
-			<div><a href=""><img src="https://source.unsplash.com/IbLZjKcelpM/416x350"></a></div>
-			<h3><a href="">CONCERTO “LE VIE DELL’AMICIZIA”- VENERDÌ 21 LUGLIO, RAI1 ALLE 23H35</a></h3>
-			<h4>27 february 2020</h4>
-			<div class="see-more">
-		     	<a href="">see more</a>
-		    </div>
-		</article>
+		@endforeach
 	</div>
 	<div class="see-more">
-     	<a href="">see more</a>
+     	<a href="{{ route('press') }}">{{ trans('texts.see_more') }}</a>
     </div>
 </section>
+@endif
 <section class="contact block block-dark-secondary">
-	<h2>write <span>message</span></h2>
-	<h4>letter</h4>
+	<h2>{{ trans('texts.write') }} <span>{{ trans('texts.message') }}</span></h2>
+	<h4>{{ trans('texts.letter') }}</h4>
 	<div class="contact-container center-container">
-		<form action="" method="POST">
+		<form
+  @submit="checkForm"
+  action="https://vuejs.org/"
+  method="post">
 			<div>
-				<input type="text" name="name" placeholder="name">
-				<input type="text" name="email" placeholder="email">
-				<input type="text" name="phone" placeholder="phone">
+				<input v-model="contact_form.name" type="text" name="name" placeholder="{{ trans('texts.form_name') }}">
+				<input v-model="contact_form.email" type="text" name="email" placeholder="{{ trans('texts.form_email') }}">
+				<input v-model="contact_form.phone" type="text" name="phone" placeholder="{{ trans('texts.form_phone') }}">
 			</div>
-			<textarea name="message" placeholder="message" rows="3"></textarea>
+			<textarea v-model="contact_form.message" name="message" placeholder="{{ trans('texts.form_message') }}" rows="3"></textarea>
 			<p class="succes" style="display: none"><span>Contgrats!</span> letter succesfully send!</p>
-			<p class="error" style="display: none"><span>Opps..</span> there was problem!</p>
-			<input type="submit" name="submit">
+			<p class="error" style="display: none"><span></span> there was problem!</p>
+			<p v-if="errors.length" class="error">
+			    <b><span>{{ trans('texts.Ooops..') }}</span> {{ trans('texts.fill_required_fileds') }}:</b>
+			    <ul>
+			      <li v-for="error in errors">@{{ error }}</li>
+			    </ul>
+			  </p>
+			<input type="submit" name="{{ trans('texts.submit') }}">
 		</form>
 	</div>
 </section>
