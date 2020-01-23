@@ -82,7 +82,7 @@ h1, h2, h3, h4, h5, h6 {
 #app header {
 	display: flex;
 	width: 100%;
-	overflow: hidden;
+	// overflow: hidden;
 	justify-content: space-between;
 	height: 90px;
 	padding: 0px 50px;
@@ -125,10 +125,17 @@ h1, h2, h3, h4, h5, h6 {
 				padding: 0 18px;
 				text-transform: uppercase;
 				font-size: 0.85rem;
+				line-height: 90px;
 
 				&.active {
 					color: #e82e579e;
 					font-weight: 700;
+				}
+				&:hover {
+					color: $primaryColor;
+					i {
+						color: inherit;
+					}
 				}
 			}
 		}
@@ -258,6 +265,7 @@ footer.footer {
     		color: #7b7b7b;
     		line-height: 24px;
     		max-width: 300px;
+    		position: relative;
 
     		&.social {
     			width: 40%;
@@ -284,6 +292,41 @@ footer.footer {
 			}
     	}
     }
+}
+.sub-nav {
+	position: absolute;
+    display: block !important;
+    background: #ffffff;
+    border-top: 2px solid;
+    color: #000;
+    padding: 10px 10px 20px !important;
+    opacity: 0;
+    visibility: hidden;
+    box-shadow: 2px 2px 2px #d6d6d6;
+    transition: opacity 1s;
+
+	li {
+		padding: 0;
+		margin-top: 10px;
+		line-height: 24px !important;
+		&:hover {
+			color: $primaryColor;
+		}
+	}
+
+}
+.subs {
+	a:after {
+		display: inline-block;
+	    font-style: normal;
+	    font-variant: normal;
+	    text-rendering: auto;
+	    -webkit-font-smoothing: antialiased;
+	}
+	i {
+		padding-left: 3px;
+    	color: #c5c5c5;
+	}
 }
 main {
 	min-height: calc(100vh - 90px);

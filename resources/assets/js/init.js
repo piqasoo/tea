@@ -70,4 +70,14 @@ $(document).ready(function(){
 		});
 	}
 
+	
+	$('nav ul li').mouseout(function(){
+		$(this).find('.sub-nav').css({"opacity": "0", "visibility":"hidden"});
+		// console.log($(this));
+	});
+	$('nav ul li.subs').mouseover(function(){
+		$(this).find('.sub-nav').css({"opacity": "1", "visibility":"visible"});
+		// console.log($(this));
+	});
+
 });

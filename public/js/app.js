@@ -3776,41 +3776,64 @@ __webpack_provided_window_dot_Vue = __webpack_require__(3);
 Vue.component('example-component', __webpack_require__(54));
 
 var app = new Vue({
-  el: '#app',
-  data: {
-    message: 'Hello Vue!',
-    errors: [],
-    contact_form: {
-      'name': '',
-      'email': '',
-      'phone': '',
-      'message': ''
-    }
-  },
-  methods: {
-    checkForm: function checkForm(e) {
+	el: '#app',
+	data: {
+		message: 'Hello Vue!',
+		errors: {
+			name: true,
+			email: true,
+			validEmail: true,
+			phone: true,
+			message: true,
+			visibility: false
+		},
+		success: false,
+		contact_form: {
+			'name': '',
+			'email': '',
+			'phone': '',
+			'message': ''
+		},
+		reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
+	},
+	methods: {
+		checkForm: function checkForm(e) {
+			console.log('ola');
 
-      if (this.contact_form.name && this.contact_form.email && this.contact_form.phone && this.contact_form.message) {
-        return true;
-      }
-      this.errors = [];
-
-      if (!this.contact_form.name) {
-        this.errors.push('Name required.');
-      }
-      if (!this.contact_form.email) {
-        this.errors.push('email required.');
-      }
-      if (!this.contact_form.phone) {
-        this.errors.push('phone required.');
-      }
-      if (!this.contact_form.messasge) {
-        this.errors.push('messasge required.');
-      }
-
-      e.preventDefault();
-    }
-  }
+			if (this.contact_form.name != '') {
+				this.errors.name = false;
+			} else {
+				this.errors.name = true;
+			}
+			if (this.contact_form.email != '') {
+				this.errors.email = false;
+			} else {
+				this.errors.email = true;
+			}
+			if (this.contact_form.email != '' && this.reg.test(this.contact_form.email)) {
+				this.errors.validEmail = false;
+			} else {
+				this.errors.validEmail = true;
+			}
+			if (this.contact_form.phone != '') {
+				this.errors.phone = false;
+			} else {
+				this.errors.phone = true;
+			}
+			if (this.contact_form.message != '') {
+				this.errors.message = false;
+			} else {
+				this.errors.message = true;
+			}
+			if (this.errors.name || this.errors.email || this.errors.validEmail || this.errors.phone || this.errors.message) {
+				this.errors.visibility = true;
+			} else {
+				this.errors.visibility = false;
+				this.success = true;
+			}
+			e.preventDefault();
+		}
+	}
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(3)))
 
@@ -18448,6 +18471,15 @@ if (false) {
 			// console.log($(this));
 		});
 	}
+
+	$('nav ul li').mouseout(function () {
+		$(this).find('.sub-nav').css({ "opacity": "0", "visibility": "hidden" });
+		// console.log($(this));
+	});
+	$('nav ul li.subs').mouseover(function () {
+		$(this).find('.sub-nav').css({ "opacity": "1", "visibility": "visible" });
+		// console.log($(this));
+	});
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 

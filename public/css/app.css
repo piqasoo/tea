@@ -16346,7 +16346,6 @@ h6 {
   display: -ms-flexbox;
   display: flex;
   width: 100%;
-  overflow: hidden;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
@@ -16396,11 +16395,20 @@ h6 {
   padding: 0 18px;
   text-transform: uppercase;
   font-size: 0.85rem;
+  line-height: 90px;
 }
 
 #app header nav ul li.active {
   color: #e82e579e;
   font-weight: 700;
+}
+
+#app header nav ul li:hover {
+  color: #E82E57;
+}
+
+#app header nav ul li:hover i {
+  color: inherit;
 }
 
 #app header .social-container a.social {
@@ -16547,6 +16555,7 @@ footer.footer ul li {
   color: #7b7b7b;
   line-height: 24px;
   max-width: 300px;
+  position: relative;
 }
 
 footer.footer ul li.social {
@@ -16577,6 +16586,44 @@ footer.footer ul li h5 {
 
 footer.footer ul li:hover h5 {
   color: #E82E57;
+}
+
+.sub-nav {
+  position: absolute;
+  display: block !important;
+  background: #ffffff;
+  border-top: 2px solid;
+  color: #000;
+  padding: 10px 10px 20px !important;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-box-shadow: 2px 2px 2px #d6d6d6;
+          box-shadow: 2px 2px 2px #d6d6d6;
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s;
+}
+
+.sub-nav li {
+  padding: 0;
+  margin-top: 10px;
+  line-height: 24px !important;
+}
+
+.sub-nav li:hover {
+  color: #E82E57;
+}
+
+.subs a:after {
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+.subs i {
+  padding-left: 3px;
+  color: #c5c5c5;
 }
 
 main {

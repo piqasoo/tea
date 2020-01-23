@@ -43,7 +43,12 @@ class PagesController extends Controller
     	$slider = Slider::where('active', true)->orderBy('ord', 'asc')->get();
     	$currentDate = \Carbon\Carbon::now()->format('Y-m-d');
         $topEvent = Events::whereDate('date', '>=', $currentDate)->orderBy('date', 'asc')->first();
-        $events = Events::whereDate('date', '>=', $currentDate)->where('id', '!=', $topEvent->id)->orderBy('date', 'asc')->get();
+        if($topEvent){
+            $events = Events::whereDate('date', '>=', $currentDate)->where('id', '!=', $topEvent->id)->orderBy('date', 'asc')->get();
+        }
+        else{
+            $events = Events::whereDate('date', '>=', $currentDate)->orderBy('date', 'asc')->get();
+        }
     	$news = News::where('active', true)->orderBy('date', 'desc')->skip(0)->take(3)->get();
     	$reviews = Review::where('active', true)->orderBy('ord', 'asc')->get();
     	$videos = Video::where('active', true)->orderBy('date', 'desc')->skip(0)->take(2)->get();

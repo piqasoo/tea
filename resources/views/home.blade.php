@@ -142,20 +142,18 @@
   action="https://vuejs.org/"
   method="post">
 			<div>
-				<input v-model="contact_form.name" type="text" name="name" placeholder="{{ trans('texts.form_name') }}">
-				<input v-model="contact_form.email" type="text" name="email" placeholder="{{ trans('texts.form_email') }}">
-				<input v-model="contact_form.phone" type="text" name="phone" placeholder="{{ trans('texts.form_phone') }}">
+				<input v-bind:class="{ error: errors.name }" v-model="contact_form.name" type="text" name="name" placeholder="{{ trans('texts.form_name') }}">
+				<input v-bind:class="{ error: errors.email }" v-model="contact_form.email" type="text" name="email" placeholder="{{ trans('texts.form_email') }}">
+				<input v-bind:class="{ error: errors.phone }" v-model="contact_form.phone" type="text" name="phone" placeholder="{{ trans('texts.form_phone') }}">
 			</div>
-			<textarea v-model="contact_form.message" name="message" placeholder="{{ trans('texts.form_message') }}" rows="3"></textarea>
-			<p class="succes" style="display: none"><span>Contgrats!</span> letter succesfully send!</p>
-			<p class="error" style="display: none"><span></span> there was problem!</p>
-			<p v-if="errors.length" class="error">
-			    <b><span>{{ trans('texts.Ooops..') }}</span> {{ trans('texts.fill_required_fileds') }}:</b>
-			    <ul>
-			      <li v-for="error in errors">@{{ error }}</li>
-			    </ul>
-			  </p>
-			<input type="submit" name="{{ trans('texts.submit') }}">
+			<textarea v-model="contact_form.message" v-on:change="checkForm($event)" name="message" placeholder="{{ trans('texts.form_message') }}" rows="3"></textarea>
+			<p v-if="errors.name && errors.visibility">{{ trans('texts.name_is_required') }}</p>
+			<p v-if="errors.email && errors.visibility">{{ trans('texts.email_is_required') }}</p>
+			<p v-if="errors.phone && errors.visibility">{{ trans('texts.phone_is_required') }}</p>
+			<p v-if="errors.message && errors.visibility">{{ trans('texts.message_is_required') }}</p>
+			<p v-if="errors.validEmail && errors.visibility && !errors.email">{{ trans('texts.not_valid_email') }}</p>
+			<p v-if="success" class="success">{{ trans('texts.message_sent') }}</p>
+			<input type="submit" v-on:submit="checkForm($event)" name="{{ trans('texts.submit') }}">
 		</form>
 	</div>
 </section>
