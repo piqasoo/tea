@@ -17474,8 +17474,8 @@ main {
 
 .tab-intro span {
   display: inline-block;
-  width: 30px;
-  height: 50px;
+  width: 25px;
+  height: 35px;
   background: #E82E57;
   vertical-align: middle;
   border-bottom-left-radius: 21px;
@@ -17483,11 +17483,11 @@ main {
 }
 
 .tab-intro i {
-  font-size: 30px;
+  font-size: 25px;
   color: #fff;
   position: relative;
   left: 10px;
-  top: 10px;
+  top: 5px;
 }
 
 /*.img-fluid {

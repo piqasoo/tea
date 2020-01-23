@@ -2,7 +2,7 @@
 
 @section('content')
 
-@include('layouts.includes.pageBanner')
+@include('layouts.includes.pageBannerSecondary')
 
 <section class="review block page-content">
 
