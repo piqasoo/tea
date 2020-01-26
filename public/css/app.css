@@ -16300,7 +16300,15 @@ a:hover {
 .en h5,
 .en h6,
 .en .logo a,
-.en .block h2 {
+.en .block h2,
+.itl h1,
+.itl h2,
+.itl h3,
+.itl h4,
+.itl h5,
+.itl h6,
+.itl .logo a,
+.itl .block h2 {
   font-family: "Open Sans", sans-serif;
 }
 
@@ -16312,7 +16320,16 @@ a:hover {
 .en article h4,
 .en .news-detailed h1,
 .en .albumn-description h3,
-.en .slider h3 {
+.en .slider h3,
+.itl .block h4,
+.itl .footer h3,
+.itl .footer h3,
+.itl .event-item h1,
+.itl .biography h1,
+.itl article h4,
+.itl .news-detailed h1,
+.itl .albumn-description h3,
+.itl .slider h3 {
   font-family: "Oswald", sans-serif;
 }
 
@@ -17587,6 +17604,11 @@ LARGE
 
   .lang a {
     padding: 0px 5px;
+  }
+
+  .lang a.active {
+    font-weight: 900;
+    text-decoration: underline;
   }
 
   a.social {

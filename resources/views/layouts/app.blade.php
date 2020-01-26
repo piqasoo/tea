@@ -80,9 +80,13 @@
                 </div>
                 @endif
                 <div class="lang">
-                    <a href="">ge</a>
-                    <a href="">en</a>
-                    <a href="">itl</a>
+                    @foreach(Config::get('app.locales') as $lang)
+                        @if(app()->getLocale() == $lang)
+                        <a href="{{ url()->current() }}" class="active">{{ $lang }}</a>
+                        @else
+                        <a href="{{ str_replace('/'.app()->getLocale().'/', '/'.$lang.'/', url()->current()) }}">{{ $lang }}</a>
+                        @endif
+                    @endforeach
                 </div>
                 <div class="burger-menu">
                     <div class="first-child"></div>
@@ -135,9 +139,13 @@
                 </div>
                 @endif
                 <div class="lang">
-                    <a href="">ge</a>
-                    <a href="">en</a>
-                    <a href="">itl</a>
+                    @foreach(Config::get('app.locales') as $lang)
+                        @if(app()->getLocale() == $lang)
+                        <a href="{{ url()->current() }}" class="active">{{ $lang }}</a>
+                        @else
+                        <a href="{{ str_replace('/'.app()->getLocale().'/', '/'.$lang.'/', url()->current()) }}">{{ $lang }}</a>
+                        @endif
+                    @endforeach
                 </div>
                 <div class="burger-menu">
                     <div class="first-child"></div>
@@ -169,9 +177,13 @@
                 </ul>
             </nav>
             <div class="lang">
-                <a href="">ge</a>
-                <a href="">en</a>
-                <a href="">itl</a>
+                    @foreach(Config::get('app.locales') as $lang)
+                        @if(app()->getLocale() == $lang)
+                        <a href="{{ url()->current() }}" class="active">{{ $lang }}</a>
+                        @else
+                        <a href="{{ str_replace('/'.app()->getLocale().'/', '/'.$lang.'/', url()->current()) }}">{{ $lang }}</a>
+                        @endif
+                    @endforeach
             </div>
         </header>
 
