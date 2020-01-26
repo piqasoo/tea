@@ -45,7 +45,6 @@ const app = new Vue({
     },
     methods: {
     	checkForm: function(e){
-    			console.log('ola');
 
 		      if (this.contact_form.name != '') {
 		        this.errors.name = false;
@@ -83,6 +82,36 @@ const app = new Vue({
 		      	this.success = true;
 		      }
 		      e.preventDefault();
+		      if(this.success){
+		      	this.sendContactForm(this.contact_form);
+		      }
     	},
+    	sendContactForm(data){
+    		let self = this;
+    		console.log(data);
+    		$.ajax({
+                url: 'contact',
+                method: 'POST',
+                cache: false,
+                data: {
+                    _token: $('meta[name=csrf-token]').attr('content'),
+                    data: data,
+                },
+                beforeSend: function(xhr){xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));},
+                })
+            .done(function (response) 
+            {
+            	if(response.statusCode && response.statusCode == 1){
+            		self.contact_form.name = '';
+            		self.contact_form.email = '';
+            		self.contact_form.phone = '';
+            		self.contact_form.message = '';
+            		setTimeout(function(){
+            			self.success = false;
+            		}, 1000);
+            	}
+            	console.log(response.statusCode);              
+            });
+    	}
     }
 });

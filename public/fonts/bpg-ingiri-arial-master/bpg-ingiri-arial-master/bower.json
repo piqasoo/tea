@@ -1,0 +1,28 @@
+{
+  "name": "bpg-ingiri-arial",
+  "description": "BPG Ingiri Arial Web-Font Package",
+  "version": "1.0.1",
+  "keywords": ["ttf", "woff", "woff2", "svg", "font", "web-font", "bpg-ingiri-arial"],
+  "main": [
+    "css/bpg-ingiri-arial.css"
+  ],
+  "homepage": "https://github.com/web-fonts/bpg-ingiri-arial",
+  "authors": [
+    "Lado Lomidze <lado.lomidze@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-fonts/bpg-ingiri-arial.git"
+  },
+  "license": ["MIT", "CC-BY-NC-ND-4.0"],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "*.md",
+    "font.json",
+    "package.json"
+  ]
+}

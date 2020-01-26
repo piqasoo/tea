@@ -20,18 +20,6 @@
 				"label":"text",
 				"columnName":"text"
 			}
-		],
-		"seo_data": [
-			{
-				"name":"textareaComponent",
-				"label":"Description",
-				"columnName":"description"
-			},
-			{
-				"name":"textareaComponent",
-				"label":"Keywords",
-				"columnName":"keywords"
-			}
 		]
 	}
 }

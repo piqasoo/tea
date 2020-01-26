@@ -10,6 +10,7 @@ use App\Review;
 use App\News;
 use App\Contact;
 use App\Banner;
+use App\Messages;
 use Carbon;
 use DB;
 use Illuminate\Http\Request;
@@ -49,7 +50,7 @@ class PagesController extends Controller
         else{
             $events = Events::whereDate('date', '>=', $currentDate)->orderBy('date', 'asc')->get();
         }
-    	$news = News::where('active', true)->orderBy('date', 'desc')->skip(0)->take(3)->get();
+    	$news = News::where('active', true)->orderBy('date', 'desc')->skip(0)->take(2)->get();
     	$reviews = Review::where('active', true)->orderBy('ord', 'asc')->get();
     	$videos = Video::where('active', true)->orderBy('date', 'desc')->skip(0)->take(2)->get();
         $photoAlbum = PhotoAlbum::where(['active'=> 1, 'top' => 1])->with('media')->first();
@@ -72,10 +73,17 @@ class PagesController extends Controller
         $general = self::$generalData;
         $data['general'] = $general;
         $biography = About::first();
-        $banner = Banner::where('page', 'biography')->where('active', true)->first(); 
+        $banner = Banner::where('page', 'biography')->where('active', true)->first();
+        $seo = array(
+            'title' => trans('texts.title_biography'),
+            'description' => trans('texts.description_biography'),
+            'keywords' => trans('texts.keywords_biography'),
+            'image' => null,
+        );
         $pageData = array(
             'banner' => $banner,
             'biography' => $biography,
+            'seo'   => (object) $seo,
         );
         $data['data'] = (object) $pageData;
         $data = (object) $data;
@@ -90,6 +98,12 @@ class PagesController extends Controller
         $data['general'] = $general;
         $filters = ['future', 'passed'];
         $currentDate = \Carbon\Carbon::now()->format('Y-m-d');
+        $seo = array(
+            'title' => trans('texts.title_events'),
+            'description' => trans('texts.description_events'),
+            'keywords' => trans('texts.keywords_events'),
+            'image' => null,
+        );
 
         if(in_array($filter, $filters)){
             if($filter && $filter == 'future'){
@@ -102,6 +116,7 @@ class PagesController extends Controller
                 $banner = Banner::where('page', 'events-passed')->where('active', true)->first();
             }
             $pageData = array(
+                'seo'   => (object) $seo,
                 'banner' => $banner,
                 'topEvent' => $topEvent,
                 'events' => $events,
@@ -121,7 +136,14 @@ class PagesController extends Controller
         $general = self::$generalData;
         $data['general'] = $general;
         $news = News::where('active', true)->orderBy('date', 'desc')->paginate(12);
+        $seo = array(
+            'title' => trans('texts.title_press'),
+            'description' => trans('texts.description_press'),
+            'keywords' => trans('texts.keywords_press'),
+            'image' => null,
+        );
         $pageData = array(
+            'seo'   => (object) $seo,
             'news' => $news,
         );
         $data['data'] = (object) $pageData;
@@ -142,7 +164,23 @@ class PagesController extends Controller
                 $news = News::where('active', true)->where('id', '!=', $post->id)->orderBy('date', 'desc')->skip(0)->take(3)->get();
             }
         }
+        $seo = [];
+        $keywords = '';
+        if($post){
+            foreach (explode(" ", str_replace(array('.', ','), '' , $post->title_01)) as $key ) {
+                $keywords .= strtolower($key).', ';
+            }
+            $seo = array(
+                'title' => $post->title_01,
+                'description' => $post->text,
+                'keywords' => $keywords,
+                'image' => asset('/uploads/news/'.$post->image),
+            );  
+        }
+        $banner = Banner::where('page', 'article')->where('active', true)->first();
         $pageData = array(
+            'seo'   => (object) $seo,
+            'banner'   => $banner,
             'post' => $post,
             'news' => $news,
         );
@@ -164,8 +202,22 @@ class PagesController extends Controller
                 $events = Events::where('active', true)->where('id', '!=', $event->id)->orderBy('date', 'desc')->skip(0)->take(2)->get();
             }
         }
-        $banner = Banner::where('page', 'event')->where('active', true)->first(); 
+        $banner = Banner::where('page', 'event')->where('active', true)->first();
+        $seo = [];
+        $keywords = '';
+        if($event){
+            foreach (explode(" ", str_replace(array('.', ','), '' , $event->name. ' ' . $event->place)) as $key ) {
+                $keywords .= strtolower($key).', ';
+            }
+            $seo = array(
+                'title' => $event->name. ' | ' . $event->place,
+                'description' => $event->text,
+                'keywords' => $keywords,
+                'image' => null,
+            );  
+        }
         $pageData = array(
+            'seo'   => (object) $seo,
             'event' => $event,
             'events' => $events,
             'banner' => $banner,
@@ -179,10 +231,18 @@ class PagesController extends Controller
         $data = [];
         $general = self::$generalData;
         $data['general'] = $general;
-
+        $banner = Banner::where('page', 'review')->where('active', true)->first(); 
+        $reviews = Review::where('active', 1)->orderBy('ord', 'asc')->get();
+        $seo = array(
+            'title' => trans('texts.title_reviews'),
+            'description' => trans('texts.description_reviews'),
+            'keywords' => trans('texts.keywords_reviews'),
+            'image' => null,
+        );
         $pageData = array(
-            // 'event' => $event,
-            // 'events' => $events,
+            'seo'   => (object) $seo,
+            'banner' => $banner,
+            'reviews' => $reviews,
         );
         $data['data'] = (object) $pageData;
         $data = (object) $data;
@@ -194,7 +254,14 @@ class PagesController extends Controller
         $data['general'] = $general;
         $banner = Banner::where('page', 'multimedia')->where('active', true)->first(); 
         $albums = PhotoAlbum::where('active', 1)->with('media')->orderBy('date', 'desc')->get();
+        $seo = array(
+            'title' => trans('texts.title_gallery_photo'),
+            'description' => trans('texts.description_gallery_photo'),
+            'keywords' => trans('texts.keywords_gallery_photo'),
+            'image' => null,
+        );
         $pageData = array(
+            'seo'   => (object) $seo,
             'banner' => $banner,
             'albums' => $albums,
         );
@@ -209,10 +276,23 @@ class PagesController extends Controller
         $data['general'] = $general;
         $banner = Banner::where('page', 'multimedia')->where('active', true)->first(); 
         $album = PhotoAlbum::where('active', 1)->where('id', $id)->with('media')->first();
+        $seo = [];
+        $keywords = '';
+        if($album){
+            foreach (explode(" ", str_replace(array('.', ','), '' , $album->title)) as $key ) {
+                $keywords .= strtolower($key).', ';
+            }
+            $seo = array(
+                'title' => $album->title,
+                'description' => $album->text,
+                'keywords' => $keywords,
+                'image' => asset('/uploads/photo_album/'.$album->image),
+            );  
+        }
         $pageData = array(
+            'seo'   => (object) $seo,
             'banner' => $banner,
             'album' => $album,
-            // 'events' => $events,
         );
         $data['data'] = (object) $pageData;
         $data = (object) $data;
@@ -225,11 +305,15 @@ class PagesController extends Controller
         $general = self::$generalData;
         $data['general'] = $general;
         $banner = Banner::where('page', 'contact')->where('active', true)->first(); 
-
+        $seo = array(
+            'title' => trans('texts.title_contact'),
+            'description' => trans('texts.description_contact'),
+            'keywords' => trans('texts.keywords_contact'),
+            'image' => null,
+        );
         $pageData = array(
+            'seo'   => (object) $seo,
             'banner' => $banner,
-            // 'event' => $event,
-            // 'events' => $events,
         );
         $data['data'] = (object) $pageData;
         $data = (object) $data;
@@ -240,14 +324,73 @@ class PagesController extends Controller
         $general = self::$generalData;
         $data['general'] = $general;
         $banner = Banner::where('page', 'multimedia')->where('active', true)->first(); 
-
+        $albums = Video::where('active', 1)->paginate(10);
+        $seo = array(
+            'title' => trans('texts.title_gallery_video'),
+            'description' => trans('texts.description_gallery_video'),
+            'keywords' => trans('texts.keywords_gallery_video'),
+            'image' => null,
+        );
         $pageData = array(
+            'seo'   => (object) $seo,
             'banner' => $banner,
-            // 'event' => $event,
-            // 'events' => $events,
+            'albums' => $albums,
         );
         $data['data'] = (object) $pageData;
         $data = (object) $data;
         return view('gallery-video', compact('data'));
+    }
+    public function galleryDetaildVideoPage($slug, $id){
+        $data = [];
+        $general = self::$generalData;
+        $data['general'] = $general;
+        $banner = Banner::where('page', 'multimedia')->where('active', true)->first(); 
+        $album = Video::where('active', 1)->where('id', $id)->first();
+        $seo = [];
+        $keywords = '';
+        if($album){
+            foreach (explode(" ", str_replace(array('.', ','), '' , $album->title)) as $key ) {
+                $keywords .= strtolower($key).', ';
+            }
+            $seo = array(
+                'title' => $album->title,
+                'description' => $album->text,
+                'keywords' => $keywords,
+                'image' => asset('/uploads/video/'.$album->image),
+            );  
+        }
+        
+        $pageData = array(
+            'seo' => (object) $seo,
+            'banner' => $banner,
+            'album' => $album,
+            // 'events' => $events,
+        );
+        $data['data'] = (object) $pageData;
+        $data = (object) $data;
+        return view('gallery-video-detailed', compact('data'));
+    }
+    public function sendLetter(Request $request){
+        $response = [];
+        if(isset($request['data']['name'])){
+            $record = new Messages;
+            $record->name = $request['data']['name'];
+
+            if(isset($request['data']['email'])){
+                $record->email = $request['data']['email'];
+            }
+            if(isset($request['data']['phone'])){
+                $record->phone = $request['data']['phone'];
+            }
+            if(isset($request['data']['message'])){
+                $record->message = $request['data']['message'];
+            }
+            $record->save();
+            $response = array(
+                'statusCode' => 1
+            );
+            // Messages
+        }
+        return $response;
     }
 }

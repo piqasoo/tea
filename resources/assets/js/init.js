@@ -38,6 +38,7 @@ $(document).ready(function(){
         var elementHeight = document.querySelector('.header-fixed').offsetHeight;
         // document.documentElement.scrollTop || window.pageYOffset;
         // console.log(scrollTop, elementHeight);
+        // console.log(elementHeight, scrollTop);
         if (scrollTop > elementHeight) {
             document.querySelector('.header-fixed').classList.add('active')
         }else {
@@ -56,6 +57,16 @@ $(document).ready(function(){
     if($('.burger-menu').length > 0){
     	$('.burger-menu').click(function(){
     		$('.header-mobile').toggleClass('active');
+    		// $('main').toggleClass('unscrollable');
+
+    		if($('.header-mobile .subs').length > 0){
+				var length = $('.header-mobile .subs').length;
+				for (var i = 0; i <= length; i++) {
+					$('.header-mobile .subs').eq(i).removeClass('active');
+					// console.log(i);
+				}
+			}
+			$(this).toggleClass('close-burger');
     	});
     }
     var length = $('.tab-item').length;
@@ -71,13 +82,32 @@ $(document).ready(function(){
 	}
 
 	
-	$('nav ul li').mouseout(function(){
+	$('.header nav ul li').mouseout(function(){
 		$(this).find('.sub-nav').css({"opacity": "0", "visibility":"hidden"});
 		// console.log($(this));
 	});
-	$('nav ul li.subs').mouseover(function(){
+	$('.header nav ul li.subs').mouseover(function(){
 		$(this).find('.sub-nav').css({"opacity": "1", "visibility":"visible"});
 		// console.log($(this));
 	});
+	$('.header-fixed nav ul li').mouseout(function(){
+		$(this).find('.sub-nav').css({"opacity": "0", "visibility":"hidden"});
+		// console.log($(this));
+	});
+	$('.header-fixed nav ul li.subs').mouseover(function(){
+		$(this).find('.sub-nav').css({"opacity": "1", "visibility":"visible"});
+		// console.log($(this));
+	});
+	$('.header-mobile .subs').click(function(){
+		console.log($('.header-mobile .subs').length);
+		if($('.header-mobile .subs').length > 0){
+			var length = $('.header-mobile .subs').length;
+			for (var i = 0; i <= length; i++) {
+				$('.header-mobile .subs').eq(i).removeClass('active');
+				console.log(i);
+			}
+		}
+		$(this).toggleClass('active');
+	})
 
 });

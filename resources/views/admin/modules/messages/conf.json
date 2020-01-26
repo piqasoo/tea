@@ -1,0 +1,35 @@
+{
+	"tableName":"news",
+	"translatableTableName": "news_translations",
+	"translatableKey" : "news_id",
+	"editable":true,
+	"setActive":true,
+	"multiLang":true,
+	"child_plugin":{
+		"mode":"add,edit,remove",
+		"component_width" : "col-lg-12 col-xl-6 ",
+		"title":"Add",
+		"description" : "Required fileds must be filed in all language!",
+		"general_data":[
+		]
+	},
+	"parent_plugin":{
+			"dataLoaderMethod" : "",
+			"name":"tables/buttonTable",
+			"texts":{
+				"title":"",
+				"msg":""
+			},
+			"imageFolder":"",
+			"cols":[
+				{"name" : "created", "value" : "created_at"},
+				{"name" : "name", "value" : "name"},
+				{"name" : "email", "value" : "email"},
+				{"name" : "phone", "value" : "phone"},
+				{"name" : "message", "value" : "message"}
+			]
+    }
+
+}
+
+

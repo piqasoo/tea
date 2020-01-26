@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('seo')
+@include('layouts.includes.seo', ['data'=> $data->data])
+@endsection
+
 @section('content')
 @if($data->data->slides && !empty($data->data->slides))
 <section class="slider">
@@ -66,7 +70,7 @@
 
             <a class="" data-fancybox="images" href="{{ asset('uploads/photo_album/'.$album->media_value) }}">
                 <div style="background-image: url('{{ asset('uploads/photo_album/'.$album->media_value) }}')"></div>
-                <img style="visibility: hidden;" class="img-fluid" src="{{ asset('uploads/photo_album/'.$album->media_value) }}">
+                <img  class="img-fluid" src="{{ asset('uploads/photo_album/'.$album->media_value) }}">
             </a>
         </figure>
         @endforeach
@@ -117,14 +121,18 @@
 	<div class="news-container center-container">
 		@foreach($data->data->news as $news)
 		<article>
-			<div class="albumn-img">
-				<a href="{{ route('article', ['slug' => $news->slug, 'id' => $news->id]) }}" class="img" style="background-image: url({{ asset('uploads/news/'.$news->image) }})"><img src="{{ asset('uploads/news/'.$news->image) }}" style="visibility: hidden;"></a>
-			</div>
+			<a class="albumn-img" href="{{ route('article', ['slug' => $news->slug, 'id' => $news->id]) }}">
+				<div  class="img" style="background-image: url({{ asset('uploads/news/'.$news->image) }})">
+					<!-- <img src="{{ asset('uploads/news/'.$news->image) }}" style="visibility: hidden;"> -->
+				</div>
+			</a>
 			<h3><a href="{{ route('article', ['slug' => $news->slug, 'id' => $news->id]) }}">{{ $news->title_01 }}</a></h3>
-			<h4>{{ \Carbon\carbon::parse($news->date)->format('d') }} {{ trans('texts.'.\Carbon\carbon::parse($news->date)->format('F')) }} {{ \Carbon\carbon::parse($news->date)->format('Y') }}</h4>
-			<div class="see-more">
-		     	<a href="{{ route('article', ['slug' => $news->slug, 'id' => $news->id]) }}">{{ trans('texts.see_more') }}</a>
-		    </div>
+			<div>
+				<h4>{{ \Carbon\carbon::parse($news->date)->format('d') }} {{ trans('texts.'.\Carbon\carbon::parse($news->date)->format('F')) }} {{ \Carbon\carbon::parse($news->date)->format('Y') }}</h4>
+				<div class="see-more">
+			     	<a href="{{ route('article', ['slug' => $news->slug, 'id' => $news->id]) }}">{{ trans('texts.see_more') }}</a>
+			    </div>
+			</div>
 		</article>
 		@endforeach
 	</div>
@@ -147,13 +155,13 @@
 				<input v-bind:class="{ error: errors.phone }" v-model="contact_form.phone" type="text" name="phone" placeholder="{{ trans('texts.form_phone') }}">
 			</div>
 			<textarea v-model="contact_form.message" v-on:change="checkForm($event)" name="message" placeholder="{{ trans('texts.form_message') }}" rows="3"></textarea>
-			<p v-if="errors.name && errors.visibility">{{ trans('texts.name_is_required') }}</p>
-			<p v-if="errors.email && errors.visibility">{{ trans('texts.email_is_required') }}</p>
-			<p v-if="errors.phone && errors.visibility">{{ trans('texts.phone_is_required') }}</p>
-			<p v-if="errors.message && errors.visibility">{{ trans('texts.message_is_required') }}</p>
-			<p v-if="errors.validEmail && errors.visibility && !errors.email">{{ trans('texts.not_valid_email') }}</p>
+			<p v-if="errors.name && errors.visibility"><i class="fa fa-exclamation"></i> {{ trans('texts.name_is_required') }}</p>
+			<p v-if="errors.email && errors.visibility"><i class="fa fa-exclamation"></i> {{ trans('texts.email_is_required') }}</p>
+			<p v-if="errors.phone && errors.visibility"><i class="fa fa-exclamation"></i> {{ trans('texts.phone_is_required') }}</p>
+			<p v-if="errors.message && errors.visibility"><i class="fa fa-exclamation"></i> {{ trans('texts.message_is_required') }}</p>
+			<p v-if="errors.validEmail && errors.visibility && !errors.email"><i class="fa fa-exclamation"></i> {{ trans('texts.not_valid_email') }}</p>
 			<p v-if="success" class="success">{{ trans('texts.message_sent') }}</p>
-			<input type="submit" v-on:submit="checkForm($event)" name="{{ trans('texts.submit') }}">
+			<input class="btn-submit" type="submit" v-on:submit="checkForm($event)" value="{{ trans('texts.submit') }}">
 		</form>
 	</div>
 </section>

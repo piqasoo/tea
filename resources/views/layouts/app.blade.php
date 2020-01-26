@@ -8,7 +8,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <!-- SEO -->
+    @yield('seo')
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -19,11 +20,24 @@
     <link href="https://fonts.googleapis.com/css?family=Oswald:300,400&display=swap" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bpg-nateli-mtavruli.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bpg-nino-elite-cond-caps.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bpg-ingiri-arial.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/alk-rex-bold.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/gugeshashvili-rachveli.min.css') }}">
     <!-- <script src="https://unpkg.com/vue@2.5.13/dist/vue.js"></script> -->
 </head>
-<body>
+<body class="{{ str_replace('_', '-', app()->getLocale()) }}">
+<div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=927234504005569";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
     <div id="app">
-        <header>
+        <header class="header">
             <div class="logo">
                 <a href="{{ route('home') }}">TEA PURTSELADZE</a>
                 <span>Soprano</span>
@@ -33,17 +47,17 @@
                     <li class="{{ in_array($data->general->activeRoute, ['home']) ? 'active' : '' }}"><a href="{{ route('home') }}">{{ trans('texts.home') }}</a></li>
                     <li class="{{ in_array($data->general->activeRoute, ['biography']) ? 'active' : '' }}"><a href="{{ route('biography') }}">{{ trans('texts.biography') }}</a></li>
                     <li class="{{ in_array($data->general->activeRoute, ['press', 'article']) ? 'active' : '' }}"><a href="{{ route('press') }}">{{ trans('texts.press') }}</a></li>
-                    <li class="{{ in_array($data->general->activeRoute, ['review']) ? 'active' : '' }}"><a href="">{{ trans('texts.review') }}</a></li>
-                    <li class="subs {{ in_array($data->general->activeRoute, ['events', 'event']) ? 'active' : '' }}"><a href="javascript:void(0)">{{ trans('texts.events') }}</a><i class="fa fa-arrow-down"></i>
+                    <li class="{{ in_array($data->general->activeRoute, ['reviews']) ? 'active' : '' }}"><a href="{{ route('reviews') }}">{{ trans('texts.review') }}</a></li>
+                    <li class="subs {{ in_array($data->general->activeRoute, ['events', 'event']) ? 'active' : '' }}"><a href="javascript:void(0)">{{ trans('texts.events') }}</a><i class="fa fa-angle-down"></i>
                         <ul class="sub-nav">
                             <li><a href="{{ route('events', ['filter' => 'future']) }}">future events</a></li>
                             <li><a href="{{ route('events', ['filter' => 'passed']) }}">passed events</a></li>
                         </ul>
                     </li>
-                    <li class="subs {{ in_array($data->general->activeRoute, ['galleryPhoto', 'galleryPhotoDetailed']) ? 'active' : '' }}"><a href="javascript:void(0)">{{ trans('texts.multimedia') }}</a><i class="fa fa-arrow-down"></i>
+                    <li class="subs {{ in_array($data->general->activeRoute, ['galleryPhoto', 'galleryPhotoDetailed','galleryVideo', 'galleryVideoDetailed']) ? 'active' : '' }}"><a href="javascript:void(0)">{{ trans('texts.multimedia') }}</a><i class="fa fa-angle-down"></i>
                         <ul class="sub-nav">
                             <li><a href="{{ route('galleryPhoto') }}">photo gallery</a></li>
-                            <li><a href="">video gallery</a></li>
+                            <li><a href="{{ route('galleryVideo') }}">video gallery</a></li>
                         </ul>
                     </li>
                     <li class="{{ in_array($data->general->activeRoute, ['contact']) ? 'active' : '' }}"><a href="{{ route('contact') }}">{{ trans('texts.contact') }}</a></li>
@@ -71,9 +85,9 @@
                     <a href="">itl</a>
                 </div>
                 <div class="burger-menu">
-                    <div></div>
-                    <div></div>
-                    <div></div>
+                    <div class="first-child"></div>
+                    <div class="second-child"></div>
+                    <div class="third-child"></div>
                 </div>
             </div>
         </header>
@@ -88,17 +102,17 @@
                     <li class="{{ in_array($data->general->activeRoute, ['home']) ? 'active' : '' }}"><a href="{{ route('home') }}">{{ trans('texts.home') }}</a></li>
                     <li class="{{ in_array($data->general->activeRoute, ['biography']) ? 'active' : '' }}"><a href="{{ route('biography') }}">{{ trans('texts.biography') }}</a></li>
                     <li class="{{ in_array($data->general->activeRoute, ['press', 'article']) ? 'active' : '' }}"><a href="{{ route('press') }}">{{ trans('texts.press') }}</a></li>
-                    <li class="{{ in_array($data->general->activeRoute, ['review']) ? 'active' : '' }}"><a href="">{{ trans('texts.review') }}</a></li>
-                    <li class="subs {{ in_array($data->general->activeRoute, ['events', 'event']) ? 'active' : '' }}"><a href="javascript:void(0)">{{ trans('texts.events') }}</a><i class="fa fa-arrow-down"></i>
+                    <li class="{{ in_array($data->general->activeRoute, ['reviews']) ? 'active' : '' }}"><a href="{{ route('reviews') }}">{{ trans('texts.review') }}</a></li>
+                    <li class="subs {{ in_array($data->general->activeRoute, ['events', 'event']) ? 'active' : '' }}"><a href="javascript:void(0)">{{ trans('texts.events') }}</a><i class="fa fa-angle-down"></i>
                         <ul class="sub-nav">
                             <li><a href="{{ route('events', ['filter' => 'future']) }}">future events</a></li>
                             <li><a href="{{ route('events', ['filter' => 'passed']) }}">passed events</a></li>
                         </ul>
                     </li>
-                    <li class="subs {{ in_array($data->general->activeRoute, ['galleryPhoto', 'galleryPhotoDetailed']) ? 'active' : '' }}"><a href="javascript:void(0)">{{ trans('texts.multimedia') }}</a><i class="fa fa-arrow-down"></i>
+                    <li class="subs {{ in_array($data->general->activeRoute, ['galleryPhoto', 'galleryPhotoDetailed','galleryVideo', 'galleryVideoDetailed']) ? 'active' : '' }}"><a href="javascript:void(0)">{{ trans('texts.multimedia') }}</a><i class="fa fa-angle-down"></i>
                         <ul class="sub-nav">
                             <li><a href="{{ route('galleryPhoto') }}">photo gallery</a></li>
-                            <li><a href="">video gallery</a></li>
+                            <li><a href="{{ route('galleryVideo') }}">video gallery</a></li>
                         </ul>
                     </li>
                     <li class="{{ in_array($data->general->activeRoute, ['contact']) ? 'active' : '' }}"><a href="{{ route('contact') }}">{{ trans('texts.contact') }}</a></li>
@@ -126,9 +140,9 @@
                     <a href="">itl</a>
                 </div>
                 <div class="burger-menu">
-                    <div></div>
-                    <div></div>
-                    <div></div>
+                    <div class="first-child"></div>
+                    <div class="second-child"></div>
+                    <div class="third-child"></div>
                 </div>
             </div>
         </header>
@@ -138,9 +152,19 @@
                     <li class="{{ in_array($data->general->activeRoute, ['home']) ? 'active' : '' }}"><a href="{{ route('home') }}">{{ trans('texts.home') }}</a></li>
                     <li class="{{ in_array($data->general->activeRoute, ['biography']) ? 'active' : '' }}"><a href="{{ route('biography') }}">{{ trans('texts.biography') }}</a></li>
                     <li class="{{ in_array($data->general->activeRoute, ['press', 'article']) ? 'active' : '' }}"><a href="{{ route('press') }}">{{ trans('texts.press') }}</a></li>
-                    <li class="{{ in_array($data->general->activeRoute, ['review']) ? 'active' : '' }}"><a href="">{{ trans('texts.review') }}</a></li>
-                    <li class="{{ in_array($data->general->activeRoute, ['events', 'event']) ? 'active' : '' }}"><a href="{{ route('events', ['filter' => 'future']) }}">{{ trans('texts.events') }}</a></li>
-                    <li class="{{ in_array($data->general->activeRoute, ['galleryPhoto', 'galleryPhotoDetailed']) ? 'active' : '' }}"><a href="{{ route('galleryPhoto') }}">{{ trans('texts.multimedia') }}</a></li>
+                    <li class="{{ in_array($data->general->activeRoute, ['reviews']) ? 'active' : '' }}"><a href="{{ route('reviews') }}">{{ trans('texts.review') }}</a></li>
+                    <li class="subs {{ in_array($data->general->activeRoute, ['events', 'event']) ? 'active' : '' }}"><a href="javascript:void(0)">{{ trans('texts.events') }}</a><i class="fa fa-caret-right"></i>
+                        <ul class="sub-nav">
+                            <li><a href="{{ route('events', ['filter' => 'future']) }}">future events</a></li>
+                            <li><a href="{{ route('events', ['filter' => 'passed']) }}">passed events</a></li>
+                        </ul>
+                    </li>
+                    <li class="subs {{ in_array($data->general->activeRoute, ['galleryPhoto', 'galleryPhotoDetailed']) ? 'active' : '' }}"><a href="javascript:void(0)">{{ trans('texts.multimedia') }}</a><i class="fa fa-caret-right"></i>
+                        <ul class="sub-nav">
+                            <li><a href="{{ route('galleryPhoto') }}">photo gallery</a></li>
+                            <li><a href="{{ route('galleryVideo') }}">video gallery</a></li>
+                        </ul>
+                    </li>
                     <li class="{{ in_array($data->general->activeRoute, ['contact']) ? 'active' : '' }}"><a href="{{ route('contact') }}">{{ trans('texts.contact') }}</a></li>
                 </ul>
             </nav>

@@ -33,11 +33,13 @@ Route::prefix($locale)->group(function(){
 	Route::get('/events/{slug}/{id}', 'PagesController@eventPage')->name('event');
 	Route::get('/press', 'PagesController@pressPage')->name('press');
 	Route::get('/press/{slug}/{id}', 'PagesController@articlePage')->name('article');
-	Route::get('/reviews', 'PagesController@reviewPage')->name('review');
+	Route::get('/reviews', 'PagesController@reviewPage')->name('reviews');
 	Route::get('/gallery-photo', 'PagesController@galleryPhotoPage')->name('galleryPhoto');
 	Route::get('/gallery-photo/{slug}/{id}', 'PagesController@galleryDetaildPhotoPage')->name('galleryPhotoDetailed');
 	Route::get('/gallery-video', 'PagesController@galleryVideoPage')->name('galleryVideo');
+	Route::get('/gallery-video/{slug}/{id}', 'PagesController@galleryDetaildVideoPage')->name('galleryVideoDetailed');
 	Route::get('/contact', 'PagesController@contactPage')->name('contact');
+	Route::post('/contact', 'PagesController@sendLetter')->name('sendLetter');
 });
 
 

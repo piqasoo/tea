@@ -39,6 +39,13 @@
 				"required": true
 			},
 			{
+				"name":"textFieldComponent",
+				"label":"sub title",
+				"placeholder" : "",
+				"columnName":"title_02",
+				"required": true
+			},
+			{
 				"name":"editorTextareaComponent",
 				"label":"Text",
 				"helpText" : "Put extra information about the event in the text field..",

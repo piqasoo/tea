@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('seo')
+@include('layouts.includes.seo', ['data'=> $data->data])
+@endsection
+
 @section('content')
 <?php $album = $data->data->album; ?>
 
@@ -20,7 +24,14 @@
 		@endif
 		<h2>{{ $album->title }}</h2>
 		<h4>{{ trans('texts.album') }}</h4>
+		<div class="center-container">
+			@include('layouts.includes.pageShare')
+		</div>
+		<div class="see-more">
+		    <a href="{{ route('galleryPhoto') }}">{{ trans('texts.back_to_more') }}</a>
+		</div>
 	</section>
+
 </section>
 
 

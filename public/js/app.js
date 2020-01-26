@@ -3752,7 +3752,7 @@ module.exports = __webpack_require__(59);
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_Vue, Vue) {
+/* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_Vue, Vue, $) {
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -3776,66 +3776,95 @@ __webpack_provided_window_dot_Vue = __webpack_require__(3);
 Vue.component('example-component', __webpack_require__(54));
 
 var app = new Vue({
-	el: '#app',
-	data: {
-		message: 'Hello Vue!',
-		errors: {
-			name: true,
-			email: true,
-			validEmail: true,
-			phone: true,
-			message: true,
-			visibility: false
-		},
-		success: false,
-		contact_form: {
-			'name': '',
-			'email': '',
-			'phone': '',
-			'message': ''
-		},
-		reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
-	},
-	methods: {
-		checkForm: function checkForm(e) {
-			console.log('ola');
+    el: '#app',
+    data: {
+        message: 'Hello Vue!',
+        errors: {
+            name: true,
+            email: true,
+            validEmail: true,
+            phone: true,
+            message: true,
+            visibility: false
+        },
+        success: false,
+        contact_form: {
+            'name': '',
+            'email': '',
+            'phone': '',
+            'message': ''
+        },
+        reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
+    },
+    methods: {
+        checkForm: function checkForm(e) {
 
-			if (this.contact_form.name != '') {
-				this.errors.name = false;
-			} else {
-				this.errors.name = true;
-			}
-			if (this.contact_form.email != '') {
-				this.errors.email = false;
-			} else {
-				this.errors.email = true;
-			}
-			if (this.contact_form.email != '' && this.reg.test(this.contact_form.email)) {
-				this.errors.validEmail = false;
-			} else {
-				this.errors.validEmail = true;
-			}
-			if (this.contact_form.phone != '') {
-				this.errors.phone = false;
-			} else {
-				this.errors.phone = true;
-			}
-			if (this.contact_form.message != '') {
-				this.errors.message = false;
-			} else {
-				this.errors.message = true;
-			}
-			if (this.errors.name || this.errors.email || this.errors.validEmail || this.errors.phone || this.errors.message) {
-				this.errors.visibility = true;
-			} else {
-				this.errors.visibility = false;
-				this.success = true;
-			}
-			e.preventDefault();
-		}
-	}
+            if (this.contact_form.name != '') {
+                this.errors.name = false;
+            } else {
+                this.errors.name = true;
+            }
+            if (this.contact_form.email != '') {
+                this.errors.email = false;
+            } else {
+                this.errors.email = true;
+            }
+            if (this.contact_form.email != '' && this.reg.test(this.contact_form.email)) {
+                this.errors.validEmail = false;
+            } else {
+                this.errors.validEmail = true;
+            }
+            if (this.contact_form.phone != '') {
+                this.errors.phone = false;
+            } else {
+                this.errors.phone = true;
+            }
+            if (this.contact_form.message != '') {
+                this.errors.message = false;
+            } else {
+                this.errors.message = true;
+            }
+            if (this.errors.name || this.errors.email || this.errors.validEmail || this.errors.phone || this.errors.message) {
+                this.errors.visibility = true;
+            } else {
+                this.errors.visibility = false;
+                this.success = true;
+            }
+            e.preventDefault();
+            if (this.success) {
+                this.sendContactForm(this.contact_form);
+            }
+        },
+        sendContactForm: function sendContactForm(data) {
+            var self = this;
+            console.log(data);
+            $.ajax({
+                url: 'contact',
+                method: 'POST',
+                cache: false,
+                data: {
+                    _token: $('meta[name=csrf-token]').attr('content'),
+                    data: data
+                },
+                beforeSend: function beforeSend(xhr) {
+                    xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
+                }
+            }).done(function (response) {
+                if (response.statusCode && response.statusCode == 1) {
+                    self.contact_form.name = '';
+                    self.contact_form.email = '';
+                    self.contact_form.phone = '';
+                    self.contact_form.message = '';
+                    setTimeout(function () {
+                        self.success = false;
+                    }, 1000);
+                }
+                console.log(response.statusCode);
+            });
+        }
+    }
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(3), __webpack_require__(1)))
 
 /***/ }),
 /* 18 */,
@@ -18440,6 +18469,7 @@ if (false) {
 		var elementHeight = document.querySelector('.header-fixed').offsetHeight;
 		// document.documentElement.scrollTop || window.pageYOffset;
 		// console.log(scrollTop, elementHeight);
+		// console.log(elementHeight, scrollTop);
 		if (scrollTop > elementHeight) {
 			document.querySelector('.header-fixed').classList.add('active');
 		} else {
@@ -18458,6 +18488,16 @@ if (false) {
 	if ($('.burger-menu').length > 0) {
 		$('.burger-menu').click(function () {
 			$('.header-mobile').toggleClass('active');
+			// $('main').toggleClass('unscrollable');
+
+			if ($('.header-mobile .subs').length > 0) {
+				var length = $('.header-mobile .subs').length;
+				for (var i = 0; i <= length; i++) {
+					$('.header-mobile .subs').eq(i).removeClass('active');
+					// console.log(i);
+				}
+			}
+			$(this).toggleClass('close-burger');
 		});
 	}
 	var length = $('.tab-item').length;
@@ -18472,13 +18512,32 @@ if (false) {
 		});
 	}
 
-	$('nav ul li').mouseout(function () {
+	$('.header nav ul li').mouseout(function () {
 		$(this).find('.sub-nav').css({ "opacity": "0", "visibility": "hidden" });
 		// console.log($(this));
 	});
-	$('nav ul li.subs').mouseover(function () {
+	$('.header nav ul li.subs').mouseover(function () {
 		$(this).find('.sub-nav').css({ "opacity": "1", "visibility": "visible" });
 		// console.log($(this));
+	});
+	$('.header-fixed nav ul li').mouseout(function () {
+		$(this).find('.sub-nav').css({ "opacity": "0", "visibility": "hidden" });
+		// console.log($(this));
+	});
+	$('.header-fixed nav ul li.subs').mouseover(function () {
+		$(this).find('.sub-nav').css({ "opacity": "1", "visibility": "visible" });
+		// console.log($(this));
+	});
+	$('.header-mobile .subs').click(function () {
+		console.log($('.header-mobile .subs').length);
+		if ($('.header-mobile .subs').length > 0) {
+			var length = $('.header-mobile .subs').length;
+			for (var i = 0; i <= length; i++) {
+				$('.header-mobile .subs').eq(i).removeClass('active');
+				console.log(i);
+			}
+		}
+		$(this).toggleClass('active');
 	});
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))

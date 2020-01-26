@@ -22,7 +22,7 @@
             <!-- <option disabled selected></option> -->
             @foreach($options as $option)
             <?php $option = (object) $option; ?>
-            <option value="{{ $option->{$optionKey} }}">{{ $option->{$optionName} }}</option>
+            <option value="{{ $option->{$optionKey} }}" {{ $value == $option->{$optionKey} ? 'selected' : '' }}>{{ $option->{$optionName} }}</option>
             @endforeach
         </select>
     </div>

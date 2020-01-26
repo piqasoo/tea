@@ -1,15 +1,19 @@
 @extends('layouts.app')
 
+@section('seo')
+@include('layouts.includes.seo', ['data'=> $data->data])
+@endsection
+
 @section('content')
 
 @include('layouts.includes.pageBanner')
 <section class="events block page-content">
 <!-- 	<h2>Future <span>events</span></h2>
 	<h4>events</h4> -->
-	<div class="center-container">
+	<!-- <div class="center-container">
 		<label class="btn-label {{ $data->data->filter && $data->data->filter == 'future' ? 'active' : '' }}"><a href="{{ route('events', ['filter' => 'future']) }}">Future</a></label>
 		<label class="btn-label {{ $data->data->filter && $data->data->filter == 'passed' ? 'active' : '' }}"><a href="{{ route('events', ['filter' => 'passed']) }}">passed</a></label>
-	</div>
+	</div> -->
 	@if($data->data->events && !empty($data->data->events))
 	<ul class="center-container">
 		@if($data->data->topEvent)

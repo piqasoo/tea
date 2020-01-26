@@ -1,0 +1,27 @@
+{
+  "name": "bpg-nateli-mtavruli",
+  "description": "BPG Nateli Mtavruli Web-Font Package",
+  "version": "1.0.0",
+  "keywords": ["ttf", "woff", "woff2", "svg", "font", "web-font", "bpg-nateli-mtavruli"],
+  "main": [
+    "css/bpg-nateli-mtavruli.css"
+  ],
+  "homepage": "https://github.com/web-fonts/bpg-nateli-mtavruli",
+  "authors": [
+    "Lado Lomidze <lado.lomidze@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-fonts/bpg-nateli-mtavruli.git"
+  },
+  "license": ["MIT", "CC-BY-NC-ND-4.0"],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "*.md",
+    "font.json"
+  ]
+}

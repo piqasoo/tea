@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('seo')
+@include('layouts.includes.seo', ['data'=> $data->data])
+@endsection
+
 @section('content')
 @include('layouts.includes.pageBannerSecondary')
 <?php 	$event = $data->data->event;
@@ -59,6 +63,7 @@
 					{!! $event->text !!}
 				</div>
 			</div>
+
 		</div>
 		@if(count($events) >= 2)
 		<div class="event-item">
@@ -88,9 +93,12 @@
 		</div>
 		@endif
 	</div>
+	<div class="center-container">
+		@include('layouts.includes.pageShare')
+	</div>
 	<div class="see-more">
-	     	<a href="{{ route('events', ['filter' => 'future']) }}">{{ trans('texts.back_to_more') }}</a>
-	    </div>
+	    <a href="{{ route('events', ['filter' => 'future']) }}">{{ trans('texts.back_to_more') }}</a>
+	</div>
 	<!-- @include('layouts.includes.pageShare') -->
 </section>
 

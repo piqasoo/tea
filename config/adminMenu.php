@@ -104,6 +104,14 @@
             'icon'  => 'fa fa-align-center sidebar-nav-icon',
             'roles' => ['admin']
         ],
+        'messages' => [
+            'title' => 'messages', 
+            'link' => 'messages', 
+            'class' => '', 
+            'namespace' => 'messages', 
+            'icon'  => 'fa fa-envelope sidebar-nav-icon',
+            'roles' => ['admin']
+        ],
         // [
         //     'title'         => 'Texts', 
         //     'link'          => 'texts', 

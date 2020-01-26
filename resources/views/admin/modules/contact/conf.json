@@ -54,19 +54,6 @@
 				"placeholder" : "Name / Lastname",
 				"columnName":"manager"
 			}
-		],
-		"seo_data": [
-			{
-				"name":"textareaComponent",
-				"label":"Description",
-				"placeholder" : "seo description is for the page in serach engine",
-				"columnName":"description"
-			},
-			{
-				"name":"textareaComponent",
-				"label":"Keywords",
-				"columnName":"keywords"
-			}
 		]
 	}
 }

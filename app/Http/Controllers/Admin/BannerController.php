@@ -161,7 +161,7 @@ class BannerController extends AdminController
         $data = Banner::find($id);
         if(Auth::User()){
             $request->validate([
-                'image' => 'required|image',
+                'image' => 'nullable|image',
                 'title_01' => 'required|array',
                 'title_01.*' => 'required|max:255',
                 'page' => 'required',
@@ -198,9 +198,9 @@ class BannerController extends AdminController
      */
     public function destroy($id)
     {
-        // $data = Model::find($id);
+        $data = Banner::find($id);
         if(Auth::User() && $data){
-            // MediaLibrary::deleteImage($data, 'field',  'path');
+            MediaLibrary::deleteImage($data, 'image',  'banner');
             $data->delete();
             return back();
         }

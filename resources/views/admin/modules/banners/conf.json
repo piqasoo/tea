@@ -47,6 +47,10 @@
 					{
 						"name" : "Multimedia",
 						"value" : "multimedia"
+					},
+					{
+						"name" : "Press Article",
+						"value" : "article"
 					}
 				],
 				"required": true
