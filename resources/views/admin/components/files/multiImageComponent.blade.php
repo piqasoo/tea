@@ -76,13 +76,14 @@
     let id = $(this).data('id');
     let self = $(this);
     if(id){
-      axios.post('/admin/remove/files', {id: id, path: '{!!$folder!!}'}).then(function (response) {
-        self.parent().remove();
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-      // console.log(id);
+      if (window.confirm("Are you sure?")) {
+        axios.post('/admin/remove/files', {id: id, path: '{!!$folder!!}'}).then(function (response) {
+          self.parent().remove();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      }
     }
   });
 </script>
