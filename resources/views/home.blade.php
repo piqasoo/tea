@@ -110,7 +110,7 @@
 		@endforeach
 	</div>
 	<div class="see-more">
-     	<a href="">{{ trans('texts.see_more') }}</a>
+     	<a href="{{ route('reviews') }}">{{ trans('texts.see_more') }}</a>
     </div>
 </section>
 @endif

@@ -23,7 +23,7 @@
 @endif
 <!-- END Datatables Header -->
 <div class="block full">
-  @if($data->action)
+  @if(isset($data->action) && $data->action)
   <div class="right clearfix"><a href="{{ route($data->route) }}" class="btn btn-primary"> Add {{ $modelName }}</a></div>
   @endif
 <div id="ecom-orders_wrapper" class="dataTables_wrapper form-inline no-footer">

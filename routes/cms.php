@@ -26,6 +26,7 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function(){
 	Route::resource('banners', 'BannerController');
 	Route::resource('texts', 'TextController');
 	Route::resource('messages', 'MessagesController');
+	Route::post('remove/files', 'MediaController@destroy');
 	
 	Route::post('{model}/set/visibility', 'VisibilityController@setVisibility');
 	

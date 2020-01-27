@@ -185,7 +185,7 @@ class MediaProvider extends ServiceProvider
     }
     public static function deleteLibraryImage($id, $path){
 
-        $image = Images::find($id);
+        $image = Media::find($id);
 
         if($image)
         {

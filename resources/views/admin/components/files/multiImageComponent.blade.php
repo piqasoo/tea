@@ -25,7 +25,7 @@
         	
         	@foreach($values as $key => $value)
         	<div data-id="{{ $value->id }}" id="{{$columnName}}-{{$key}}">
-        		<a class="btn btn-primary" href=""><i class="fa fa-times"></i></a>
+        		<a class="btn btn-primary removeImg" href="javascript:void(0)" data-id="{{ $value->id }}"><i class="fa fa-times"></i></a>
           		<img class="{{ $columnName.'-src' }} ui-sortable-handle" src="{{ isset($value) ? asset($path.$value->media_value).'?nocache='.rand(0, 10000)  : '' }}"  alt="Uploaded Image Preview Holder" />
         	</div>
           	@endforeach
@@ -35,10 +35,8 @@
 </div>
 
 @push('scripts')
-<!-- <script src="{{ asset('admin_resources/js/pages/uiDraggable.js') }}"></script>
- -->
- <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
-  <script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
   $( function() {
     
     $( "#{!! $columnName !!}-prev" ).sortable({
@@ -54,7 +52,7 @@
 		  		array.push(obj);
 	  		}
 	  	}
-	  	console.log(array);
+	  	// console.log(array);
 	  	var sortedData = JSON.stringify(array);
 	  	$('input[name="sort-{!!$columnName!!}"]').val(sortedData);
 	  }
@@ -72,5 +70,20 @@
 	    	$( "#{!! $columnName !!}-prev" ).sortable();
 		});
   	});
+</script>
+<script type="text/javascript">
+  $('.removeImg').click(function(){
+    let id = $(this).data('id');
+    let self = $(this);
+    if(id){
+      axios.post('/admin/remove/files', {id: id, path: '{!!$folder!!}'}).then(function (response) {
+        self.parent().remove();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      // console.log(id);
+    }
+  });
 </script>
 @endpush

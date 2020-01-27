@@ -14,6 +14,8 @@ use App\Messages;
 use Carbon;
 use DB;
 use Illuminate\Http\Request;
+use App\Mail\SendLetter;
+use Illuminate\Support\Facades\Mail;
 
 class PagesController extends Controller
 {
@@ -389,6 +391,7 @@ class PagesController extends Controller
             $response = array(
                 'statusCode' => 1
             );
+            Mail::to(env('MAIL_USERNAME'))->send(new SendLetter());
             // Messages
         }
         return $response;
