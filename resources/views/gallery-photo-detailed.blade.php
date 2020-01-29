@@ -1,11 +1,19 @@
 @extends('layouts.app')
+<?php $album = $data->data->album; ?>
 
 @section('seo')
 @include('layouts.includes.seo', ['data'=> $data->data])
 @endsection
 
+@foreach(Config::get('app.locales') as $lang)
+
+	@section('urlPath_'.$lang)
+	gallery-photo/{{$album->translate($lang)->slug}}/{{$album->id}}
+	@endsection
+
+@endforeach
+
 @section('content')
-<?php $album = $data->data->album; ?>
 
 <section class="gallery-photo-container">
 	<section class="gallery-photo block">
