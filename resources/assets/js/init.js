@@ -57,7 +57,7 @@ $(document).ready(function(){
     if($('.burger-menu').length > 0){
     	$('.burger-menu').click(function(){
     		$('.header-mobile').toggleClass('active');
-    		// $('main').toggleClass('unscrollable');
+    		$('body').toggleClass('unscrollable');
 
     		if($('.header-mobile .subs').length > 0){
 				var length = $('.header-mobile .subs').length;

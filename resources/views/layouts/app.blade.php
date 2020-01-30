@@ -136,11 +136,7 @@
                 @endif
                 <div class="lang">
                     @foreach(Config::get('app.locales') as $lang)
-                        @if(app()->getLocale() == $lang)
-                        <a href="{{ url()->current() }}" class="active">{{ $lang }}</a>
-                        @else
-                        <a href="{{ str_replace('/'.app()->getLocale().'/', '/'.$lang.'/', url()->current()) }}">{{ $lang }}</a>
-                        @endif
+                        <a href="{{ Config::get('app.url').'/'.$lang.'/' }}@yield('urlPath_'.$lang)" class="{{ app()->getLocale() == $lang ? 'active' : '' }}">{{ $lang }}</a>
                     @endforeach
                 </div>
                 <div class="burger-menu">
@@ -174,8 +170,7 @@
             </nav>
             <div class="lang">
                     @foreach(Config::get('app.locales') as $lang)
-                        <a href="{{ str_replace('/'.app()->getLocale().'/', '/'.$lang.'/', url()->current()) }}" class="{{app()->getLocale() == $lang ? 'active' : ''}}">{{ $lang }}</a>
-
+                        <a href="{{ Config::get('app.url').'/'.$lang.'/' }}@yield('urlPath_'.$lang)" class="{{ app()->getLocale() == $lang ? 'active' : '' }}">{{ $lang }}</a>
                     @endforeach
             </div>
         </header>
