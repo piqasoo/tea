@@ -26,6 +26,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/alk-rex-bold.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/gugeshashvili-rachveli.min.css') }}">
     <!-- <script src="https://unpkg.com/vue@2.5.13/dist/vue.js"></script> -->
+    <script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer>
+</script> 
 </head>
 <body class="{{ str_replace('_', '-', app()->getLocale()) }}">
 <div id="fb-root"></div>

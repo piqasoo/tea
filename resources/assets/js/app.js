@@ -21,8 +21,11 @@ window.Vue = require('vue');
 // window.slick = require('slick-carousel');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('recaptcha-component', require('./components/recaptchaComponent.vue'));
+import VueRecaptcha from 'vue-recaptcha';
 
 const app = new Vue({
+    components: { VueRecaptcha },
     el: '#app',
     data: {
     	message: 'Hello Vue!',
@@ -40,6 +43,7 @@ const app = new Vue({
     		'email': '',
     		'phone': '',
     		'message': '',
+            'grecaptcha': '',
     	},
     	reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
     },
@@ -79,16 +83,17 @@ const app = new Vue({
 		      }
 		      else {
 		      	this.errors.visibility = false;
-		      	this.success = true;
-		      }
-		      e.preventDefault();
-		      if(this.success){
-		      	this.sendContactForm(this.contact_form);
-		      }
+		      	// this.success = true;
+                this.contact_form.grecaptcha = grecaptcha.getResponse();
+                    e.preventDefault();
+                    if(this.success && this.contact_form.grecaptcha){
+                    var response = this.sendContactForm(this.contact_form);
+                }
+		    }
+              
     	},
     	sendContactForm(data){
     		let self = this;
-    		console.log(data);
     		$.ajax({
                 url: 'contact',
                 method: 'POST',
@@ -101,11 +106,13 @@ const app = new Vue({
                 })
             .done(function (response) 
             {
-            	if(response.statusCode && response.statusCode == 1){
+            	if(response.statusCode && response.statusCode == 200){
+                    self.success = true;
             		self.contact_form.name = '';
             		self.contact_form.email = '';
             		self.contact_form.phone = '';
             		self.contact_form.message = '';
+                    self.contact_form.grecaptcha = '';
             		setTimeout(function(){
             			self.success = false;
             		}, 1000);

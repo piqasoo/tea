@@ -161,6 +161,8 @@
 			<p v-if="errors.message && errors.visibility"><i class="fa fa-exclamation"></i> {{ trans('texts.message_is_required') }}</p>
 			<p v-if="errors.validEmail && errors.visibility && !errors.email"><i class="fa fa-exclamation"></i> {{ trans('texts.not_valid_email') }}</p>
 			<p v-if="success" class="success">{{ trans('texts.message_sent') }}</p>
+			<!-- <recaptcha-component></recaptcha-component> -->
+			<vue-recaptcha sitekey="6LcMKtQUAAAAAKqFfPfcOJndlXWaw6XicIx_mYiP" :loadRecaptchaScript="true" theme="dark"></vue-recaptcha>
 			<input class="btn-submit" type="submit" v-on:submit="checkForm($event)" value="{{ trans('texts.submit') }}">
 		</form>
 	</div>
