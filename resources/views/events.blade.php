@@ -57,6 +57,9 @@
 		@endforeach
 	</ul>
 	@endif
+	<div class="center-container pagination-container">
+		{{ $albums->links() }}
+	</div>
 </section>
 
 

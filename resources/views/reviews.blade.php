@@ -34,6 +34,9 @@
 			@endforeach
 			@endif
 		</div>
+		<div class="pagination-container">
+			{{ $data->data->reviews->links() }}
+		</div>
 	</section>
 </section>
 

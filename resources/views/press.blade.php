@@ -36,6 +36,9 @@
 			</div>
 		</article>
 		@endforeach
+		<div class="pagination-container">
+			{{ $data->data->news->links() }}
+		</div>
 	</div>
 	@endif
 </section>

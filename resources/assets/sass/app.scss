@@ -871,6 +871,29 @@ article {
 		color: #929292;
 	}
 }
+.pagination {
+	justify-content: center;
+}
+.page-link {
+	border: 1px solid #1313132b;
+    border-radius: 50%;
+    color: #000000;
+    background: transparent;
+    margin: 3px;
+}
+.page-item.active .page-link {
+	color: #fff;
+    background-color: #000000;
+    border: 0;
+}
+.page-item:last-child .page-link, .page-item.disabled .page-link, .page-item:first-child .page-link {
+	border: 1px solid #1313132b;
+    border-radius: 50%;
+    color: #e82e57;
+}
+.page-item.disabled .page-link {
+	background: transparent;
+}
 /*
 =======================================
 =======================================

@@ -111,11 +111,11 @@ class PagesController extends Controller
         if(in_array($filter, $filters)){
             if($filter && $filter == 'future'){
                 $topEvent = Events::whereDate('date', '>=', $currentDate)->orderBy('date', 'asc')->first();
-                $events = Events::whereDate('date', '>=', $currentDate)->where('id', '!=', $topEvent->id)->orderBy('date', 'asc')->get();
+                $events = Events::whereDate('date', '>=', $currentDate)->where('id', '!=', $topEvent->id)->orderBy('date', 'asc')->paginate(10);
                 $banner = Banner::where('page', 'events-future')->where('active', true)->first();
             }
             elseif($filter == 'passed'){
-                $events = Events::whereDate('date', '<=', $currentDate)->orderBy('date', 'asc')->get();
+                $events = Events::whereDate('date', '<=', $currentDate)->orderBy('date', 'asc')->paginate(10);
                 $banner = Banner::where('page', 'events-passed')->where('active', true)->first();
                 $model  = 'passedEvents';
             }
@@ -140,7 +140,7 @@ class PagesController extends Controller
         $data = [];
         $general = self::$generalData;
         $data['general'] = $general;
-        $news = News::where('active', true)->orderBy('date', 'desc')->paginate(12);
+        $news = News::where('active', true)->orderBy('date', 'desc')->paginate(8);
         $seo = array(
             'title' => trans('texts.title_press'),
             'description' => trans('texts.description_press'),
@@ -237,7 +237,7 @@ class PagesController extends Controller
         $general = self::$generalData;
         $data['general'] = $general;
         $banner = Banner::where('page', 'review')->where('active', true)->first(); 
-        $reviews = Review::where('active', 1)->orderBy('ord', 'asc')->get();
+        $reviews = Review::where('active', 1)->orderBy('ord', 'asc')->paginate(10);
         $seo = array(
             'title' => trans('texts.title_reviews'),
             'description' => trans('texts.description_reviews'),
@@ -258,7 +258,7 @@ class PagesController extends Controller
         $general = self::$generalData;
         $data['general'] = $general;
         $banner = Banner::where('page', 'multimedia')->where('active', true)->first(); 
-        $albums = PhotoAlbum::where('active', 1)->with('media')->orderBy('date', 'desc')->get();
+        $albums = PhotoAlbum::where('active', 1)->with('media')->orderBy('date', 'desc')->paginate(10);
         $seo = array(
             'title' => trans('texts.title_gallery_photo'),
             'description' => trans('texts.description_gallery_photo'),
