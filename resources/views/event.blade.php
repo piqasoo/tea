@@ -1,13 +1,22 @@
 @extends('layouts.app')
+<?php 	$event = $data->data->event;
+		$events = $data->data->events ?>
 
 @section('seo')
 @include('layouts.includes.seo', ['data'=> $data->data])
 @endsection
 
+@foreach(Config::get('app.locales') as $lang)
+
+	@section('urlPath_'.$lang)
+	events/{{$event->translate($lang)->slug}}/{{$event->id}}
+	@endsection
+
+@endforeach
+
 @section('content')
 @include('layouts.includes.pageBannerSecondary')
-<?php 	$event = $data->data->event;
-		$events = $data->data->events ?>
+
 <section class="events block page-content">
 	<div class="events-container center-container">
 		@if(count($events) >= 2)

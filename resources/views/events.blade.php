@@ -1,8 +1,17 @@
 @extends('layouts.app')
+<?php $lang = Config::get('app.locale'); ?>
 
 @section('seo')
 @include('layouts.includes.seo', ['data'=> $data->data])
 @endsection
+
+@foreach(Config::get('app.locales') as $lang)
+
+	@section('urlPath_'.$lang)
+	{{ $data->data->model == 'passedEvents' ? 'events/passed' : 'events/future'}}
+	@endsection
+
+@endforeach
 
 @section('content')
 
@@ -23,7 +32,7 @@
             $topmonth = \Carbon\carbon::parse($topEvent->date)->format('F');
         ?>
 		<li class="top-event">
-			<a href="{{ url('events/'.$topEvent->slug.'/'.$topEvent->id) }}">
+			<a href="{{ url($lang.'/events/'.$topEvent->slug.'/'.$topEvent->id) }}">
 				<div class="highlight date"><span class="event-day">{{$topday}}</span> <span class="event-month">{{trans('texts.'.$topmonth)}}</span></div>
 				<div>{{ $topEvent->name }}</div>
 				<div>{{ $topEvent->place }}</div>
@@ -38,7 +47,7 @@
             $year = \Carbon\carbon::parse($event->date)->format('Y');
         ?>
 		<li>
-			<a href="{{ url('events/'.$event->slug.'/'.$event->id) }}">
+			<a href="{{ url($lang.'/events/'.$event->slug.'/'.$event->id) }}">
 				<div class="highlight date">{{$day}} {{trans('texts.'.$month)}} {{$year}}</div>
 				<div>{{ $event->name }}</div>
 				<div>{{ $event->place }}</div>

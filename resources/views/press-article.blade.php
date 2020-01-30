@@ -1,12 +1,21 @@
 @extends('layouts.app')
+<?php $post = $data->data->post; ?>
 
 @section('seo')
 @include('layouts.includes.seo', ['data'=> $data->data])
 @endsection
 
+@foreach(Config::get('app.locales') as $lang)
+
+	@section('urlPath_'.$lang)
+	press/{{$post->translate($lang)->slug}}/{{$post->id}}
+	@endsection
+
+@endforeach
+
 @section('content')
 @include('layouts.includes.pageBannerSecondary')
-<?php $post = $data->data->post; ?>
+
 <section class="news block">
 	<div class="news-container center-container">
 		<div class="news-detailed text">

@@ -99,6 +99,7 @@ class PagesController extends Controller
         $general = self::$generalData;
         $data['general'] = $general;
         $filters = ['future', 'passed'];
+        $model = 'futureEvents';
         $currentDate = \Carbon\Carbon::now()->format('Y-m-d');
         $seo = array(
             'title' => trans('texts.title_events'),
@@ -116,6 +117,7 @@ class PagesController extends Controller
             elseif($filter == 'passed'){
                 $events = Events::whereDate('date', '<=', $currentDate)->orderBy('date', 'asc')->get();
                 $banner = Banner::where('page', 'events-passed')->where('active', true)->first();
+                $model  = 'passedEvents';
             }
             $pageData = array(
                 'seo'   => (object) $seo,
@@ -123,6 +125,7 @@ class PagesController extends Controller
                 'topEvent' => $topEvent,
                 'events' => $events,
                 'filter' => $filter,
+                'model' => $model,
             );
             $data['data'] = (object) $pageData;
             $data = (object) $data;

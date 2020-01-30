@@ -4,6 +4,14 @@
 @include('layouts.includes.seo', ['data'=> $data->data])
 @endsection
 
+@foreach(Config::get('app.locales') as $lang)
+
+	@section('urlPath_'.$lang)
+	press
+	@endsection
+
+@endforeach
+
 @section('content')
 
 <section class="news page-title block">
