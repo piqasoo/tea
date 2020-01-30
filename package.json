@@ -24,6 +24,7 @@
         "@fancyapps/fancybox": "^3.5.7",
         "bpg-glaho-web-caps": "^1.0.0",
         "font-awesome": "^4.7.0",
-        "slick-carousel": "^1.8.1"
+        "slick-carousel": "^1.8.1",
+        "vue-recaptcha": "^1.3.0"
     }
 }
