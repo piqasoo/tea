@@ -32,7 +32,7 @@
             $topmonth = \Carbon\carbon::parse($topEvent->date)->format('F');
         ?>
 		<li class="top-event">
-			<a href="{{ url($lang.'/events/'.$topEvent->slug.'/'.$topEvent->id) }}">
+			<a href="{{ route('event', ['slug' => $topEvent->slug, 'id' => $topEvent->id]) }}">
 				<div class="highlight date"><span class="event-day">{{$topday}}</span> <span class="event-month">{{trans('texts.'.$topmonth)}}</span></div>
 				<div>{{ $topEvent->name }}</div>
 				<div>{{ $topEvent->place }}</div>
@@ -47,7 +47,7 @@
             $year = \Carbon\carbon::parse($event->date)->format('Y');
         ?>
 		<li>
-			<a href="{{ url($lang.'/events/'.$event->slug.'/'.$event->id) }}">
+			<a href="{{ route('event', ['slug' => $event->slug, 'id' => $event->id]) }}">
 				<div class="highlight date">{{$day}} {{trans('texts.'.$month)}} {{$year}}</div>
 				<div>{{ $event->name }}</div>
 				<div>{{ $event->place }}</div>
@@ -55,32 +55,11 @@
 			</a>
 		</li>
 		@endforeach
-<!-- 		<li>
-			<a href="">
-				<div class="highlight date">12 November 2020</div>
-				<div>Torino</div>
-				<div>Nabucco</div>
-				<div class="highlight">see more</div>
-			</a>
-		</li>
-		<li>
-			<a href="">
-				<div class="highlight date">19 September</div>
-				<div>Torino</div>
-				<div>Nabucco</div>
-				<div class="highlight">see more</div>
-			</a>
-		</li>
-		<li>
-			<a href="">
-				<div class="highlight date">12 february</div>
-				<div>Torino</div>
-				<div>Nabucco</div>
-				<div class="highlight">see more</div>
-			</a>
-		</li> -->
 	</ul>
 	@endif
+	<div class="center-container pagination-container">
+		{{ $albums->links() }}
+	</div>
 </section>
 
 

@@ -39,6 +39,7 @@ class PagesController extends Controller
         self::$generalData = (object) $data;
     }
     public function homePage(){
+
     	$data = [];
     	$general = self::$generalData;
     	$data['general'] = $general;
@@ -111,11 +112,11 @@ class PagesController extends Controller
         if(in_array($filter, $filters)){
             if($filter && $filter == 'future'){
                 $topEvent = Events::whereDate('date', '>=', $currentDate)->orderBy('date', 'asc')->first();
-                $events = Events::whereDate('date', '>=', $currentDate)->where('id', '!=', $topEvent->id)->orderBy('date', 'asc')->get();
+                $events = Events::whereDate('date', '>=', $currentDate)->where('id', '!=', $topEvent->id)->orderBy('date', 'asc')->paginate(10);
                 $banner = Banner::where('page', 'events-future')->where('active', true)->first();
             }
             elseif($filter == 'passed'){
-                $events = Events::whereDate('date', '<=', $currentDate)->orderBy('date', 'asc')->get();
+                $events = Events::whereDate('date', '<=', $currentDate)->orderBy('date', 'asc')->paginate(10);
                 $banner = Banner::where('page', 'events-passed')->where('active', true)->first();
                 $model  = 'passedEvents';
             }
@@ -140,7 +141,7 @@ class PagesController extends Controller
         $data = [];
         $general = self::$generalData;
         $data['general'] = $general;
-        $news = News::where('active', true)->orderBy('date', 'desc')->paginate(12);
+        $news = News::where('active', true)->orderBy('date', 'desc')->paginate(8);
         $seo = array(
             'title' => trans('texts.title_press'),
             'description' => trans('texts.description_press'),
@@ -237,7 +238,7 @@ class PagesController extends Controller
         $general = self::$generalData;
         $data['general'] = $general;
         $banner = Banner::where('page', 'review')->where('active', true)->first(); 
-        $reviews = Review::where('active', 1)->orderBy('ord', 'asc')->get();
+        $reviews = Review::where('active', 1)->orderBy('ord', 'asc')->paginate(10);
         $seo = array(
             'title' => trans('texts.title_reviews'),
             'description' => trans('texts.description_reviews'),
@@ -258,7 +259,7 @@ class PagesController extends Controller
         $general = self::$generalData;
         $data['general'] = $general;
         $banner = Banner::where('page', 'multimedia')->where('active', true)->first(); 
-        $albums = PhotoAlbum::where('active', 1)->with('media')->orderBy('date', 'desc')->get();
+        $albums = PhotoAlbum::where('active', 1)->with('media')->orderBy('date', 'desc')->paginate(10);
         $seo = array(
             'title' => trans('texts.title_gallery_photo'),
             'description' => trans('texts.description_gallery_photo'),
@@ -376,26 +377,68 @@ class PagesController extends Controller
         return view('gallery-video-detailed', compact('data'));
     }
     public function sendLetter(Request $request){
-        $response = [];
-        if(isset($request['data']['name'])){
-            $record = new Messages;
-            $record->name = $request['data']['name'];
 
-            if(isset($request['data']['email'])){
-                $record->email = $request['data']['email'];
+        $response = [];
+        $grecaptcha = $request['data']['grecaptcha'];
+        if(!isset($grecaptcha) || !$grecaptcha) {
+          $response = array(
+            'status' => 404,
+            'msg' => trans('texts.incorect_security_code'),
+          );
+        } else {
+            $status = $this->checkRecaptcha($grecaptcha);
+            
+            if($status){
+                if(isset($request['data']['name'])){
+                    $record = new Messages;
+                    $record->name = $request['data']['name'];
+
+                    if(isset($request['data']['email'])){
+                        $record->email = $request['data']['email'];
+                    }
+                    if(isset($request['data']['phone'])){
+                        $record->phone = $request['data']['phone'];
+                    }
+                    if(isset($request['data']['message'])){
+                        $record->message = $request['data']['message'];
+                    }
+                    $record->save();
+                    $response = array(
+                        'status' => 200,
+                        'msg' => trans('texts.message_sent'),
+                    );
+                    // Mail::to(env('MAIL_USERNAME'))->send(new SendLetter());
+                }
             }
-            if(isset($request['data']['phone'])){
-                $record->phone = $request['data']['phone'];
-            }
-            if(isset($request['data']['message'])){
-                $record->message = $request['data']['message'];
-            }
-            $record->save();
-            $response = array(
-                'statusCode' => 1
-            );
-            Mail::to(env('MAIL_USERNAME'))->send(new SendLetter());
-            // Messages
+        }
+        
+        return $response;
+    }
+
+    public function checkRecaptcha($grecaptcha){
+        $response = '';
+        $secret = \Config::get('services.recaptcha.secret');
+        $url = \Config::get('app.url');
+
+        if(ini_get('allow_url_fopen')){
+            
+            $res = file_get_contents('https://www.google.com/recaptcha/api/siteverify?'.'secret='.$secret.'&response='.$grecaptcha.'&remoteip='.$url);
+        } else {
+            $captchaUrl = 'https://www.google.com/recaptcha/api/siteverify?' .'secret='.env('RECAPTCHA_SECRET_KEY') .'&response='.$grecaptcha .'&remoteip='.$url; 
+            $curl = curl_init(); 
+            curl_setopt($curl, CURLOPT_URL, $captchaUrl); 
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); 
+            curl_setopt($curl, CURLOPT_TIMEOUT, 120); 
+            $res = curl_exec($curl); 
+            curl_close($curl); 
+        }
+        $response = json_decode($res);
+
+        if(!$response || !isset($response->success) || !$response->success) {
+            $response = 0;
+        } 
+        else{
+            $response = 1;
         }
         return $response;
     }

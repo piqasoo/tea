@@ -42,6 +42,9 @@
 	        @endforeach
 		</div>
 		@endif
+		<div class="pagination-container">
+			{{ $albums->links() }}
+		</div>
 		
 	</section>
 <!-- </section> -->
