@@ -169,8 +169,8 @@
 				<p :class="[errors.message && errors.visibility ? errorClass : '', 'form-msgs', success ? successClass : '']"><i class="fa fa-exclamation"></i> {{ trans('texts.message_is_required') }}</p>
 			</div>
 			
-			<p :class="[errors.grecaptcha ? errorClass : '']"><i class="fa fa-exclamation"></i> {{ trans('texts.not_valid_security_code') }}</p>
-			<p :class="[success ? successClass : '']">{{ trans('texts.message_sent') }}</p>
+			<p :class="[errors.grecaptcha && !contact_form.grecaptcha ? errorClass : '']"><i class="fa fa-exclamation"></i> {{ trans('texts.not_valid_security_code') }}</p>
+			<p :class="[success ? errorClass : '']">{{ trans('texts.message_sent') }}</p>
 			<!-- <recaptcha-component></recaptcha-component> -->
 			<vue-recaptcha sitekey="6LcMKtQUAAAAAKqFfPfcOJndlXWaw6XicIx_mYiP" :loadRecaptchaScript="true" theme="dark"></vue-recaptcha>
 			<input class="btn-submit" type="submit" v-on:submit="checkForm($event)" value="{{ trans('texts.submit') }}">

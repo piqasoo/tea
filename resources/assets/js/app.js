@@ -55,6 +55,8 @@ const app = new Vue({
     	checkForm: function(e){
             e.preventDefault();
 
+            this.contact_form.grecaptcha = grecaptcha.getResponse();
+
 		      if (this.contact_form.name != '') {
 		        this.errors.name = false;
 		      }
@@ -83,22 +85,26 @@ const app = new Vue({
 		      else{
 		      	this.errors.message = true;
 		      }
-		      if(this.errors.name || this.errors.email || this.errors.validEmail || this.errors.phone || this.errors.message){
-		      	this.errors.visibility = true;
-		      }
-		      else {
-		      	this.errors.visibility = false;
-		      	// this.success = true;
-                if(this.contact_form.grecaptcha != ''){
+              if(this.contact_form.grecaptcha != ''){
                     this.errors.grecaptcha = false;
                 }
                 else {
                     this.errors.grecaptcha = true;
                 }
-                this.contact_form.grecaptcha = grecaptcha.getResponse();
-                    
+
+		      if(this.errors.name || this.errors.email || this.errors.validEmail || this.errors.phone || this.errors.message || this.errors.grecaptcha){
+		      	this.errors.visibility = true;
+		      }
+		      else {
+		      	this.errors.visibility = false;
+		      	// this.success = true; 
                     if(this.contact_form.grecaptcha){
                     var response = this.sendContactForm(this.contact_form);
+                    if(response){
+                        setTimeout(function(){
+                            this.success = false;
+                        }, 1000);
+                    }
                 }
 		    }
               
@@ -126,12 +132,13 @@ const app = new Vue({
                     self.contact_form.grecaptcha = '';
                     self.errors.grecaptcha = false;
                     grecaptcha.reset();
-            		setTimeout(function(){
-            			self.success = false;
-            		}, 1000);
+            		
             	}
-            	console.log(response.status);              
+                return true;
+            	// console.log(response.status);              
             });
+
+            return false;
     	}
     }
 });

@@ -4129,6 +4129,8 @@ var app = new Vue({
         checkForm: function checkForm(e) {
             e.preventDefault();
 
+            this.contact_form.grecaptcha = grecaptcha.getResponse();
+
             if (this.contact_form.name != '') {
                 this.errors.name = false;
             } else {
@@ -4154,20 +4156,24 @@ var app = new Vue({
             } else {
                 this.errors.message = true;
             }
-            if (this.errors.name || this.errors.email || this.errors.validEmail || this.errors.phone || this.errors.message) {
+            if (this.contact_form.grecaptcha != '') {
+                this.errors.grecaptcha = false;
+            } else {
+                this.errors.grecaptcha = true;
+            }
+
+            if (this.errors.name || this.errors.email || this.errors.validEmail || this.errors.phone || this.errors.message || this.errors.grecaptcha) {
                 this.errors.visibility = true;
             } else {
                 this.errors.visibility = false;
-                // this.success = true;
-                if (this.contact_form.grecaptcha != '') {
-                    this.errors.grecaptcha = false;
-                } else {
-                    this.errors.grecaptcha = true;
-                }
-                this.contact_form.grecaptcha = grecaptcha.getResponse();
-
+                // this.success = true; 
                 if (this.contact_form.grecaptcha) {
                     var response = this.sendContactForm(this.contact_form);
+                    if (response) {
+                        setTimeout(function () {
+                            this.success = false;
+                        }, 1000);
+                    }
                 }
             }
         },
@@ -4194,12 +4200,12 @@ var app = new Vue({
                     self.contact_form.grecaptcha = '';
                     self.errors.grecaptcha = false;
                     grecaptcha.reset();
-                    setTimeout(function () {
-                        self.success = false;
-                    }, 1000);
                 }
-                console.log(response.status);
+                return true;
+                // console.log(response.status);              
             });
+
+            return false;
         }
     }
 });
