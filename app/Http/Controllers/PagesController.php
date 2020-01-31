@@ -410,9 +410,16 @@ class PagesController extends Controller
                     // Mail::to(env('MAIL_USERNAME'))->send(new SendLetter());
                 }
             }
+            else {
+                $response = array(
+                    'status' => 404,
+                    'msg' => trans('texts.incorect_security_code'),
+                );
+            }
+            // dd($response);
         }
         
-        return $response;
+        return response()->json($response);
     }
 
     public function checkRecaptcha($grecaptcha){
@@ -432,9 +439,9 @@ class PagesController extends Controller
             $res = curl_exec($curl); 
             curl_close($curl); 
         }
-        $response = json_decode($res);
+        $status = json_decode($res);
 
-        if(!$response || !isset($response->success) || !$response->success) {
+        if(!$status || !isset($status->success) || !$status->success) {
             $response = 0;
         } 
         else{

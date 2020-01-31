@@ -28,6 +28,9 @@ const app = new Vue({
     components: { VueRecaptcha },
     el: '#app',
     data: {
+        errorClass: 'error-msg',
+        successClass: 'success-msg',
+        successTextClass: 'success-msg-info',
     	message: 'Hello Vue!',
     	errors: {
     		name: true,
@@ -36,6 +39,7 @@ const app = new Vue({
     		phone: true,
     		message: true,
     		visibility: false,
+            grecaptcha: false,
     	},
     	success: false,
     	contact_form: {
@@ -49,6 +53,7 @@ const app = new Vue({
     },
     methods: {
     	checkForm: function(e){
+            e.preventDefault();
 
 		      if (this.contact_form.name != '') {
 		        this.errors.name = false;
@@ -84,9 +89,15 @@ const app = new Vue({
 		      else {
 		      	this.errors.visibility = false;
 		      	// this.success = true;
+                if(this.contact_form.grecaptcha != ''){
+                    this.errors.grecaptcha = false;
+                }
+                else {
+                    this.errors.grecaptcha = true;
+                }
                 this.contact_form.grecaptcha = grecaptcha.getResponse();
-                    e.preventDefault();
-                    if(this.success && this.contact_form.grecaptcha){
+                    
+                    if(this.contact_form.grecaptcha){
                     var response = this.sendContactForm(this.contact_form);
                 }
 		    }
@@ -106,18 +117,20 @@ const app = new Vue({
                 })
             .done(function (response) 
             {
-            	if(response.statusCode && response.statusCode == 200){
+            	if(response.status && response.status == 200){
                     self.success = true;
             		self.contact_form.name = '';
             		self.contact_form.email = '';
             		self.contact_form.phone = '';
             		self.contact_form.message = '';
                     self.contact_form.grecaptcha = '';
+                    self.errors.grecaptcha = false;
+                    grecaptcha.reset();
             		setTimeout(function(){
             			self.success = false;
             		}, 1000);
             	}
-            	console.log(response.statusCode);              
+            	console.log(response.status);              
             });
     	}
     }
